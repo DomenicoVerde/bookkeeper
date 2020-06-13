@@ -94,7 +94,6 @@
         <configuration>
           <excludes>
             <!-- exclude test files -->
-            <exclude>**/src/test/resources/proc_cpuinfo.txt</exclude>
           </excludes>
         </configuration>
       </plugin>
