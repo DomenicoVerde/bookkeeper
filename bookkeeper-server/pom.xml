@@ -122,17 +122,31 @@
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
-    </dependency>    
+    </dependency>   
+    <!-- Pitest mutation testing dependency -->
+    <dependency>
+        <groupId>org.pitest</groupId>
+        <artifactId>pitest-maven</artifactId>
+        <version>1.5.1</version>
+        <type>maven-plugin</type>
+    </dependency> 
   </dependencies>
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.rat</groupId>
-        <artifactId>apache-rat-plugin</artifactId>
+    <plugin>
+        <groupId>org.pitest</groupId>
+        <artifactId>pitest-maven</artifactId>
+        <version>1.5.1</version>
         <configuration>
-          <excludes>
-            <!-- exclude generated file //-->
-          </excludes>
+            <targetClasses>
+                <param>org.apache.bookkeeper.streaming.LedgerInputStream*</param>
+                <param>org.apache.bookkeeper.client.BookKeeper*</param>
+            </targetClasses>
+            <targetTests>
+                <param>org.apache.bookkeeper.LedgerInputStreamTest*</param>
+                <param>org.apache.bookkeeper.BookkeeperTest*</param>
+            </targetTests>
+            <threads>4</threads>
         </configuration>
       </plugin>
       <plugin>
