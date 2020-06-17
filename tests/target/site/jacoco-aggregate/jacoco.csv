@@ -1,0 +1,1113 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.20.new AsyncCallback.DataCallback() {...},38,0,2,0,6,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ExponentialBackoffRetryPolicy,25,15,2,0,2,5,3,1,2,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.Builder,54,138,5,5,16,34,9,7,4,7
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.ZkRetryRunnable,4,23,1,1,1,8,1,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooWorker,77,106,17,11,17,32,14,7,2,5
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.8.new AsyncCallback.VoidCallback() {...},36,0,2,0,6,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooKeeperClient.ZkRetryRunnable() {...},75,0,2,0,8,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooKeeperClient.ZkRetryRunnable() {...},74,0,2,0,8,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooWorker.ZooCallable() {...},7,45,1,1,1,5,1,3,0,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooWorker.ZooCallable() {...},7,44,1,1,1,5,1,3,0,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooKeeperClient.ZkRetryRunnable() {...},74,0,2,0,8,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooWorker.ZooCallable() {...},9,50,1,1,1,5,1,3,0,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooWorker.ZooCallable() {...},9,49,1,1,1,5,1,3,0,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.26.new AsyncCallback.Children2Callback() {...},38,0,2,0,6,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooKeeperClient.ZkRetryRunnable() {...},26,49,1,1,2,6,2,2,1,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooWorker.ZooCallable() {...},53,0,2,0,7,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooKeeperClient.ZkRetryRunnable() {...},34,59,1,1,2,6,2,2,1,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooKeeperClient.ZkRetryRunnable() {...},54,0,2,0,8,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooWorker.ZooCallable() {...},51,0,2,0,6,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooKeeperClient.ZkRetryRunnable() {...},75,0,2,0,8,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooWorker.ZooCallable() {...},31,0,2,0,6,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooKeeperClient.ZkRetryRunnable() {...},74,0,2,0,8,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooKeeperClient.ZkRetryRunnable() {...},25,49,1,1,2,6,2,2,1,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooWorker.ZooCallable() {...},51,0,2,0,6,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooWorker.ZooCallable() {...},59,0,2,0,6,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooKeeperClient.ZkRetryRunnable() {...},74,0,2,0,8,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new Callable() {...},27,6,0,0,6,1,1,1,1,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooWorker.ZooCallable() {...},52,0,2,0,6,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooKeeperClient.ZkRetryRunnable() {...},87,0,2,0,8,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooWorker.ZooCallable() {...},64,0,2,0,6,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooWorker.ZooCallable() {...},70,0,2,0,6,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooKeeperClient.ZkRetryRunnable() {...},62,0,2,0,8,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.15.new AsyncCallback.StatCallback() {...},37,0,2,0,6,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooWorker.ZooCallable() {...},58,0,2,0,6,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooKeeperClient.ZkRetryRunnable() {...},82,0,2,0,8,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooWorker.ZooCallable() {...},59,0,2,0,6,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooKeeperClient.ZkRetryRunnable() {...},75,0,2,0,8,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.new ZooKeeperClient.ZkRetryRunnable() {...},75,0,2,0,8,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.22.new AsyncCallback.StatCallback() {...},37,0,2,0,6,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,BoundExponentialBackoffRetryPolicy,8,8,0,0,1,3,1,1,1,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.30.new AsyncCallback.ChildrenCallback() {...},37,0,2,0,6,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperWatcherBase,94,145,13,9,27,39,14,10,4,8
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.19.new AsyncCallback.DataCallback() {...},38,0,2,0,6,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient,569,317,26,6,103,64,49,16,33,16
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.7.new AsyncCallback.StatCallback() {...},37,0,2,0,6,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.29.new AsyncCallback.ChildrenCallback() {...},37,0,2,0,6,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.16.new AsyncCallback.StatCallback() {...},37,0,2,0,6,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.5.new AsyncCallback.ACLCallback() {...},38,0,2,0,6,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.25.new AsyncCallback.Children2Callback() {...},10,28,1,1,1,5,1,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.3.new AsyncCallback.MultiCallback() {...},37,0,2,0,6,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.12.new AsyncCallback.VoidCallback() {...},10,26,1,1,1,5,1,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.1.new ZooWorker.ZooCallable() {...},75,0,0,0,14,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.zookeeper,ZooKeeperClient.10.new AsyncCallback.StringCallback() {...},10,27,1,1,1,5,1,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.helpers,DiscoveryCommand,54,0,2,0,14,0,5,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.helpers,BookieShellCommand,35,0,0,0,9,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.helpers,BookieCommand,25,0,2,0,7,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.helpers,CommandHelpers,40,0,2,0,9,0,2,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.helpers,ClientCommand,60,0,2,0,16,0,6,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta.zk,ZKMetadataBookieDriver,71,10,4,0,22,4,6,2,4,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta.zk,ZKMetadataClientDriver,19,67,6,2,5,19,6,5,2,5
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta.zk,ZKMetadataDriverBase,162,238,17,9,45,58,19,9,4,9
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.10.new Runnable() {...},23,0,0,0,5,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,AuditorElector,376,0,18,0,85,0,25,0,16,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.ReadLedgerMetadataCallbackForReplicasCheck,296,0,22,0,64,0,13,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.ProcessLostFragmentsCb,132,0,10,0,29,0,9,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor,2093,0,116,0,525,0,100,0,42,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,ReplicationEnableCb,33,0,4,0,12,0,6,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.ReplicasCheckFinalCallback,17,0,0,0,7,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,ReplicationException.CompatibilityException,9,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.new Gauge() {...},15,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.new Gauge() {...},15,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.new Gauge() {...},15,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.new Gauge() {...},15,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.new Gauge() {...},15,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.new Gauge() {...},15,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.BookieExpectedToContainSegmentInfo,27,0,0,0,10,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.new Runnable() {...},22,0,0,0,6,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.new ThreadFactory() {...},28,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.new Runnable() {...},199,0,20,0,45,0,12,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.MissingEntriesInfoOfLedger,33,0,0,0,12,0,6,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,BookieLedgerIndexer,101,0,6,0,26,0,7,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,AuditorElector.ElectionComparator,31,0,4,0,7,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,ReplicationWorker.CheckerCallback,25,0,0,0,8,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,ReplicationException.UnavailableException,9,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,ReplicationException,25,0,2,0,8,0,5,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,AutoRecoveryMain,445,0,18,0,131,0,27,0,18,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,ReplicationException.BKAuditException,9,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.GetListOfEntriesOfLedgerCallbackForReplicasCheck,241,0,16,0,51,0,10,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,BookieLedgerIndexer.new AsyncCallback.VoidCallback() {...},22,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,BookieLedgerIndexer.new BookkeeperInternalCallbacks.Processor() {...},93,0,8,0,16,0,7,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.LostBookieRecoveryDelayChangedCb,22,0,0,0,8,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.new Runnable() {...},122,0,10,0,29,0,7,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.new Runnable() {...},72,0,2,0,23,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,AuditorElector.new ThreadFactory() {...},23,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.new BookkeeperInternalCallbacks.Processor() {...},197,0,20,0,43,0,13,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.new AsyncCallback.VoidCallback() {...},22,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,AuditorElector.new Runnable() {...},62,0,4,0,13,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.new Runnable() {...},153,0,6,0,47,0,5,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.new Runnable() {...},123,0,6,0,37,0,5,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,AuditorElector.new Runnable() {...},172,0,8,0,36,0,6,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.new BookkeeperInternalCallbacks.MultiCallback() {...},23,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.new Runnable() {...},19,0,2,0,5,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,AuditorElector.ElectionWatcher,26,0,4,0,7,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,ReplicationWorker.new TimerTask() {...},158,0,12,0,46,0,8,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,ReplicationWorker.new TimerTask() {...},28,0,0,0,7,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,ReplicationWorker.new CacheLoader() {...},10,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,ReplicationWorker.new CacheLoader() {...},10,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,AutoRecoveryMain.AutoRecoveryDeathWatcher,64,0,4,0,18,0,5,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.9.new Runnable() {...},23,0,0,0,5,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,ReplicationWorker,871,0,60,0,245,0,51,0,21,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.replication,Auditor.MissingEntriesInfo,27,0,0,0,10,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client.api,Handle,6,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client.api,WriteAdvHandle,49,0,0,0,7,0,7,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client.api,BKException,37,90,4,36,12,42,6,38,4,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client.api,BKException.LogMessagePool.UnrecognizedCodeLogFormatter,23,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client.api,ReadHandle,39,0,0,0,6,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client.api,LedgerMetadata.State,0,34,0,0,0,4,0,1,0,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client.api,BookKeeper,5,0,0,0,1,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client.api,DigestType,0,44,0,0,0,5,0,1,0,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client.api,BKException.LogMessagePool,26,123,5,15,5,22,4,12,1,5
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client.api,WriteFlag,34,29,4,0,9,7,5,2,3,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client.api,CreateBuilder,6,0,0,0,1,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client.api,WriteHandle,48,0,0,0,9,0,8,0,8,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server,Main,704,0,42,0,182,0,33,0,12,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,LedgerLayout,176,105,25,5,14,22,20,7,5,7
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,LongHierarchicalLedgerManager.LongHierarchicalLedgerRangeIterator.LeafIterator,56,0,8,0,14,0,7,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,AbstractHierarchicalLedgerManager.1.new AsyncCallback.ChildrenCallback() {...},79,0,4,0,12,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,MSLedgerManagerFactory.MsLedgerManager.ReadLedgerMetadataTask,158,0,20,0,34,0,15,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,LongZkLedgerIdGenerator,324,78,27,5,80,21,28,6,12,5
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,LegacyHierarchicalLedgerManager.2.new BookkeeperInternalCallbacks.Processor() {...},47,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,MetadataDrivers.MetadataBookieDriverInfo,17,10,0,0,1,4,1,1,1,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,MSLedgerManagerFactory.MsLedgerManager.new MetastoreCallback() {...},60,0,6,0,11,0,5,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,LedgerMetadataSerDe,968,196,103,15,204,51,73,11,11,7
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,MSLedgerManagerFactory.MsLedgerManager.new MetastoreCallback() {...},61,0,4,0,9,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,MSLedgerManagerFactory.MsLedgerManager.new MetastoreCallback() {...},92,0,6,0,13,0,5,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,MSLedgerManagerFactory.MsLedgerManager.new MetastoreCallback() {...},136,0,4,0,19,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,MSLedgerManagerFactory.MsLedgerManager.new MetastoreCallback() {...},47,0,4,0,8,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,MSLedgerManagerFactory.MsLedgerManager.new MetastoreCursor.ReadEntriesCallback() {...},117,0,6,0,20,0,5,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,MSLedgerManagerFactory.MsLedgerManager.new Runnable() {...},40,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,LegacyHierarchicalLedgerManager.new ThreadLocal() {...},4,3,0,0,1,1,1,1,1,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,LegacyHierarchicalLedgerManager.new BookkeeperInternalCallbacks.Processor() {...},61,0,2,0,7,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,CleanupLedgerManager,212,107,15,3,51,27,21,5,12,5
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,MSLedgerManagerFactory.MsLedgerManager.MSLedgerRangeIterator.new MetastoreCallback() {...},28,0,2,0,6,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,FlatLedgerManager.new LedgerManager.LedgerRangeIterator() {...},99,0,10,0,22,0,9,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,FlatLedgerManager,77,0,0,0,18,0,7,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,ZkLedgerIdGenerator.new AsyncCallback.StringCallback() {...},37,48,3,3,9,8,3,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,LayoutManager.LedgerLayoutExistsException,13,0,0,0,6,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,ZkLedgerIdGenerator.1.new AsyncCallback.VoidCallback() {...},8,22,2,2,2,5,2,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,HierarchicalLedgerManager.HierarchicalLedgerRangeIterator,33,0,6,0,8,0,6,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,HierarchicalLedgerManager,63,34,2,0,10,6,5,3,4,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,AbstractZkLedgerManager.new AsyncCallback.VoidCallback() {...},75,0,10,0,17,0,7,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,AbstractZkLedgerManager.new AsyncCallback.StringCallback() {...},126,37,11,1,24,4,7,2,1,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,AbstractZkLedgerManager.new BookkeeperInternalCallbacks.GenericCallback() {...},107,0,10,0,18,0,7,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,AbstractZkLedgerManager.new AsyncCallback.StatCallback() {...},78,0,6,0,11,0,5,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,AbstractZkLedgerManager.new AsyncCallback.DataCallback() {...},128,0,8,0,24,0,6,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,LongHierarchicalLedgerManager.LongHierarchicalLedgerRangeIterator.InnerIterator,112,0,14,0,24,0,11,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,AbstractHierarchicalLedgerManager.AsyncListProcessor,47,0,4,0,12,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,FlatLedgerManagerFactory,77,0,8,0,14,0,11,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,LongHierarchicalLedgerManager.LongHierarchicalLedgerRangeIterator,75,0,4,0,20,0,7,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,LedgerManager.LedgerRange,26,0,0,0,7,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,MSLedgerManagerFactory.AsyncSetProcessor.1.new Runnable() {...},21,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,CleanupLedgerManager.CleanupGenericCallback,39,0,4,0,9,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,MSLedgerManagerFactory.MsLedgerManager.MSLedgerRangeIterator,95,0,4,0,23,0,5,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,UnderreplicatedLedger,23,0,0,0,10,0,6,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,MSLedgerManagerFactory.SyncResult,35,0,2,0,15,0,6,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,HierarchicalLedgerManagerFactory,0,38,0,0,0,6,0,3,0,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,ZkLedgerUnderreplicationManager,2125,0,128,0,503,0,108,0,44,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,ZkLedgerIdGenerator,9,85,1,1,3,19,1,7,0,7
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,LongZkLedgerIdGenerator.new BookkeeperInternalCallbacks.GenericCallback() {...},130,0,14,0,23,0,10,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,LongZkLedgerIdGenerator.new BookkeeperInternalCallbacks.GenericCallback() {...},9,18,1,1,1,4,1,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,LongZkLedgerIdGenerator.new AsyncCallback.StringCallback() {...},66,0,0,0,18,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,CleanupLedgerManager.ClosedLedgerRangeIterator,10,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,MSLedgerManagerFactory.MsLedgerManager.7.new AsyncCallback.VoidCallback() {...},70,0,2,0,8,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,LegacyHierarchicalLedgerManagerFactory,45,22,1,1,7,8,5,3,4,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,ZkLayoutManager,72,35,0,0,25,8,2,3,2,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,AbstractHierarchicalLedgerManager.new AsyncCallback.VoidCallback() {...},75,0,4,0,11,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,MSLedgerManagerFactory.MsLedgerManager,488,0,35,0,110,0,32,0,14,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,ZkLedgerUnderreplicationManager.Lock,15,0,0,0,6,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,LongHierarchicalLedgerManagerFactory,11,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,MSLedgerManagerFactory.AsyncSetProcessor,39,0,4,0,11,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,AbstractZkLedgerManager.ReadLedgerMetadataTask,182,0,22,0,39,0,16,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,AbstractZkLedgerManagerFactory,559,75,66,10,117,23,45,3,7,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,LegacyHierarchicalLedgerManager.LegacyHierarchicalLedgerRangeIterator,295,0,30,0,71,0,21,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,CleanupLedgerManager.new BookkeeperInternalCallbacks.GenericCallback() {...},24,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,CleanupLedgerManager.new AsyncCallback.VoidCallback() {...},26,0,2,0,4,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,LongHierarchicalLedgerManager.RecursiveProcessor,100,0,6,0,16,0,5,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,HierarchicalLedgerManager.new AsyncCallback.VoidCallback() {...},47,0,2,0,5,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,MetadataDrivers.MetadataClientDriverInfo,17,10,0,0,1,4,1,1,1,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,LongHierarchicalLedgerManager,69,9,2,0,9,3,6,2,5,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,AbstractHierarchicalLedgerManager,121,9,18,0,25,3,12,2,3,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,LedgerUnderreplicationManager,14,0,0,0,4,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,AbstractZkLedgerManager,539,100,73,2,126,26,50,4,12,4
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,MetadataDrivers,297,221,30,16,68,68,32,13,11,11
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,AbstractHierarchicalLedgerManager.AsyncListProcessor.new AsyncCallback.VoidCallback() {...},79,0,4,0,12,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,MSLedgerManagerFactory.AsyncSetProcessor.new AsyncCallback.VoidCallback() {...},68,0,4,0,11,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,LongZkLedgerIdGenerator.HighOrderLedgerIdGenPathStatus,0,34,0,0,0,4,0,1,0,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,MSLedgerManagerFactory,331,0,20,0,76,0,24,0,14,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,ZkLedgerUnderreplicationManager.new SubTreeCache.TreeProvider() {...},15,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,ZkLedgerUnderreplicationManager.new Iterator() {...},152,0,24,0,30,0,17,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,ZkLedgerUnderreplicationManager.new Watcher() {...},33,0,10,0,8,0,7,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,ZkLedgerUnderreplicationManager.new Watcher() {...},22,0,2,0,5,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,ZkLedgerUnderreplicationManager.new Watcher() {...},19,0,2,0,4,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,AbstractHierarchicalLedgerManager.AsyncListProcessor.1.new Runnable() {...},21,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta,LegacyHierarchicalLedgerManager,98,13,2,0,11,4,8,2,7,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.component,ServerLifecycleComponent,79,0,2,0,13,0,5,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.conf,BookieConfiguration,11,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieException.UnknownBookieIdException,9,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,TransactionalEntryLogCompactor.UpdateIndexPhase.new EntryLogger.EntryLogScanner() {...},90,0,4,0,11,0,5,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.SimpleTestCmd,98,0,0,0,23,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryMemTableWithParallelFlusher.new SafeRunnable() {...},81,0,4,0,19,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieException.MetadataStoreException,20,0,0,0,8,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogger.new EntryLogger.EntryLogScanner() {...},27,0,2,0,4,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogger.new FastThreadLocal() {...},9,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogger.new FilenameFilter() {...},10,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogger.new ThreadLocal() {...},14,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogManagerBase,201,0,16,0,53,0,19,0,11,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Journal.LastLogMark,203,0,10,0,46,0,12,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,LedgerCache.LedgerIndexMetadata,22,0,2,0,8,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogManagerBase.new FastThreadLocal() {...},9,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,SkipListArena.MemorySlice,33,0,0,0,7,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.RebuildDbLedgerLocationsIndexCmd,35,0,0,0,10,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.InitBookieCmd,44,0,2,0,11,0,6,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,FileSystemUpgrade.new FilenameFilter() {...},79,0,18,0,19,0,12,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,FileSystemUpgrade.new FilenameFilter() {...},19,0,4,0,3,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLocation,21,0,0,0,8,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieThread,31,0,0,0,12,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.EndpointInfoCmd,67,0,4,0,18,0,7,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,IndexInMemPageMgr.new Gauge() {...},14,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,InterleavedStorageRegenerateIndexOp.RecoveryStats,44,0,4,0,13,0,7,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryMemTable.EntrySkipList,53,0,8,0,10,0,10,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogCompactor.CompactionScannerFactory,46,0,4,0,12,0,5,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,IndexPersistenceMgr,1350,0,142,0,311,0,107,0,36,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.WhoIsAuditorCmd,41,0,2,0,11,0,6,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.BookieSanityTestCmd,57,0,2,0,13,0,6,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogCompactor.CompactionScannerFactory.new EntryLogger.EntryLogScanner() {...},60,0,2,0,9,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,AbstractLogCompactor,16,0,0,0,6,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,LedgerDirsMonitor,408,0,40,0,106,0,31,0,11,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Journal.QueueEntry,85,0,2,0,24,0,6,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.RegenerateInterleavedStorageIndexFile,127,0,4,0,28,0,8,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.FilesTimeComparator,51,0,2,0,14,0,2,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieStateManager,427,0,48,0,115,0,51,0,27,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,IndexPersistenceMgr.new Comparator() {...},13,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.BookieInfoCmd,35,0,0,0,10,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieException.InvalidCookieException,14,0,0,0,6,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieException.OperationRejectedException,6,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,LocalBookieEnsemblePlacementPolicy,65,0,2,0,21,0,13,0,12,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieException.CookieExistException,14,0,0,0,6,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieStateManager.new Callable() {...},11,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieStateManager.new Callable() {...},11,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogCompactor,65,0,0,0,20,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieStateManager.new Gauge() {...},33,0,6,0,7,0,6,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieStateManager.new Callable() {...},31,0,2,0,9,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.ReadLogCmd,167,0,6,0,38,0,8,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Bookie.NoLedgerException,19,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogManagerForEntryLogPerLedger.EntryLogAndLockTuple,45,0,2,0,10,0,5,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.AutoRecoveryCmd,71,0,4,0,16,0,7,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.InitNewCluster,39,0,2,0,10,0,6,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Journal.QueueEntry.new Recycler() {...},9,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieException.BookieUnauthorizedAccessException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.TriggerAuditCmd,35,0,0,0,10,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,LogMark,112,0,6,0,29,0,14,0,11,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,ShortReadException,9,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,FileInfoBackingCache.CachedFileInfo,87,0,6,0,20,0,9,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,GarbageCollectionStatus,77,0,0,0,9,0,16,0,16,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,IndexInMemPageMgr.PageEntriesImpl,31,0,0,0,7,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogger,1713,0,118,0,362,0,110,0,51,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogManagerForSingleEntryLog.new LedgerDirsManager.LedgerDirsListener() {...},42,0,8,0,11,0,7,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Cookie,658,0,42,0,137,0,46,0,25,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,ScanAndCompareGarbageCollector,462,0,52,0,130,0,33,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,LedgerDirsManager.NoWritableLedgerDirException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,ScrubberStats,3,0,0,0,1,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BufferedChannelBase,21,0,2,0,7,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,KeyComparator,33,0,6,0,5,0,5,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,InterleavedLedgerStorage,844,0,42,0,216,0,62,0,41,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,CheckpointSourceList,36,0,6,0,11,0,6,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,ReadOnlyBookie,46,0,2,0,10,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,GarbageCollectionStatus.GarbageCollectionStatusBuilder,98,0,0,0,1,0,10,0,10,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,LedgerStorage,11,0,0,0,5,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,ReadOnlyEntryLogger,11,0,0,0,4,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,LedgerEntryPage,613,0,58,0,134,0,64,0,35,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.ListDiskFilesCmd,80,0,0,0,18,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogger.BufferedLogChannel.new ConcurrentLongLongHashMap.BiConsumerLong() {...},108,0,4,0,24,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,TransactionalEntryLogCompactor.UpdateIndexPhase,153,0,14,0,36,0,13,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.MyCommand,60,0,0,0,15,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,SyncThread,248,0,10,0,94,0,20,0,15,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,IndexInMemPageMgr.InMemPageCollection,454,0,68,0,119,0,49,0,15,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,SkipListArena.Chunk,140,0,22,0,30,0,16,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,SortedLedgerStorage.new Runnable() {...},49,0,2,0,11,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogger.Header,12,0,0,0,5,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BufferedReadChannel,143,0,12,0,33,0,10,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogManagerForEntryLogPerLedger.new RemovalListener() {...},11,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogManagerForEntryLogPerLedger.new LedgerDirsManager.LedgerDirsListener() {...},58,0,8,0,13,0,7,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogManagerForEntryLogPerLedger.new CacheLoader() {...},15,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Checkpointer,5,0,0,0,1,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.RecoverCmd,184,0,10,0,35,0,10,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,LedgerDescriptorImpl,249,0,16,0,57,0,25,0,17,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,CheckpointSource.Checkpoint.new CheckpointSource.Checkpoint() {...},19,0,4,0,6,0,6,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,CheckpointSource.Checkpoint.new CheckpointSource.Checkpoint() {...},19,0,4,0,6,0,6,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,FileInfo.FileInfoDeletedException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,LedgerEntryPage.new PrimitiveIterator.OfLong() {...},69,0,8,0,11,0,7,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieException.LedgerFencedException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieStatus,328,0,28,0,88,0,27,0,13,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,LedgerDirsManager.LedgerDirsListener,7,0,0,0,7,0,7,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,TransactionalEntryLogCompactor.ScanEntryLogPhase,58,0,2,0,16,0,5,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Journal.ForceWriteThread,144,0,22,0,50,0,14,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell,1339,0,32,0,176,0,37,0,21,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.BookieFormatCmd,88,0,4,0,20,0,7,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.LastMarkCmd,31,0,0,0,9,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.UpdateCookieCmd,201,0,20,0,45,0,15,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.ConvertToDbStorageCmd,42,0,0,0,12,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.LedgerCmd,73,0,4,0,16,0,7,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,JournalChannel,471,0,38,0,104,0,33,0,14,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,InterleavedStorageRegenerateIndexOp.new EntryLogger.EntryLogScanner() {...},104,0,4,0,13,0,6,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,LedgerCacheImpl.new PrimitiveIterator.OfLong() {...},73,0,12,0,15,0,9,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogger.EntryLookupException.WrongEntryException,37,0,0,0,8,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Journal.new Recycler() {...},14,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,IndexInMemPageMgr.PageEntriesIterableImpl,46,0,0,0,9,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,CheckpointSourceList.CheckpointList,151,0,18,0,31,0,15,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,LedgerDirsManager.new Gauge() {...},15,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.HelpCmd,60,0,4,0,18,0,7,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieException.BookieIllegalOpException,14,0,0,0,6,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,GarbageCollectorThread,1079,0,98,0,233,0,82,0,33,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,LastAddConfirmedUpdateNotification.new Recycler() {...},8,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,IndexInMemPageMgr,479,0,50,0,118,0,40,0,15,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.ReadLogMetadataCmd,70,0,2,0,21,0,6,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Checkpointer.new Checkpointer() {...},5,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Journal.JournalRollingFilter,17,0,2,0,4,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryMemTable,731,0,78,0,174,0,60,0,21,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.LocalConsistencyCheck,39,0,2,0,10,0,6,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,InterleavedLedgerStorage.new LedgerDirsManager.LedgerDirsListener() {...},93,0,10,0,24,0,11,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,LedgerDirsManager.new Gauge() {...},24,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,TransactionalEntryLogCompactor.FlushCompactionLogPhase,95,0,18,0,24,0,13,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,ExitCode,3,0,0,0,1,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,LastAddConfirmedUpdateNotification,53,0,0,0,17,0,8,0,8,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.NukeExistingCluster,83,0,2,0,19,0,6,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogger.EntryLookupException.MissingEntryException,27,0,0,0,6,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogManagerForSingleEntryLog,324,0,36,0,88,0,38,0,20,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.LostBookieRecoveryDelayCmd,78,0,4,0,19,0,7,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogger.EntryLookupException.MissingLogFileException,27,0,0,0,6,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,LedgerCacheImpl,202,0,2,0,50,0,27,0,26,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogger.RecentEntryLogsStatus,61,0,4,0,14,0,6,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,FileInfoBackingCache,185,0,12,0,47,0,13,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogManagerForEntryLogPerLedger.EntryLogsPerLedgerCounter.new RemovalListener() {...},32,0,4,0,8,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogManagerForEntryLogPerLedger.EntryLogsPerLedgerCounter.new CacheLoader() {...},20,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryMemTable.EntrySkipList.new EntryMemTable.EntrySkipList() {...},6,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,LedgerDescriptor,45,0,2,0,11,0,5,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.UpdateLedgerCmd,186,0,12,0,42,0,11,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,ReadOnlyBookie.new BookieStateManager() {...},19,0,0,0,5,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,HandleFactoryImpl,76,0,4,0,20,0,6,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,AbstractLogCompactor.Throttler,31,0,4,0,7,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLoggerAllocator,381,0,20,0,89,0,21,0,11,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.ListBookiesCmd,109,0,8,0,32,0,9,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,FileInfo,1160,0,128,0,270,0,93,0,29,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.ReadJournalCmd,108,0,6,0,29,0,8,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Bookie.NoEntryException,33,0,0,0,8,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieException.UpgradeException,14,0,0,0,6,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,CheckpointSource.Checkpoint,9,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,TransactionalEntryLogCompactor.CompactionPhase,25,0,0,0,10,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.ListUnderreplicatedCmd,92,0,0,0,23,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,LedgerStorageFactory,22,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.ReadLedgerEntriesCmd,151,0,2,0,31,0,6,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,LedgerStorage.DetectedInconsistency,21,0,0,0,8,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Bookie.new FilenameFilter() {...},24,0,6,0,4,0,5,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Bookie.new CheckpointSource() {...},6,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,ReadOnlyFileInfo,9,0,0,0,3,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,SkipListArena,105,0,18,0,26,0,14,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Journal.ForceWriteRequest,120,0,12,0,34,0,10,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogger.EntryLookupException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,IndexInMemPageMgr.PageEntriesIterableImpl.new Iterator() {...},44,0,2,0,5,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieStatus.BookieMode,24,0,0,0,3,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Bookie.CounterCallback,29,0,4,0,10,0,6,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogger.BufferedLogChannel,125,0,2,0,37,0,10,0,9,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.DeleteLedgerCmd,71,0,0,0,16,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryMemTableWithParallelFlusher,153,0,10,0,41,0,9,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Bookie.new LedgerDirsManager.LedgerDirsListener() {...},52,0,0,0,15,0,6,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Bookie.new BookieThread() {...},17,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Bookie.new SyncThread() {...},36,0,0,0,6,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Bookie.new Journal.JournalScanner() {...},239,0,24,0,53,0,14,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,TransactionalEntryLogCompactor.ScanEntryLogPhase.new EntryLogger.EntryLogScanner() {...},129,0,6,0,17,0,6,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogManagerForEntryLogPerLedger.EntryLogsPerLedgerCounter,107,0,8,0,29,0,9,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Journal,1333,0,152,0,327,0,100,0,24,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieCriticalThread,23,0,0,0,10,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,SortedLedgerStorage,383,0,14,0,101,0,45,0,38,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,LedgerCache.NoIndexForLedger,5,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogMetadata,122,0,4,0,28,0,14,0,12,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogger.EntryLookupException.InvalidEntryLengthException,27,0,0,0,6,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Journal.BufferedChannelBuilder,10,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BufferedChannel,394,0,38,0,94,0,34,0,15,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,GarbageCollectorThread.new AbstractLogCompactor.LogRemovalListener() {...},11,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BufferedChannelBase.BufferedChannelClosedException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieException.DiskPartitionDuplicationException,14,0,0,0,6,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryKey,60,0,6,0,14,0,10,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Bookie,2529,0,214,0,609,0,174,0,67,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,SlowBufferedChannel,83,0,2,0,29,0,11,0,10,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.LedgerMetadataCmd,115,0,10,0,26,0,10,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.ConvertToInterleavedStorageCmd,37,0,0,0,11,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryKeyValue,101,0,2,0,20,0,11,0,10,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,FileSystemUpgrade,768,0,58,0,195,0,43,0,14,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.ListLedgersCmd,67,0,0,0,16,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,TransactionalEntryLogCompactor,228,0,22,0,48,0,18,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieException,139,0,28,0,55,0,30,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,LedgerDirsManager,472,0,42,0,104,0,45,0,24,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,LedgerDescriptorReadOnlyImpl,47,0,8,0,9,0,9,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Bookie.NopWriteCallback,31,0,2,0,5,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieException.CookieNotFoundException,14,0,0,0,6,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,InterleavedStorageRegenerateIndexOp.DryRunLedgerCache,61,0,0,0,21,0,21,0,21,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,InterleavedStorageRegenerateIndexOp,205,0,10,0,39,0,8,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogManagerForEntryLogPerLedger.BufferedLogChannelWithDirInfo,19,0,0,0,8,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,EntryLogManagerForEntryLogPerLedger,675,0,50,0,165,0,51,0,26,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.DecommissionBookieCmd,56,0,2,0,14,0,6,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.WhatIsInstanceId,35,0,0,0,10,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,BookieShell.MetaFormatCmd,73,0,4,0,16,0,7,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Journal.LogMarkCheckpoint,48,0,8,0,13,0,9,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie,Cookie.Builder,91,0,0,0,25,0,8,0,8,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto.checksum,CRC32DigestManager.new FastThreadLocal() {...},10,3,2,0,3,1,2,1,1,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto.checksum,DirectMemoryCRC32Digest,211,0,6,0,31,0,8,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto.checksum,CRC32CDigestManager.new FastThreadLocal() {...},8,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto.checksum,StandardCRC32Digest,23,0,0,0,7,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto.checksum,DummyDigestManager,10,0,0,0,5,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto.checksum,DigestManager,269,172,17,10,48,39,18,10,5,8
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto.checksum,MacDigestManager.new ThreadLocal() {...},7,26,0,0,3,6,0,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto.checksum,CRC32DigestManager,14,13,0,0,4,4,2,3,2,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto.checksum,CRC32CDigestManager,53,0,4,0,17,0,7,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto.checksum,MacDigestManager,6,61,0,0,2,17,0,6,0,6
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto.checksum,DigestManager.RecoveryData,15,0,0,0,6,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,ListBookiesService,143,0,20,0,31,0,13,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,ListUnderReplicatedLedgerService,246,0,40,0,61,0,26,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,GetLedgerMetaService,105,0,6,0,25,0,6,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,BookieInfoService.BookieInfo,117,0,10,0,5,0,15,0,10,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,ListDiskFilesService,265,0,48,0,53,0,27,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,ListLedgerService,300,0,42,0,67,0,25,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,GetLastLogMarkService,199,0,6,0,35,0,6,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,BookieIsReadyService,55,0,6,0,15,0,5,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,ListBookieInfoService,265,0,12,0,47,0,10,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,MetricsService,100,0,4,0,26,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,TriggerAuditService,82,0,2,0,22,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,GCDetailsService,69,0,4,0,20,0,5,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,RecoveryBookieService,186,0,8,0,45,0,9,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,BookieStateService,67,0,2,0,18,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,DeleteLedgerService,106,0,6,0,26,0,6,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,RecoveryBookieService.RecoveryRequestJsonBody,3,0,0,0,1,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,AutoRecoveryStatusService,132,0,15,0,30,0,13,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,ExpandStorageService,128,0,6,0,35,0,7,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,BookieStateService.BookieState,160,0,22,0,6,0,24,0,13,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,BookieInfoService,54,0,4,0,11,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,DecommissionService,156,0,8,0,41,0,8,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,LostBookieRecoveryDelayService,156,0,10,0,37,0,8,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,WhoIsAuditorService,122,0,4,0,30,0,5,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,ReadLedgerEntryService,241,0,28,0,44,0,17,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,ConfigurationService,92,0,8,0,25,0,6,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http.service,TriggerGCService,121,0,8,0,29,0,7,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,SubTreeCache.SubTreeNode,39,0,0,0,11,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,Shell.ExitCodeException,10,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,ZkUtils.1.new AsyncCallback.StringCallback() {...},12,32,3,1,1,4,2,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,LedgerIdFormatter.UUIDLedgerIdFormatter,15,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,SafeRunnable.new SafeRunnable() {...},21,0,0,0,7,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,SafeRunnable.new SafeRunnable() {...},4,6,0,0,2,1,1,1,1,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,SubTreeCache,94,0,4,0,24,0,9,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,SnapshotMap,150,0,4,0,34,0,7,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,EntryFormatter,60,0,4,0,18,0,6,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,SubTreeCache.WatchGuard,15,0,0,0,5,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,LedgerIdFormatter.HexLedgerIdFormatter,12,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,ByteBufList.Encoder,57,15,7,1,11,6,4,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,LocalBookKeeper,1226,0,92,0,259,0,69,0,23,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,BookKeeperConstants,7,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,HardLink.OSType,44,0,0,0,5,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,IteratorUtility.new PrimitiveIterator.OfLong() {...},148,0,26,0,31,0,16,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,IteratorUtility.new PrimitiveIterator.OfLong() {...},143,0,26,0,32,0,16,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,SafeRunnable,6,8,0,0,1,2,1,2,1,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,OrderedGenericCallback.new SafeRunnable() {...},37,0,0,0,5,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,LedgerIdFormatter,69,0,6,0,20,0,7,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,DirectMemoryUtils,43,0,2,0,12,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,AvailabilityOfEntriesOfLedger.SequenceGroup,217,0,18,0,48,0,22,0,13,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,DiskChecker,401,0,46,0,77,0,35,0,12,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,ByteBufList,180,98,15,3,33,26,18,11,10,10
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,Shell.ShellCommandExecutor,129,0,12,0,31,0,15,0,9,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,EventLoopUtil,80,21,4,2,17,5,8,3,5,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,Shell,292,0,22,0,86,0,25,0,14,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,ZeroBuffer,56,0,6,0,16,0,8,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,OrderedGenericCallback,60,0,4,0,15,0,5,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,StringUtils,185,52,9,1,37,11,12,3,7,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,StringEntryFormatter,37,0,0,0,10,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,HardLink.HardLinkCGUnix,185,0,4,0,32,0,10,0,8,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,IOUtils,171,0,28,0,40,0,22,0,8,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,DiskChecker.DiskErrorException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,DiskChecker.DiskWarnThresholdException,10,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,DiskChecker.DiskOutOfSpaceException,10,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,ZkUtils.6.new AsyncCallback.ChildrenCallback() {...},31,0,2,0,8,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,AvailabilityOfEntriesOfLedger,821,0,82,0,171,0,66,0,25,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,DaemonThreadFactory,55,0,8,0,13,0,8,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,HardLink,631,0,80,0,143,0,51,0,11,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,ZkUtils.new AsyncCallback.StringCallback() {...},0,58,0,2,0,7,0,3,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,ZkUtils.new AsyncCallback.VoidCallback() {...},90,0,10,0,13,0,8,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,ZkUtils.GetChildrenCtx,9,0,0,0,3,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,ZkUtils.new BookkeeperInternalCallbacks.GenericCallback() {...},34,0,2,0,9,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,ZkUtils.new AsyncCallback.VoidCallback() {...},41,0,2,0,8,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,ZkUtils.new AsyncCallback.StringCallback() {...},17,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,ZkUtils.new AsyncCallback.VoidCallback() {...},17,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,Shell.new Thread() {...},44,0,4,0,10,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,DiskChecker.DiskException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,ByteBufList.new Recycler() {...},0,9,0,0,0,2,0,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,NativeIO,140,0,10,0,42,0,9,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,HardLink.LinkStats,85,0,0,0,15,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,Shell.ShellTimeoutTimerTask,28,0,4,0,11,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,ZkUtils,196,26,17,1,38,4,15,3,6,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,LedgerIdFormatter.LongLedgerIdFormatter,10,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,HexDumpEntryFormatter,76,0,0,0,17,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,IteratorUtility,17,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,HardLink.HardLinkCGWin,271,0,4,0,34,0,9,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.autorecovery,WhoIsAuditorCommand,76,0,4,0,25,0,6,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.autorecovery,LostBookieRecoveryDelayCommand.LBRDFlags,16,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.autorecovery,TriggerAuditCommand,43,0,2,0,15,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.autorecovery,ListUnderReplicatedCommand,239,0,30,0,63,0,26,0,11,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.autorecovery,ToggleCommand.AutoRecoveryFlags,13,0,0,0,2,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.autorecovery,ListUnderReplicatedCommand.LURFlags,37,0,0,0,5,0,6,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.autorecovery,ToggleCommand,115,0,12,0,35,0,12,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.autorecovery,LostBookieRecoveryDelayCommand,95,0,14,0,32,0,12,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.feature,FixedValueFeature,25,9,4,0,7,4,6,1,4,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.feature,SettableFeatureProvider,7,21,0,0,1,5,1,3,1,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.feature,SettableFeature,17,5,2,0,6,2,4,1,3,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.feature,CacheableFeatureProvider,46,52,6,4,10,14,5,4,1,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta.exceptions,Code,37,0,0,0,4,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.meta.exceptions,MetadataException,25,0,0,0,10,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.stats,IndexPersistenceMgrStats,49,0,0,0,12,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.stats,IndexInMemPageMgrStats,19,0,0,0,6,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.stats,EntryMemTableStats,51,0,0,0,14,0,7,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.stats,BookieStats,81,0,0,0,22,0,11,0,11,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.stats,IndexPersistenceMgrStats.new Gauge() {...},17,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.stats,IndexPersistenceMgrStats.new Gauge() {...},17,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.stats,JournalStats,147,0,0,0,41,0,19,0,19,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.stats,GarbageCollectorStats.new Gauge() {...},17,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.stats,GarbageCollectorStats.new Gauge() {...},17,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.stats,GarbageCollectorStats.new Gauge() {...},17,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.stats,GarbageCollectorStats,102,0,0,0,25,0,11,0,11,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.client,LedgerMetaDataCommand,182,0,14,0,44,0,14,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.client,SimpleTestCommand,101,0,4,0,25,0,5,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.client,LedgerMetaDataCommand.LedgerMetadataFlag,35,0,0,0,6,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.client,DeleteLedgerCommand.DeleteLedgerFlags,21,0,0,0,3,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.client,DeleteLedgerCommand,133,0,18,0,36,0,15,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.client,SimpleTestCommand.Flags,35,0,0,0,6,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentLongLongHashMap,520,0,32,0,97,0,47,0,31,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,GrowableArrayBlockingQueue.PaddedInt,46,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentLongLongPairHashMap,445,0,26,0,79,0,39,0,26,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentOpenHashSet.Section,422,0,58,0,121,0,37,0,8,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentLongHashSet,322,0,24,0,60,0,30,0,18,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentOpenHashMap.Section,345,264,53,21,83,59,40,7,4,6
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentLongLongPairHashMap.LongPair,58,0,8,0,12,0,8,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentOpenHashSet,295,0,20,0,55,0,28,0,18,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentLongHashMap,429,0,28,0,75,0,40,0,26,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentLongHashMap.Section,690,0,98,0,169,0,58,0,9,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentOpenHashMap,219,199,19,7,36,41,23,15,12,13
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentLongLongHashMap.Section,925,0,110,0,214,0,68,0,13,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,GrowableArrayBlockingQueue,601,0,40,0,138,0,41,0,21,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentLongLongPairHashMap.Section,739,0,72,0,151,0,45,0,9,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentLongHashSet.Section,459,0,56,0,114,0,37,0,9,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,SynchronizedHashMultiMap,109,16,4,0,19,3,13,2,11,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.net,NetworkTopologyImpl,702,230,116,18,164,52,81,13,19,8
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.net,StabilizeNetworkTopology,110,0,4,0,27,0,12,0,10,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.net,BookieSocketAddress,41,114,6,6,8,23,8,8,2,8
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.net,StabilizeNetworkTopology.RemoveNodeTask,81,0,8,0,16,0,6,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.net,NetworkTopologyImpl.InvalidTopologyException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.net,NodeBase,61,147,9,15,15,43,12,17,4,13
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.net,CachedDNSToSwitchMapping,144,11,14,0,33,4,16,1,9,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.net,ScriptBasedMapping.RawScriptBasedMapping,297,35,31,3,67,12,22,3,5,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.net,DNSToSwitchMapping,0,2,0,0,0,1,0,1,0,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.net,AbstractDNSToSwitchMapping,122,13,14,0,24,7,13,4,6,4
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.net,NetworkTopologyImpl.InnerNode,258,337,53,41,50,68,42,22,4,13
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.net,ScriptBasedMapping,26,13,0,0,7,4,3,3,3,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.net,NetUtils,52,42,6,2,13,9,7,2,3,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.net,DNS,390,0,36,0,97,0,32,0,14,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.net,StabilizeNetworkTopology.NodeStatus,23,0,2,0,9,0,5,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.net,BookieNode,2,38,1,1,1,9,1,5,0,5
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookkeeperInternalCallbacks.GenericCallbackFuture,16,0,2,0,5,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieClientImpl.Counter,33,0,2,0,10,0,5,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,ForceLedgerProcessorV3,184,0,15,0,55,0,14,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieRequestProcessor,1243,0,112,0,348,0,111,0,50,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.ReadLacCompletion.new BookkeeperInternalCallbacks.ReadLacCallback() {...},31,0,0,0,5,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,ReadLastConfirmedAndEntryContext,37,0,0,0,14,0,7,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,ReadEntryProcessorV3,580,0,38,0,129,0,36,0,17,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieNettyServer.RejectRequestHandler,5,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.ContextPreservingFutureListener,18,0,0,0,8,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieClientImpl.ChannelReadyForAddEntryCallback.new Recycler() {...},0,9,0,0,0,2,0,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.GetListOfEntriesOfLedgerCompletion.new BookkeeperInternalCallbacks.GetListOfEntriesOfLedgerCallback() {...},29,0,0,0,5,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtocol.AuthRequest,17,0,0,0,5,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.ReadV2ResponseCallback.new Recycler() {...},9,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,DefaultPerChannelBookieClientPool,163,139,21,11,28,31,19,12,6,9
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieServer.DeathWatcher,53,0,2,0,16,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.GetListOfEntriesOfLedgerCompletion,106,0,8,0,26,0,9,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,WriteEntryProcessorV3,283,0,18,0,71,0,15,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtocol.AddRequest.new Recycler() {...},9,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,RequestUtils,223,0,34,0,49,0,26,0,9,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PacketProcessorBaseV3,167,0,18,0,39,0,14,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieServer,363,0,26,0,99,0,34,0,21,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtoEncoding.RequestDecoder,82,0,6,0,24,0,5,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,ResponseBuilder,66,0,8,0,11,0,9,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,AuthHandler.ServerSideHandler.AuthHandshakeCompleteCallback,23,0,4,0,7,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtocol.Response,66,0,0,0,17,0,11,0,11,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookkeeperInternalCallbacks.MultiCallback.new Runnable() {...},10,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtoEncoding.ResponseEncoder,66,0,6,0,13,0,5,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieRequestProcessor.new GenericFutureListener() {...},67,0,4,0,13,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtocol.ReadRequest,21,0,2,0,4,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtoEncoding.ResponseEnDecoderV3,7,14,0,0,2,4,1,2,1,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.CompletionValue.new SafeRunnable() {...},61,0,6,0,11,0,5,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.GetBookieInfoCompletion,107,0,4,0,20,0,7,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtocol.AddResponse,29,0,0,0,9,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.ForceLedgerCompletion,96,0,4,0,19,0,7,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.StartTLSCompletion.new BookkeeperInternalCallbacks.StartTLSCallback() {...},20,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.V3CompletionKey,17,35,2,4,1,8,3,4,1,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieClientImpl.new BookkeeperInternalCallbacks.WriteCallback() {...},29,0,2,0,6,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieClientImpl.new SafeRunnable() {...},38,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieClientImpl.new SafeRunnable() {...},60,0,0,0,4,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.WriteLacCompletion,96,0,4,0,19,0,7,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,WriteEntryProcessorV3.new BookkeeperInternalCallbacks.WriteCallback() {...},78,0,5,0,20,0,5,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,GetListOfEntriesOfLedgerProcessorV3,148,0,6,0,43,0,7,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtocol.AddResponse.new Recycler() {...},9,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieClient,21,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.GetBookieInfoCompletion.new BookkeeperInternalCallbacks.GetBookieInfoCallback() {...},33,0,0,0,5,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.new GenericFutureListener() {...},258,0,28,0,44,0,16,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.new SafeRunnable() {...},32,24,0,0,3,4,1,2,1,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.new ChannelInitializer() {...},2,88,1,1,0,12,1,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.new ClientConnectionPeer() {...},96,19,14,0,28,4,13,2,6,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.new Recycler() {...},8,6,0,0,1,1,1,1,1,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.new Recycler() {...},0,13,0,0,0,2,0,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,WriteLacProcessorV3.new BookkeeperInternalCallbacks.WriteCallback() {...},78,0,5,0,20,0,5,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtocol.ErrorResponse,10,0,0,0,3,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieNettyServer,527,0,38,0,117,0,30,0,11,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,AuthHandler.ServerSideHandler.AuthResponseCallbackLegacy,43,0,2,0,12,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient,1347,1106,161,62,337,275,154,35,37,30
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtocol.ParsedAddRequest,74,0,2,0,23,0,8,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,ReadEntryProcessorV3.new FutureCallback() {...},63,0,0,0,7,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.AddCompletion,54,127,4,2,14,29,9,5,6,5
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.ReadLacCompletion,114,0,8,0,25,0,9,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookkeeperInternalCallbacks.MultiCallback,118,0,10,0,33,0,11,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtoEncoding.ResponseDecoder,65,53,13,3,17,16,8,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtocol.ReadResponse,42,0,2,0,12,0,7,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtocol.AuthResponse,16,0,0,0,5,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtocol.ParsedAddRequest.new Recycler() {...},9,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtocol.AddRequest,73,0,2,0,22,0,7,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PacketProcessorBase,101,0,8,0,30,0,11,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,AuthHandler.ServerSideHandler.AuthResponseCallback,61,0,2,0,18,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,ReadLacProcessorV3,175,0,12,0,54,0,11,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,GetBookieInfoProcessorV3,148,0,8,0,42,0,9,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,AuthHandler,11,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,LocalBookiesRegistry,16,9,2,0,6,2,4,2,3,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.ForceLedgerCompletion.new BookkeeperInternalCallbacks.ForceLedgerCallback() {...},34,0,0,0,5,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,AuthHandler.AuthenticationException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookkeeperInternalCallbacks.TimedGenericCallback,40,0,2,0,11,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClientPool,2,0,0,0,1,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtocol.PacketHeader,57,0,6,0,13,0,8,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,AuthHandler.ClientSideHandler.AuthHandshakeCompleteCallback,9,42,1,3,2,12,1,3,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookkeeperInternalCallbacks,21,0,2,0,6,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookkeeperInternalCallbacks.FutureGetListOfEntriesOfLedger,28,0,4,0,9,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtoEncoding.ResponseEnDeCoderPreV3,184,6,14,0,43,3,10,1,2,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,AuthHandler.ServerSideHandler,251,0,38,0,69,0,25,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,RequestStats,363,0,0,0,87,0,43,0,43,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,WriteLacProcessorV3,228,0,8,0,57,0,9,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,ReadEntryProcessor,371,0,28,0,86,0,23,0,9,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.CompletionValue,81,93,9,5,17,24,12,6,5,6
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieRequestHandler,69,0,6,0,23,0,10,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.ReadCompletion,66,144,13,7,14,31,14,4,4,4
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PacketProcessorBaseV3.new ChannelFutureListener() {...},61,0,4,0,11,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.V2CompletionKey,88,0,8,0,16,0,10,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtoEncoding,9,31,0,0,3,7,1,2,1,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,RequestStats.new Gauge() {...},13,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,RequestStats.new Gauge() {...},13,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,RequestStats.new Gauge() {...},13,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,RequestStats.new Gauge() {...},13,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,AuthHandler.ClientSideHandler.AuthRequestCallback,60,16,4,0,16,5,3,1,1,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieClientImpl.ChannelReadyForAddEntryCallback,15,117,1,1,1,35,1,5,0,5
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieNettyServer.BookieSideConnectionPeerContextHandler.new BookieConnectionPeer() {...},114,0,14,0,33,0,14,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,ReadEntryProcessor.new Recycler() {...},9,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,ReadEntryProcessor.new FutureCallback() {...},34,0,0,0,6,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieNettyServer.1.new DefaultEventLoop() {...},24,0,2,0,4,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieClientImpl,706,284,59,13,165,68,61,12,27,10
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,AuthHandler.ClientSideHandler,325,125,47,10,72,34,32,7,4,6
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtoEncoding.RequestEncoder,33,33,4,2,5,8,3,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.ReadV2ResponseCallback,72,0,0,0,23,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,WriteEntryProcessor.new Recycler() {...},9,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.WriteLacCompletion.new BookkeeperInternalCallbacks.WriteLacCallback() {...},34,0,0,0,5,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.StartTLSCompletion,82,0,6,0,22,0,7,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BKStats.OpStats,269,0,24,0,50,0,18,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.ReadCompletion.new BookkeeperInternalCallbacks.ReadEntryCallback() {...},0,35,0,0,0,5,0,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieNettyServer.CleanupChannelGroup,68,0,10,0,15,0,10,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,WriteEntryProcessor,280,0,14,0,68,0,15,0,8,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.ConnectionFutureListener,224,120,32,8,39,25,19,3,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtocol.Request,98,0,10,0,19,0,18,0,13,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.CompletionKey,0,13,0,0,0,5,0,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,LongPollReadEntryProcessorV3,440,0,42,0,94,0,32,0,11,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtoEncoding.RequestEnDecoderV3,8,13,0,0,1,5,1,2,1,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieNettyServer.new DefaultEventLoopGroup() {...},17,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieNettyServer.new ChannelInitializer() {...},126,0,4,0,20,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtoEncoding.RequestEnDeCoderPreV3,295,13,26,0,71,6,17,2,3,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieNettyServer.new ChannelInitializer() {...},121,0,4,0,19,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BKStats,82,0,6,0,18,0,10,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.ConnectionState,0,54,0,0,0,2,0,1,0,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieNettyServer.BookieSideConnectionPeerContextHandler,24,0,0,0,7,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BKStats.OpStatData,45,0,2,0,14,0,8,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,TopologyAwareEnsemblePlacementPolicy.DefaultResolver,1,42,0,2,1,11,1,3,1,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeperAdmin.new BookkeeperInternalCallbacks.Processor() {...},73,0,6,0,18,0,6,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeperAdmin.new AsyncCallback.VoidCallback() {...},19,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeperAdmin.new AsyncCallback.RecoverCallback() {...},30,0,0,0,9,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeperAdmin.new BookkeeperInternalCallbacks.Processor() {...},28,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeperAdmin.new BookkeeperInternalCallbacks.GenericCallback() {...},41,0,0,0,9,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKClientClosedException,0,4,0,0,0,2,0,1,0,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,ReadLastConfirmedAndEntryOp,617,0,50,0,115,0,37,0,12,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerFragmentReplicator,522,0,40,0,101,0,33,0,13,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeperAdmin.new AsyncCallback.OpenCallback() {...},394,0,38,0,79,0,21,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeperAdmin.new Iterable() {...},14,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,SyncCallbackUtils.SyncReadLastConfirmedCallback,22,0,0,0,8,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerFragment,330,0,30,0,69,0,32,0,17,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,SyncCallbackUtils.SyncCreateCallback,0,12,0,0,0,5,0,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeperAdmin.SyncObject,9,0,0,0,4,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,ReadOnlyLedgerHandle,541,0,32,0,118,0,44,0,28,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,SyncCallbackUtils.LastAddConfirmedCallback,26,0,4,0,7,0,5,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,ExplicitLacFlushPolicy.ExplicitLacFlushPolicyImpl.new SafeRunnable() {...},106,0,10,0,17,0,8,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,ZoneawareEnsemblePlacementPolicy,155,0,14,0,39,0,15,0,8,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,ExplicitLacFlushPolicy.ExplicitLacFlushPolicyImpl.new SafeRunnable() {...},24,0,0,0,5,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKUnauthorizedAccessException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerMetadataBuilder,90,237,11,7,20,53,17,12,8,12
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKLedgerRecoveryException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeperAdmin.6.new AsyncCallback.OpenCallback() {...},65,0,2,0,9,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeperAdmin.6.new AsyncCallback.VoidCallback() {...},53,0,2,0,12,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKQuorumException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,SyncCounter,71,0,4,0,26,0,13,0,11,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,PendingAddOp.new Recycler() {...},0,9,0,0,0,2,0,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,PendingAddOp.new SafeRunnable() {...},53,0,4,0,8,0,5,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerHandle,1984,573,188,32,454,127,172,25,63,24
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,RoundRobinDistributionSchedule.WriteSetImpl.new Recycler() {...},0,9,0,0,0,2,0,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,RackawareEnsemblePlacementPolicy,218,62,18,4,43,17,20,6,9,6
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKLedgerClosedException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKTimeoutException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerMetadataUtils,48,43,8,4,9,8,9,5,3,5
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,RoundRobinDistributionSchedule.AckSetImpl,105,78,13,3,20,21,12,7,5,6
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,TopologyAwareEnsemblePlacementPolicy.RRTopologyAwareCoverageEnsemble.RackOrRegionDurabilityCoverageSet,323,0,36,0,62,0,23,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,SyncCallbackUtils.SyncOpenCallback,12,0,0,0,5,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeper.Builder,102,0,0,0,32,0,12,0,12,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookieInfoReader.BookieInfoMap,51,13,2,0,13,3,8,1,7,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookieWatcherImpl,295,193,21,7,69,53,19,9,6,8
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,ZoneawareEnsemblePlacementPolicyImpl.ZoneAwareNodeLocation,43,0,4,0,10,0,7,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKDigestNotInitializedException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerHandleAdv,262,0,14,0,60,0,19,0,12,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookieInfoReader.InstanceState,45,9,6,0,16,3,8,1,5,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,PendingReadOp.LedgerEntryRequest,198,83,25,3,35,21,20,3,6,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKNotEnoughBookiesException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,EnsemblePlacementPolicy.PlacementPolicyAdherence,3,45,0,0,1,5,1,2,1,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,ForceLedgerOp,168,0,16,0,43,0,14,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerHandleAdv.PendingOpsComparator,9,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,SyncCallbackUtils.SyncDeleteCallback,12,0,0,0,5,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookieInfoReader.new BookkeeperInternalCallbacks.GetBookieInfoCallback() {...},80,0,8,0,19,0,7,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,TopologyAwareEnsemblePlacementPolicy.RRTopologyAwareCoverageEnsemble.RackQuorumCoverageSet,74,36,10,0,14,8,7,2,2,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookieInfoReader.new BookkeeperInternalCallbacks.GetBookieInfoCallback() {...},60,0,8,0,12,0,6,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookieInfoReader.new Runnable() {...},66,0,4,0,16,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookieInfoReader.BookieInfo,38,0,0,0,10,0,6,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,ExplicitLacFlushPolicy.new ExplicitLacFlushPolicy() {...},1,4,0,0,1,2,1,2,1,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerChecker.new BookkeeperInternalCallbacks.GenericCallback() {...},37,0,2,0,5,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,ExplicitLacFlushPolicy,0,5,0,0,0,1,0,1,0,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerDeleteOp.DeleteBuilderImpl,90,0,8,0,25,0,9,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,PendingReadOp.ReadContext,4,18,0,0,2,7,1,2,1,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKProtocolVersionException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,TopologyAwareEnsemblePlacementPolicy.TruePredicate,2,8,0,0,1,2,1,2,1,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,PendingReadOp.LedgerEntryRequest.new Callable() {...},57,0,6,0,7,0,5,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerMetadataImpl,537,209,93,11,31,49,60,20,8,20
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,MetadataUpdateLoop,282,0,18,0,66,0,19,0,10,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKDigestMatchException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,ReadLastConfirmedAndEntryOp.SequenceReadRequest,275,0,26,0,61,0,23,0,10,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,ReadOnlyLedgerHandle.MetadataUpdater,81,0,4,0,15,0,5,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerFragmentReplicator.new BookkeeperInternalCallbacks.WriteCallback() {...},113,0,12,0,15,0,8,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerFragmentReplicator.new AsyncCallback.ReadCallback() {...},128,0,4,0,23,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerCreateOp,130,206,12,8,27,51,11,7,2,6
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerFragmentReplicator.new AsyncCallback.VoidCallback() {...},44,0,2,0,5,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,EnsemblePlacementPolicy,24,0,2,0,6,0,5,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKUnexpectedConditionException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,SyncCallbackUtils.SyncCreateAdvCallback,24,0,4,0,7,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerHandle.new ReadLastConfirmedAndEntryOp.LastConfirmedAndEntryCallback() {...},50,0,6,0,8,0,5,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerHandle.new AsyncCallback.ReadCallback() {...},45,0,4,0,7,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerHandle.new ReadLastConfirmedOp.LastConfirmedDataCallback() {...},56,0,6,0,9,0,5,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerHandle.new ReadLastConfirmedOp.LastConfirmedDataCallback() {...},38,0,2,0,6,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKBookieException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,RackawareEnsemblePlacementPolicyImpl.new CacheLoader() {...},3,6,0,0,1,1,1,1,1,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,RackawareEnsemblePlacementPolicyImpl.new Gauge() {...},25,6,0,0,4,1,2,1,2,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerHandle.new PendingReadLacOp.LacCallback() {...},35,0,2,0,6,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerEntry,42,47,5,1,9,12,8,2,5,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,RoundRobinDistributionSchedule.AckSetImpl.new Recycler() {...},0,9,0,0,0,2,0,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerHandle.NoopCloseCallback,16,0,2,0,5,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,PendingAddOp,451,432,60,22,95,110,49,15,8,13
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeperAdmin.LedgerEntriesIterator,152,0,16,0,36,0,13,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,PendingReadOp.SequenceReadRequest,165,104,21,3,36,23,16,5,4,5
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerCreateOp.CreateAdvBuilderImpl,128,0,12,0,32,0,11,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKLedgerExistException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerChecker.ReadManyEntriesCallback,53,0,8,0,13,0,6,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookieWatcherImpl.new RemovalListener() {...},6,6,0,0,2,1,1,1,1,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKNoSuchLedgerExistsOnMetadataServerException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeper.DigestType,55,64,10,5,11,9,10,6,1,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKLedgerFencedException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeperClientStats,0,5,0,0,0,1,0,1,0,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,EnsembleUtils,172,0,16,0,34,0,12,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerChecker.EntryExistsCallback,44,0,8,0,10,0,6,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,ZoneawareEnsemblePlacementPolicyImpl,1789,0,174,0,396,0,123,0,36,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,SyncCallbackUtils.FutureReadLastConfirmed,9,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKAddEntryQuorumTimeoutException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKMetadataVersionException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerRecoveryOp,388,0,36,0,70,0,26,0,8,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,ZoneawareEnsemblePlacementPolicyImpl.new Gauge() {...},31,0,0,0,5,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,ZoneawareEnsemblePlacementPolicyImpl.new CacheLoader() {...},9,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,PendingWriteLacOp,167,0,14,0,43,0,13,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerChecker.LedgerFragmentCallback,91,0,10,0,23,0,7,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,WeightedRandomSelectionImpl,374,0,26,0,65,0,20,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKSecurityException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerChecker.InvalidFragmentException,3,0,0,0,1,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookieInfoReader.State,0,34,0,0,0,1,0,1,0,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,TopologyAwareEnsemblePlacementPolicy.EnsembleForReplacementWithNoConstraints,19,0,0,0,6,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerHandle.new SafeRunnable() {...},41,0,0,0,5,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerHandle.new SafeRunnable() {...},36,0,0,0,5,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerHandle.new SafeRunnable() {...},26,0,0,0,4,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerHandle.new SafeRunnable() {...},222,0,14,0,39,0,13,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerHandle.new FutureEventListener() {...},27,36,2,0,6,8,2,3,1,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerHandle.new Gauge() {...},9,6,0,0,2,1,2,1,2,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerHandle.new SafeRunnable() {...},10,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerHandle.new CacheLoader() {...},3,6,0,0,1,1,1,1,1,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerHandle.new BookiesHealthInfo() {...},22,12,2,0,3,1,3,1,2,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,TopologyAwareEnsemblePlacementPolicy.DNSResolverDecorator,49,61,6,6,13,16,6,4,1,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerFragmentReplicator.SingleFragmentCallback,53,0,2,0,14,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerOpenOp,299,0,26,0,74,0,21,0,8,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,TopologyAwareEnsemblePlacementPolicy,309,164,42,8,72,38,30,9,6,8
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,RoundRobinDistributionSchedule,180,31,24,0,25,8,18,4,6,4
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException,192,7,45,0,53,3,44,2,5,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerOpenOp.new AsyncCallback.ReadLastConfirmedCallback() {...},36,0,2,0,6,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,ExplicitLacFlushPolicy.ExplicitLacFlushPolicyImpl,136,0,4,0,38,0,12,0,10,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,ReadLastConfirmedOp,241,0,32,0,56,0,22,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerOpenOp.new OrderedGenericCallback() {...},49,0,4,0,8,0,5,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,DefaultSpeculativeRequestExecutionPolicy,34,49,4,2,7,10,3,4,0,4
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerDeleteOp,80,0,2,0,18,0,6,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeperAdmin.7.new Iterator() {...},69,0,10,0,19,0,9,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,DistributionSchedule,5,0,0,0,1,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeper.new Object() {...},12,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookieInfoReader,307,42,37,1,78,12,30,2,11,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,RoundRobinDistributionSchedule.RRQuorumCoverageSet,145,0,16,0,26,0,12,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKBookieHandleNotAvailableException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,ClientInternalConf,15,110,2,2,4,31,4,2,2,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,SyncCallbackUtils.SyncReadCallback,0,12,0,0,0,5,0,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerOpenOp.OpenBuilderImpl,80,0,6,0,23,0,6,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,RoundRobinDistributionSchedule.WriteSetImpl,281,103,39,7,57,28,30,12,9,10
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKIllegalOpException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerCreateOp.CreateBuilderImpl,215,0,18,0,65,0,21,0,12,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKUnclosedFragmentException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,PendingReadLacOp,236,0,42,0,56,0,25,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,WeightedRandomSelectionImpl.new Comparator() {...},26,0,4,0,7,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,ReadOnlyLedgerHandle.new AsyncCallback.ReadLastConfirmedCallback() {...},65,0,4,0,9,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,DefaultEnsemblePlacementPolicy,334,0,34,0,82,0,29,0,12,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.MetaStoreException,9,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerRecoveryOp.RecoveryReadOp,17,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,DistributionSchedule.new DistributionSchedule.WriteSet() {...},29,0,0,0,11,0,11,0,11,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,DynamicWeightedRandomSelectionImpl,246,0,26,0,63,0,21,0,8,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKMetadataSerializationException,9,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKNoSuchEntryException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKWriteException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeper,761,470,49,17,188,114,66,22,34,21
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,AsyncCallback.AddCallback,0,7,0,0,0,2,0,1,0,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,SyncCallbackUtils.FutureReadLastConfirmedAndEntry,12,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,ListenerBasedPendingReadOp,87,0,8,0,22,0,7,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,DefaultSpeculativeRequestExecutionPolicy.new Runnable() {...},11,15,0,0,3,1,1,1,1,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,TopologyAwareEnsemblePlacementPolicy.RRTopologyAwareCoverageEnsemble,349,130,49,11,63,28,33,6,6,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,UpdateLedgerOp,337,0,20,0,69,0,22,0,12,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,RegionAwareEnsemblePlacementPolicy,1359,0,144,0,269,0,86,0,14,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,SyncCallbackUtils,32,16,3,1,11,5,3,3,1,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerRecoveryOp.new ReadLastConfirmedOp.LastConfirmedDataCallback() {...},77,0,4,0,14,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKNoSuchLedgerExistsException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKDuplicateEntryIdException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKLedgerIdOverflowException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerHandle.LastConfirmedCtx,29,0,2,0,10,0,7,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,ReadLastConfirmedAndEntryOp.ParallelReadRequest,99,0,10,0,22,0,9,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerChecker,493,0,50,0,107,0,32,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerChecker.FullLedgerCallback,47,0,6,0,13,0,5,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeperAdmin.LedgerEntriesIterable,40,0,0,0,10,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKWriteOnReadOnlyBookieException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKReplicationException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,SyncCallbackUtils.SyncAddCallback,0,9,0,0,0,3,0,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,TryReadLastConfirmedOp,229,0,24,0,44,0,16,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeper.new ClientContext() {...},12,34,0,0,3,8,3,8,3,8
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,ReadLastConfirmedAndEntryOp.new Callable() {...},66,0,8,0,8,0,6,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeper.new AsyncCallback.IsClosedCallback() {...},22,0,0,0,5,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeper.new SafeRunnable() {...},10,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerCreateOp.new BookkeeperInternalCallbacks.GenericCallback() {...},6,35,1,1,2,6,1,3,0,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKIncorrectParameterException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeperAdmin.ResultCallBack,12,0,0,0,5,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookieInfoReader.2.new Runnable() {...},25,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,ReadLastConfirmedAndEntryOp.ReadLACAndEntryRequest,255,0,26,0,54,0,23,0,10,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,PendingReadOp.ParallelReadRequest,95,0,8,0,22,0,8,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.ZKException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,RackawareEnsemblePlacementPolicyImpl,1464,448,214,22,292,112,130,15,14,13
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerHandleAdv.new SafeRunnable() {...},43,0,0,0,6,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,EnsemblePlacementPolicy.PlacementResult,0,21,0,0,0,7,0,4,0,4
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,LedgerHandle.HandleState,0,24,0,0,0,3,0,1,0,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKInterruptedException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeperAdmin.new AsyncCallback.VoidCallback() {...},19,0,0,0,5,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,DefaultSpeculativeRequestExecutionPolicy.1.new FutureCallback() {...},73,0,4,0,12,0,5,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,SyncCallbackUtils.SyncCloseCallback,12,0,0,0,5,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKReadException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BookKeeperAdmin,1630,0,140,0,381,0,139,0,69,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,PendingReadOp,176,335,20,18,30,74,22,12,4,11
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client,BKException.BKTooManyRequestsException,4,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.shims.zk,ZooKeeperServerShimFactory,15,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.shims.zk,ZooKeeperServerShimImpl,75,0,8,0,20,0,8,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.cookie,CookieCommand,151,0,8,0,35,0,11,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.cookie,GenerateCookieCommand,107,0,4,0,30,0,8,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.cookie,AdminCommand.AdminFlags,33,0,0,0,2,0,7,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.cookie,CreateCookieCommand.Flags,8,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.cookie,GetCookieCommand,119,0,0,0,33,0,6,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.cookie,DeleteCookieCommand.Flags,3,0,0,0,1,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.cookie,DeleteCookieCommand,89,0,0,0,28,0,6,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.cookie,UpdateCookieCommand,100,0,0,0,30,0,6,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.cookie,GenerateCookieCommand.Flags,26,0,0,0,3,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.cookie,CreateCookieCommand,97,0,0,0,30,0,6,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.cookie,GetCookieCommand.Flags,3,0,0,0,1,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.cookie,AdminCommand,645,0,72,0,147,0,49,0,13,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.cookie,UpdateCookieCommand.Flags,8,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.auth,AuthProviderFactoryFactory.AuthenticationDisabledAuthProviderFactory,13,0,0,0,4,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.auth,AuthToken,19,0,0,0,6,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.auth,AuthProviderFactoryFactory.AuthenticationDisabledAuthProviderFactory.new BookieAuthProvider() {...},18,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.auth,BookieAuthProvider,2,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.auth,ClientAuthProvider,1,1,0,0,1,1,1,1,1,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.auth,AuthProviderFactoryFactory.NullClientAuthProviderFactory.new ClientAuthProvider() {...},1,7,0,0,1,2,1,2,1,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.auth,ClientAuthProvider.Factory,0,1,0,0,0,1,0,1,0,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.auth,BookieAuthProvider.Factory,1,0,0,0,1,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.auth,AuthProviderFactoryFactory.NullClientAuthProviderFactory,1,14,0,0,1,4,1,2,1,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.auth,AuthCallbacks,3,0,0,0,1,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.auth,AuthProviderFactoryFactory,39,10,7,1,10,3,6,1,2,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.auth,BookKeeperPrincipal,40,24,6,0,12,5,6,3,3,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.conf,ClientConfiguration,666,298,4,0,169,60,94,54,92,54
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.conf,ServerConfiguration,1925,0,56,0,483,0,299,0,271,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.conf,UncheckedConfigurationException,17,0,0,0,5,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.conf,AbstractConfiguration,583,159,29,5,150,40,84,24,68,23
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.sasl,SASLClientProviderFactory,186,0,14,0,53,0,21,0,14,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.sasl,TGTRefreshThread,533,0,44,0,135,0,31,0,9,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.sasl,SASLBookieAuthProviderFactory.ClientCallbackHandler,99,0,16,0,30,0,10,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.sasl,SaslServerState.new PrivilegedExceptionAction() {...},33,0,0,0,5,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.sasl,SaslConstants,83,0,14,0,19,0,10,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.sasl,SaslClientState,238,0,20,0,51,0,16,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.sasl,SaslServerState,143,0,8,0,36,0,10,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.sasl,SASLBookieAuthProvider,67,0,6,0,21,0,6,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.sasl,SASLBookieAuthProviderFactory,188,0,10,0,49,0,19,0,14,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.sasl,SaslClientState.new PrivilegedExceptionAction() {...},16,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.sasl,SaslClientState.new PrivilegedExceptionAction() {...},36,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.sasl,SASLClientAuthProvider,144,0,12,0,42,0,10,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.sasl,SaslServerState.SaslServerCallbackHandler,344,0,32,0,65,0,22,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.sasl,SaslClientState.ClientCallbackHandler,99,0,16,0,30,0,10,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http,BKHttpServiceProvider,289,0,35,0,62,0,36,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.http,BKHttpServiceProvider.Builder,48,0,0,0,14,0,6,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.streaming,LedgerOutputStream,189,0,10,0,50,0,14,0,9,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.streaming,LedgerInputStream,41,241,2,16,10,56,2,14,0,7
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,ConvertToInterleavedStorageCommand.new CheckpointSource() {...},9,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,ConvertToInterleavedStorageCommand.new Checkpointer() {...},8,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,LastMarkCommand,76,0,2,0,17,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,ReadLogMetadataCommand,183,0,18,0,47,0,18,0,9,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,ReadLogCommand.ReadLogFlags,63,0,0,0,7,0,10,0,10,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,FlipBookieIdCommand,171,0,20,0,49,0,15,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,ReadJournalCommand.new Journal.JournalScanner() {...},41,0,2,0,8,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,FormatCommand,75,0,2,0,23,0,6,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,ListLedgersCommand.ListLedgersFlags,21,0,0,0,3,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,LedgerCommand.LedgerFlags,21,0,0,0,3,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,LedgerCommand,418,0,20,0,82,0,23,0,13,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,LocalConsistencyCheckCommand,91,0,4,0,23,0,6,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,ConvertToInterleavedStorageCommand.CTISFlags,6,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,FormatCommand.Flags,18,0,0,0,2,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,FlipBookieIdCommand.new BookieShell.UpdateLedgerNotifier() {...},38,0,4,0,8,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,ReadJournalCommand,322,0,30,0,69,0,25,0,10,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,InitCommand,29,0,0,0,12,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,ReadLedgerCommand.ReadLedgerFlags,52,0,0,0,5,0,9,0,9,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,ConvertToInterleavedStorageCommand,290,0,16,0,57,0,15,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,ReadLogMetadataCommand.ReadLogMetadataFlags,21,0,0,0,3,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,ListFilesOnDiscCommand,141,0,14,0,31,0,11,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,ReadLogCommand,411,0,40,0,71,0,30,0,10,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,FlipBookieIdCommand.FlipBookieIdFlags,48,0,0,0,6,0,7,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,ReadLogCommand.new EntryLogger.EntryLogScanner() {...},23,0,0,0,4,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,ReadLogCommand.new EntryLogger.EntryLogScanner() {...},83,0,14,0,8,0,10,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,ReadLogCommand.new EntryLogger.EntryLogScanner() {...},94,0,14,0,12,0,10,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,RegenerateInterleavedStorageIndexFileCommand,112,0,8,0,31,0,10,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,ConvertToDBStorageCommand.CTDBFlags,11,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,ListFilesOnDiscCommand.LFODFlags,18,0,0,0,2,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,RegenerateInterleavedStorageIndexFileCommand.RISIFFlags,29,0,0,0,4,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,ListLedgersCommand,265,0,22,0,69,0,23,0,12,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,ConvertToDBStorageCommand,163,0,12,0,39,0,13,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,SanityTestCommand.SanityFlags,19,0,0,0,4,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,ReadJournalCommand.ReadJournalFlags,48,0,0,0,7,0,7,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,FormatUtil,176,0,8,0,42,0,7,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,SanityTestCommand,237,0,10,0,44,0,10,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,ReadLedgerCommand,328,0,30,0,80,0,24,0,9,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookie,RebuildDBLedgerLocationsIndexCommand,39,0,0,0,11,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.discover,BookieServiceInfo.Endpoint,103,0,0,0,29,0,15,0,15,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.discover,ZKRegistrationClient.WatchTask,53,121,9,9,16,34,11,10,3,9
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.discover,RegistrationClient,17,0,0,0,4,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.discover,ZKRegistrationManager,1272,0,80,0,265,0,64,0,24,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.discover,BookieServiceInfo,58,0,0,0,17,0,9,0,9,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.discover,ZKRegistrationManager.new Watcher() {...},17,0,2,0,4,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.discover,BookieServiceInfoUtils,44,0,0,0,10,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.discover,ZKRegistrationClient,301,207,25,11,71,48,29,12,13,10
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.service,HttpService,59,0,2,0,16,0,6,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.service,BookieService,87,0,2,0,28,0,9,0,8,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.service,AutoRecoveryService,34,0,0,0,13,0,6,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.service,ScrubberService,203,0,12,0,45,0,14,0,8,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.server.service,StatsProviderService,29,0,0,0,11,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.stats,AlertStatsLogger,129,0,10,0,30,0,11,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tls,TLSContextFactory,832,0,89,0,216,0,63,0,16,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tls,SecurityProviderFactoryFactory,35,8,3,1,10,3,3,2,1,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tls,FileModifiedTimeUpdater,60,0,6,0,18,0,9,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tls,SecurityHandlerFactory.NodeType,34,0,0,0,4,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tls,TLSContextFactory.KeyStoreType,48,0,0,0,8,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tls,SecurityException,16,0,0,0,7,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookies,MetaFormatCommand,32,0,0,0,11,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookies,DecommissionCommand,122,0,4,0,33,0,8,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookies,InfoCommand,224,0,10,0,41,0,8,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookies,DecommissionCommand.DecommissionFlags,8,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookies,RecoverCommand,463,0,36,0,109,0,30,0,12,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookies,EndpointInfoCommand,219,0,12,0,41,0,13,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookies,NukeExistingClusterCommand.NukeExistingClusterFlags,18,0,0,0,2,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookies,ListBookiesCommand.Flags,27,0,0,0,5,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookies,InitCommand,24,0,0,0,9,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookies,MetaFormatCommand.MetaFormatFlags,13,0,0,0,2,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookies,NukeExistingClusterCommand,52,0,4,0,16,0,6,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookies,ListBookiesCommand,122,0,22,0,44,0,15,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookies,InstanceIdCommand,53,0,0,0,16,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookies,RecoverCommand.RecoverFlags,41,0,0,0,3,0,8,0,8,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.tools.cli.commands.bookies,EndpointInfoCommand.EndpointInfoFlags,8,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MSException.MSInterruptedException,11,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,InMemoryMetastoreTable.new Runnable() {...},26,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,InMemoryMetastoreTable.new Runnable() {...},47,0,0,0,6,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,InMemoryMetastoreTable.new Runnable() {...},61,0,6,0,9,0,5,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,InMemoryMetastoreTable.new Runnable() {...},58,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,InMemoryMetastoreTable.new Runnable() {...},30,0,0,0,3,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,InMemoryMetastoreTable.new Runnable() {...},74,0,8,0,9,0,6,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MetastoreScannableTable,5,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MSException.BadVersionException,11,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MSWatchedEvent.EventType,24,0,0,0,1,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MSException.OperationFailureException,11,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MetastoreUtils.MultiMetastoreCallback,57,0,6,0,17,0,6,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MSException.Code,158,0,2,0,22,0,6,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,InMemoryMetastoreTable,554,0,64,0,115,0,51,0,19,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MetastoreCursor,5,0,0,0,1,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,InMemoryMetastoreTable.MetadataVersion,101,0,18,0,29,0,16,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MetastoreUtils,115,0,8,0,31,0,7,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MetastoreScannableTable.Order,24,0,0,0,3,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MetastoreException,13,0,0,0,6,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MSException.NoEntriesException,11,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,InMemoryMetastoreTable.Result,9,0,0,0,4,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MetastoreUtils.SyncMetastoreCallback,35,0,2,0,10,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MetastoreFactory,21,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MSException,100,0,8,0,18,0,13,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MSException.NoKeyException,11,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,Value,265,0,24,0,61,0,25,0,13,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MSException.KeyExistsException,11,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,InMemoryMetastoreCursor,89,0,6,0,23,0,9,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,InMemoryMetastoreCursor.new Runnable() {...},42,0,2,0,7,0,3,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,InMemoryMetaStore,47,0,2,0,15,0,11,0,10,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MSWatchedEvent,15,0,0,0,6,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MSException.ServiceDownException,11,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MetastoreCursor.new MetastoreCursor() {...},18,0,0,0,6,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MSException.IllegalOpException,11,0,0,0,4,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MetastoreTable,5,0,0,0,2,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.metastore,MetastoreTableItem,23,0,0,0,10,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,TransientLedgerInfo,207,0,20,0,59,0,20,0,10,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,LongPairWrapper.new Recycler() {...},9,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,KeyValueStorageRocksDB.new KeyValueStorage.CloseableIterator() {...},44,0,0,0,9,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,KeyValueStorageRocksDB.new KeyValueStorage.CloseableIterator() {...},45,0,4,0,8,0,6,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,KeyValueStorageRocksDB.new KeyValueStorage.CloseableIterator() {...},30,0,0,0,8,0,4,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,LocationsIndexRebuildOp,226,0,4,0,40,0,6,0,4,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,EntryLocationIndex,507,0,44,0,117,0,35,0,13,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,ArrayGroupSort,186,0,22,0,38,0,18,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,DbLedgerStorage,589,0,22,0,110,0,54,0,43,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,LongPairWrapper,57,0,0,0,16,0,7,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,ArrayUtil,211,0,14,0,20,0,12,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,LedgerMetadataIndex,454,0,46,0,103,0,36,0,13,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,LedgerMetadataIndex.new Predicate() {...},28,0,4,0,2,0,4,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,ReadCache,356,0,18,0,65,0,16,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,DbLedgerStorageStats.new Gauge() {...},17,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,DbLedgerStorageStats.new Gauge() {...},17,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,DbLedgerStorageStats.new Gauge() {...},17,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,SingleDirectoryDbLedgerStorage,1558,0,100,0,376,0,104,0,54,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,DbLedgerStorageStats.new Gauge() {...},17,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,EntryLocationIndexStats.new Gauge() {...},17,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,DbLedgerStorageStats,143,0,0,0,34,0,15,0,15,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,KeyValueStorageRocksDB.RocksDBBatch,78,0,0,0,26,0,7,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,LedgerMetadataIndexStats.new Gauge() {...},17,0,0,0,3,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,LongWrapper.new Recycler() {...},9,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,KeyValueStorageFactory.DbConfigType,24,0,0,0,3,0,1,0,1,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,LongWrapper,46,0,0,0,14,0,7,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,KeyValueStorageRocksDB,587,0,35,0,142,0,36,0,17,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,LedgerMetadataIndexStats,18,0,0,0,5,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,EntryLocationIndexStats,18,0,0,0,5,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,LocationsIndexRebuildOp.new EntryLogger.EntryLogScanner() {...},81,0,2,0,11,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,WriteCache,617,0,38,0,120,0,35,0,16,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.bookie.storage.ldb,KeyValueStorageRocksDB.EntryWrapper,28,0,0,0,11,0,5,0,5,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.verifier,BookkeeperVerifier.WriteCallback,128,0,4,0,25,0,5,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.verifier,DirectBookkeeperDriver,259,0,10,0,46,0,18,0,13,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.verifier,BookkeeperVerifier.LedgerInfo.EntryIterator,74,0,4,0,16,0,8,0,6,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.verifier,BookkeeperVerifier.EntryInfo,31,0,0,0,9,0,3,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.verifier,BookkeeperVerifier.LedgerInfo,352,0,30,0,74,0,33,0,18,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.verifier,BookkeeperVerifierMain,330,0,2,0,79,0,4,0,3,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.verifier,BookkeeperVerifier,1171,0,70,0,207,0,52,0,17,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client.impl,BookKeeperClientStatsImpl,48,160,0,0,16,38,16,10,16,10
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client.impl,LedgerEntriesImpl,87,36,7,1,16,10,8,4,4,4
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client.impl,LedgerEntriesImpl.new Recycler() {...},0,9,0,0,0,2,0,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client.impl,LedgerEntryImpl.new Recycler() {...},0,9,0,0,0,2,0,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client.impl,LedgerEntryImpl,51,71,0,0,16,26,6,11,6,11
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client.impl,BookKeeperBuilderImpl,53,0,0,0,16,0,8,0,8,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client.impl,LastConfirmedAndEntryImpl,72,0,6,0,23,0,10,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client.impl,OpenBuilderBase,54,0,2,0,17,0,8,0,7,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.client.impl,LastConfirmedAndEntryImpl.new Recycler() {...},8,0,0,0,2,0,2,0,2,0
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.versioning,Version,10,7,2,0,3,2,2,1,1,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.versioning,Versioned,117,15,22,0,1,3,17,3,6,3
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.versioning,Version.new Version() {...},7,11,2,2,2,4,2,2,0,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.versioning,Version.Occurred,0,34,0,0,0,2,0,1,0,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.versioning,LongVersion,110,6,20,0,20,3,17,1,7,1

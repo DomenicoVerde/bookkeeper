@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../jacoco-resources/report.gif" type="image/gif"/><title>LocalBookKeeper.java</title><link rel="stylesheet" href="../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../index.html" class="el_report">Apache Bookkeeper :: Tests</a> &gt; <a href="../index.html" class="el_bundle">bookkeeper-server</a> &gt; <a href="index.source.html" class="el_package">org.apache.bookkeeper.util</a> &gt; <span class="el_source">LocalBookKeeper.java</span></div><h1>LocalBookKeeper.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.bookkeeper.util;
+
+import static com.google.common.base.Charsets.UTF_8;
+import static org.apache.bookkeeper.util.BookKeeperConstants.AVAILABLE_NODE;
+import static org.apache.bookkeeper.util.BookKeeperConstants.READONLY;
+
+import com.google.common.collect.Lists;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import org.apache.bookkeeper.bookie.Bookie;
+import org.apache.bookkeeper.common.component.ComponentInfoPublisher;
+import org.apache.bookkeeper.conf.ServerConfiguration;
+import org.apache.bookkeeper.discover.BookieServiceInfo;
+import org.apache.bookkeeper.discover.BookieServiceInfo.Endpoint;
+import org.apache.bookkeeper.meta.zk.ZKMetadataDriverBase;
+import org.apache.bookkeeper.proto.BookieServer;
+import org.apache.bookkeeper.server.conf.BookieConfiguration;
+import org.apache.bookkeeper.server.service.BookieService;
+import org.apache.bookkeeper.shims.zk.ZooKeeperServerShim;
+import org.apache.bookkeeper.shims.zk.ZooKeeperServerShimFactory;
+import org.apache.bookkeeper.stats.NullStatsLogger;
+import org.apache.bookkeeper.zookeeper.ZooKeeperClient;
+import org.apache.commons.io.FileUtils;
+import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.Op;
+import org.apache.zookeeper.ZooDefs.Ids;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Local Bookkeeper.
+ */
+public class LocalBookKeeper {
+<span class="nc" id="L64">    protected static final Logger LOG = LoggerFactory.getLogger(LocalBookKeeper.class);</span>
+    public static final int CONNECTION_TIMEOUT = 30000;
+
+    private static String newMetadataServiceUri(String zkServers, int port, String layout, String ledgerPath) {
+<span class="nc" id="L68">        return &quot;zk+&quot; + layout + &quot;://&quot; + zkServers + &quot;:&quot; + port + ledgerPath;</span>
+    }
+
+    int numberOfBookies;
+
+    public LocalBookKeeper() {
+<span class="nc" id="L74">        this(3);</span>
+<span class="nc" id="L75">    }</span>
+
+    public LocalBookKeeper(int numberOfBookies) {
+<span class="nc" id="L78">        this(numberOfBookies, 5000, new ServerConfiguration(), defaultLocalBookiesConfigDir);</span>
+<span class="nc" id="L79">    }</span>
+
+    public LocalBookKeeper(
+            int numberOfBookies,
+            int initialPort,
+            ServerConfiguration baseConf,
+<span class="nc" id="L85">            String localBookiesConfigDirName) {</span>
+<span class="nc" id="L86">        this.numberOfBookies = numberOfBookies;</span>
+<span class="nc" id="L87">        this.initialPort = initialPort;</span>
+<span class="nc" id="L88">        this.localBookiesConfigDir = new File(localBookiesConfigDirName);</span>
+<span class="nc" id="L89">        this.baseConf = baseConf;</span>
+<span class="nc" id="L90">        LOG.info(&quot;Running {} bookie(s) on zkServer {}.&quot;, this.numberOfBookies);</span>
+<span class="nc" id="L91">    }</span>
+
+<span class="nc" id="L93">    private static String zooKeeperDefaultHost = &quot;127.0.0.1&quot;;</span>
+<span class="nc" id="L94">    private static int zooKeeperDefaultPort = 2181;</span>
+<span class="nc" id="L95">    private static int zkSessionTimeOut = 5000;</span>
+<span class="nc" id="L96">    private static Integer bookieDefaultInitialPort = 5000;</span>
+<span class="nc" id="L97">    private static String defaultLocalBookiesConfigDir = &quot;/tmp/localbookies-config&quot;;</span>
+
+    //BookKeeper variables
+    File[] journalDirs;
+    BookieServer[] bs;
+    ServerConfiguration[] bsConfs;
+<span class="nc" id="L103">    Integer initialPort = 5000;</span>
+    private ServerConfiguration baseConf;
+
+    File localBookiesConfigDir;
+    /**
+     * @param maxCC
+     *          Max Concurrency of Client
+     * @param zookeeperPort
+     *          ZooKeeper Server Port
+     */
+    public static ZooKeeperServerShim runZookeeper(int maxCC, int zookeeperPort) throws IOException {
+<span class="nc" id="L114">        File zkTmpDir = IOUtils.createTempDir(&quot;zookeeper&quot;, &quot;localbookkeeper&quot;);</span>
+<span class="nc" id="L115">        return runZookeeper(maxCC, zookeeperPort, zkTmpDir);</span>
+    }
+
+    public static ZooKeeperServerShim runZookeeper(int maxCC, int zookeeperPort, File zkDir) throws IOException {
+<span class="nc" id="L119">        LOG.info(&quot;Starting ZK server&quot;);</span>
+<span class="nc" id="L120">        ZooKeeperServerShim server = ZooKeeperServerShimFactory.createServer(zkDir, zkDir, zookeeperPort, maxCC);</span>
+<span class="nc" id="L121">        server.start();</span>
+
+<span class="nc" id="L123">        boolean b = waitForServerUp(InetAddress.getLoopbackAddress().getHostAddress() + &quot;:&quot; + zookeeperPort,</span>
+          CONNECTION_TIMEOUT);
+<span class="nc bnc" id="L125" title="All 2 branches missed.">        if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L126">            LOG.debug(&quot;ZooKeeper server up: {}&quot;, b);</span>
+        }
+<span class="nc" id="L128">        return server;</span>
+    }
+
+    @SuppressWarnings(&quot;deprecation&quot;)
+    private void initializeZookeeper(String zkHost, int zkPort) throws IOException {
+<span class="nc" id="L133">        LOG.info(&quot;Instantiate ZK Client&quot;);</span>
+        //initialize the zk client with values
+<span class="nc" id="L135">        try (ZooKeeperClient zkc = ZooKeeperClient.newBuilder()</span>
+<span class="nc" id="L136">                    .connectString(zkHost + &quot;:&quot; + zkPort)</span>
+<span class="nc" id="L137">                    .sessionTimeoutMs(zkSessionTimeOut)</span>
+<span class="nc" id="L138">                    .build()) {</span>
+<span class="nc" id="L139">            String zkLedgersRootPath = ZKMetadataDriverBase.resolveZkLedgersRootPath(baseConf);</span>
+<span class="nc" id="L140">            ZkUtils.createFullPathOptimistic(zkc, zkLedgersRootPath, new byte[0], Ids.OPEN_ACL_UNSAFE,</span>
+                    CreateMode.PERSISTENT);
+<span class="nc" id="L142">            List&lt;Op&gt; multiOps = Lists.newArrayListWithExpectedSize(2);</span>
+<span class="nc" id="L143">            multiOps.add(</span>
+<span class="nc" id="L144">                Op.create(zkLedgersRootPath + &quot;/&quot; + AVAILABLE_NODE,</span>
+                    new byte[0], Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT));
+<span class="nc" id="L146">            multiOps.add(</span>
+<span class="nc" id="L147">                Op.create(zkLedgersRootPath + &quot;/&quot; + AVAILABLE_NODE + &quot;/&quot; + READONLY,</span>
+                    new byte[0], Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT));
+<span class="nc" id="L149">            zkc.multi(multiOps);</span>
+            // No need to create an entry for each requested bookie anymore as the
+            // BookieServers will register themselves with ZooKeeper on startup.
+<span class="nc" id="L152">        } catch (KeeperException e) {</span>
+<span class="nc" id="L153">            LOG.error(&quot;Exception while creating znodes&quot;, e);</span>
+<span class="nc" id="L154">            throw new IOException(&quot;Error creating znodes : &quot;, e);</span>
+<span class="nc" id="L155">        } catch (InterruptedException e) {</span>
+<span class="nc" id="L156">            Thread.currentThread().interrupt();</span>
+<span class="nc" id="L157">            LOG.error(&quot;Interrupted while creating znodes&quot;, e);</span>
+<span class="nc" id="L158">            throw new IOException(&quot;Error creating znodes : &quot;, e);</span>
+<span class="nc" id="L159">        }</span>
+<span class="nc" id="L160">    }</span>
+
+    private static void cleanupDirectories(List&lt;File&gt; dirs) throws IOException {
+<span class="nc bnc" id="L163" title="All 2 branches missed.">        for (File dir : dirs) {</span>
+<span class="nc" id="L164">            FileUtils.deleteDirectory(dir);</span>
+<span class="nc" id="L165">        }</span>
+<span class="nc" id="L166">    }</span>
+
+    private List&lt;File&gt; runBookies(String dirSuffix)
+            throws Exception {
+<span class="nc" id="L170">        List&lt;File&gt; tempDirs = new ArrayList&lt;File&gt;();</span>
+        try {
+<span class="nc" id="L172">            runBookies(tempDirs, dirSuffix);</span>
+<span class="nc" id="L173">            return tempDirs;</span>
+<span class="nc" id="L174">        } catch (Exception ioe) {</span>
+<span class="nc" id="L175">            cleanupDirectories(tempDirs);</span>
+<span class="nc" id="L176">            throw ioe;</span>
+        }
+    }
+
+    @SuppressWarnings(&quot;deprecation&quot;)
+    private void runBookies(List&lt;File&gt; tempDirs, String dirSuffix)
+            throws Exception {
+<span class="nc" id="L183">        LOG.info(&quot;Starting Bookie(s)&quot;);</span>
+        // Create Bookie Servers (B1, B2, B3)
+
+<span class="nc" id="L186">        journalDirs = new File[numberOfBookies];</span>
+<span class="nc" id="L187">        bs = new BookieServer[numberOfBookies];</span>
+<span class="nc" id="L188">        bsConfs = new ServerConfiguration[numberOfBookies];</span>
+
+<span class="nc bnc" id="L190" title="All 4 branches missed.">        if (localBookiesConfigDir.exists() &amp;&amp; localBookiesConfigDir.isFile()) {</span>
+<span class="nc" id="L191">            throw new IOException(&quot;Unable to create LocalBookiesConfigDir, since there is a file at &quot;</span>
+<span class="nc" id="L192">                    + localBookiesConfigDir.getAbsolutePath());</span>
+        }
+<span class="nc bnc" id="L194" title="All 4 branches missed.">        if (!localBookiesConfigDir.exists() &amp;&amp; !localBookiesConfigDir.mkdirs()) {</span>
+<span class="nc" id="L195">            throw new IOException(</span>
+<span class="nc" id="L196">                    &quot;Unable to create LocalBookiesConfigDir - &quot; + localBookiesConfigDir.getAbsolutePath());</span>
+        }
+
+<span class="nc bnc" id="L199" title="All 2 branches missed.">        for (int i = 0; i &lt; numberOfBookies; i++) {</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">            if (null == baseConf.getJournalDirNameWithoutDefault()) {</span>
+<span class="nc" id="L201">                journalDirs[i] = IOUtils.createTempDir(&quot;localbookkeeper&quot; + Integer.toString(i), dirSuffix);</span>
+<span class="nc" id="L202">                tempDirs.add(journalDirs[i]);</span>
+            } else {
+<span class="nc" id="L204">                journalDirs[i] = new File(baseConf.getJournalDirName(), &quot;bookie&quot; + Integer.toString(i));</span>
+            }
+<span class="nc bnc" id="L206" title="All 2 branches missed.">            if (journalDirs[i].exists()) {</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">                if (journalDirs[i].isDirectory()) {</span>
+<span class="nc" id="L208">                    FileUtils.deleteDirectory(journalDirs[i]);</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">                } else if (!journalDirs[i].delete()) {</span>
+<span class="nc" id="L210">                    throw new IOException(&quot;Couldn't cleanup bookie journal dir &quot; + journalDirs[i]);</span>
+                }
+            }
+<span class="nc bnc" id="L213" title="All 2 branches missed.">            if (!journalDirs[i].mkdirs()) {</span>
+<span class="nc" id="L214">                throw new IOException(&quot;Couldn't create bookie journal dir &quot; + journalDirs[i]);</span>
+            }
+
+<span class="nc" id="L217">            String [] ledgerDirs = baseConf.getLedgerDirWithoutDefault();</span>
+<span class="nc bnc" id="L218" title="All 4 branches missed.">            if ((null == ledgerDirs) || (0 == ledgerDirs.length)) {</span>
+<span class="nc" id="L219">                ledgerDirs = new String[] { journalDirs[i].getPath() };</span>
+            } else {
+<span class="nc bnc" id="L221" title="All 2 branches missed.">                for (int l = 0; l &lt; ledgerDirs.length; l++) {</span>
+<span class="nc" id="L222">                    File dir = new File(ledgerDirs[l], &quot;bookie&quot; + Integer.toString(i));</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">                    if (dir.exists()) {</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">                        if (dir.isDirectory()) {</span>
+<span class="nc" id="L225">                            FileUtils.deleteDirectory(dir);</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">                        } else if (!dir.delete()) {</span>
+<span class="nc" id="L227">                            throw new IOException(&quot;Couldn't cleanup bookie ledger dir &quot; + dir);</span>
+                        }
+                    }
+<span class="nc bnc" id="L230" title="All 2 branches missed.">                    if (!dir.mkdirs()) {</span>
+<span class="nc" id="L231">                        throw new IOException(&quot;Couldn't create bookie ledger dir &quot; + dir);</span>
+                    }
+<span class="nc" id="L233">                    ledgerDirs[l] = dir.getPath();</span>
+                }
+            }
+
+<span class="nc" id="L237">            bsConfs[i] = new ServerConfiguration((ServerConfiguration) baseConf.clone());</span>
+
+            // If the caller specified ephemeral ports then use ephemeral ports for all
+            // the bookies else use numBookie ports starting at initialPort
+<span class="nc bnc" id="L241" title="All 2 branches missed.">            if (0 == initialPort) {</span>
+<span class="nc" id="L242">                bsConfs[i].setBookiePort(0);</span>
+            } else {
+<span class="nc" id="L244">                bsConfs[i].setBookiePort(initialPort + i);</span>
+            }
+
+<span class="nc bnc" id="L247" title="All 2 branches missed.">            if (null == baseConf.getMetadataServiceUriUnchecked()) {</span>
+<span class="nc" id="L248">                bsConfs[i].setMetadataServiceUri(baseConf.getMetadataServiceUri());</span>
+            }
+
+<span class="nc" id="L251">            bsConfs[i].setJournalDirName(journalDirs[i].getPath());</span>
+<span class="nc" id="L252">            bsConfs[i].setLedgerDirNames(ledgerDirs);</span>
+
+            // write config into file before start so we can know what's wrong if start failed
+<span class="nc" id="L255">            String fileName = Bookie.getBookieAddress(bsConfs[i]).toString() + &quot;.conf&quot;;</span>
+<span class="nc" id="L256">            serializeLocalBookieConfig(bsConfs[i], fileName);</span>
+
+            // Mimic BookKeeper Main
+<span class="nc" id="L259">            final ComponentInfoPublisher componentInfoPublisher = new ComponentInfoPublisher();</span>
+<span class="nc" id="L260">            final Supplier&lt;BookieServiceInfo&gt; bookieServiceInfoProvider =</span>
+<span class="nc" id="L261">                    () -&gt; buildBookieServiceInfo(componentInfoPublisher);</span>
+<span class="nc" id="L262">            BookieService bookieService = new BookieService(new BookieConfiguration(bsConfs[i]),</span>
+                    NullStatsLogger.INSTANCE,
+                    bookieServiceInfoProvider
+            );
+<span class="nc" id="L266">            bs[i] = bookieService.getServer();</span>
+<span class="nc" id="L267">            bookieService.publishInfo(componentInfoPublisher);</span>
+<span class="nc" id="L268">            componentInfoPublisher.startupFinished();</span>
+<span class="nc" id="L269">            bookieService.start();</span>
+        }
+
+        /*
+         * baseconf.conf is needed because for executing any BookieShell command
+         * of Metadata/Zookeeper Operation nature we need a valid conf file
+         * having correct zk details and this could be used for running any such
+         * bookieshell commands if bookieid is not provided as parameter to
+         * bookkeeper shell operation. for eg:
+         * &quot;./bookkeeper shell localbookie listbookies -rw&quot;. But for execution
+         * shell command of bookie Operation nature we need to provide bookieid,
+         * for eg &quot;./bookkeeper shell -localbookie 10.3.27.190:5000 lastmark&quot;,
+         * so this shell command would use '10.3.27.190:5000.conf' file
+         */
+<span class="nc" id="L283">        ServerConfiguration baseConfWithCorrectZKServers = new ServerConfiguration(</span>
+<span class="nc" id="L284">                (ServerConfiguration) baseConf.clone());</span>
+<span class="nc bnc" id="L285" title="All 2 branches missed.">        if (null == baseConf.getMetadataServiceUriUnchecked()) {</span>
+<span class="nc" id="L286">            baseConfWithCorrectZKServers.setMetadataServiceUri(baseConf.getMetadataServiceUri());</span>
+        }
+<span class="nc" id="L288">        serializeLocalBookieConfig(baseConfWithCorrectZKServers, &quot;baseconf.conf&quot;);</span>
+<span class="nc" id="L289">    }</span>
+
+    public static void startLocalBookies(String zkHost,
+                                         int zkPort,
+                                         int numBookies,
+                                         boolean shouldStartZK,
+                                         int initialBookiePort)
+            throws Exception {
+<span class="nc" id="L297">        ServerConfiguration conf = new ServerConfiguration();</span>
+<span class="nc" id="L298">        startLocalBookiesInternal(</span>
+                conf, zkHost, zkPort, numBookies, shouldStartZK,
+                initialBookiePort, true, &quot;test&quot;, null, defaultLocalBookiesConfigDir);
+<span class="nc" id="L301">    }</span>
+
+    public static void startLocalBookies(String zkHost,
+                                         int zkPort,
+                                         int numBookies,
+                                         boolean shouldStartZK,
+                                         int initialBookiePort,
+                                         ServerConfiguration conf)
+            throws Exception {
+<span class="nc" id="L310">        startLocalBookiesInternal(</span>
+                conf, zkHost, zkPort, numBookies, shouldStartZK,
+                initialBookiePort, true, &quot;test&quot;, null, defaultLocalBookiesConfigDir);
+<span class="nc" id="L313">    }</span>
+
+    public static void startLocalBookies(String zkHost,
+                                         int zkPort,
+                                         int numBookies,
+                                         boolean shouldStartZK,
+                                         int initialBookiePort,
+                                         String dirSuffix)
+            throws Exception {
+<span class="nc" id="L322">        ServerConfiguration conf = new ServerConfiguration();</span>
+<span class="nc" id="L323">        startLocalBookiesInternal(</span>
+                conf, zkHost, zkPort, numBookies, shouldStartZK,
+                initialBookiePort, true, dirSuffix, null, defaultLocalBookiesConfigDir);
+<span class="nc" id="L326">    }</span>
+
+    @SuppressWarnings(&quot;deprecation&quot;)
+    static void startLocalBookiesInternal(ServerConfiguration conf,
+                                          String zkHost,
+                                          int zkPort,
+                                          int numBookies,
+                                          boolean shouldStartZK,
+                                          int initialBookiePort,
+                                          boolean stopOnExit,
+                                          String dirSuffix,
+                                          String zkDataDir,
+                                          String localBookiesConfigDirName)
+            throws Exception {
+<span class="nc" id="L340">        conf.setMetadataServiceUri(</span>
+<span class="nc" id="L341">                newMetadataServiceUri(</span>
+                        zkHost,
+                        zkPort,
+<span class="nc" id="L344">                        conf.getLedgerManagerLayoutStringFromFactoryClass(),</span>
+<span class="nc" id="L345">                        conf.getZkLedgersRootPath()));</span>
+<span class="nc" id="L346">        LocalBookKeeper lb = new LocalBookKeeper(numBookies, initialBookiePort, conf, localBookiesConfigDirName);</span>
+<span class="nc" id="L347">        ZooKeeperServerShim zks = null;</span>
+<span class="nc" id="L348">        File zkTmpDir = null;</span>
+<span class="nc" id="L349">        List&lt;File&gt; bkTmpDirs = null;</span>
+        try {
+<span class="nc bnc" id="L351" title="All 2 branches missed.">            if (shouldStartZK) {</span>
+<span class="nc" id="L352">                File zkDataDirFile = null;</span>
+<span class="nc bnc" id="L353" title="All 2 branches missed.">                if (zkDataDir != null) {</span>
+<span class="nc" id="L354">                    zkDataDirFile = new File(zkDataDir);</span>
+<span class="nc bnc" id="L355" title="All 4 branches missed.">                    if (zkDataDirFile.exists() &amp;&amp; zkDataDirFile.isFile()) {</span>
+<span class="nc" id="L356">                        throw new IOException(&quot;Unable to create zkDataDir, since there is a file at &quot;</span>
+<span class="nc" id="L357">                                + zkDataDirFile.getAbsolutePath());</span>
+                    }
+<span class="nc bnc" id="L359" title="All 4 branches missed.">                    if (!zkDataDirFile.exists() &amp;&amp; !zkDataDirFile.mkdirs()) {</span>
+<span class="nc" id="L360">                        throw new IOException(&quot;Unable to create zkDataDir - &quot; + zkDataDirFile.getAbsolutePath());</span>
+                    }
+                }
+<span class="nc" id="L363">                zkTmpDir = IOUtils.createTempDir(&quot;zookeeper&quot;, dirSuffix, zkDataDirFile);</span>
+<span class="nc" id="L364">                zkTmpDir.deleteOnExit();</span>
+<span class="nc" id="L365">                zks = LocalBookKeeper.runZookeeper(1000, zkPort, zkTmpDir);</span>
+            }
+
+<span class="nc" id="L368">            lb.initializeZookeeper(zkHost, zkPort);</span>
+<span class="nc" id="L369">            bkTmpDirs = lb.runBookies(dirSuffix);</span>
+
+            try {
+                while (true) {
+<span class="nc" id="L373">                    Thread.sleep(5000);</span>
+                }
+<span class="nc" id="L375">            } catch (InterruptedException ie) {</span>
+<span class="nc" id="L376">                Thread.currentThread().interrupt();</span>
+<span class="nc bnc" id="L377" title="All 2 branches missed.">                if (stopOnExit) {</span>
+<span class="nc" id="L378">                    lb.shutdownBookies();</span>
+
+<span class="nc bnc" id="L380" title="All 2 branches missed.">                    if (null != zks) {</span>
+<span class="nc" id="L381">                        zks.stop();</span>
+                    }
+                }
+<span class="nc" id="L384">                throw ie;</span>
+            }
+<span class="nc" id="L386">        } catch (Exception e) {</span>
+<span class="nc" id="L387">            LOG.error(&quot;Failed to run {} bookies : zk ensemble = '{}:{}'&quot;,</span>
+<span class="nc" id="L388">                    numBookies, zkHost, zkPort, e);</span>
+<span class="nc" id="L389">            throw e;</span>
+        } finally {
+<span class="nc bnc" id="L391" title="All 2 branches missed.">            if (stopOnExit) {</span>
+<span class="nc" id="L392">                cleanupDirectories(bkTmpDirs);</span>
+<span class="nc bnc" id="L393" title="All 2 branches missed.">                if (null != zkTmpDir) {</span>
+<span class="nc" id="L394">                    FileUtils.deleteDirectory(zkTmpDir);</span>
+                }
+            }
+        }
+    }
+
+    /**
+     * Serializes the config object to the specified file in localBookiesConfigDir.
+     *
+     * @param localBookieConfig
+     *         config object which has to be serialized
+     * @param fileName
+     *         name of the file
+     * @throws IOException
+     */
+    private void serializeLocalBookieConfig(ServerConfiguration localBookieConfig, String fileName) throws IOException {
+<span class="nc" id="L410">        File localBookieConfFile = new File(localBookiesConfigDir, fileName);</span>
+<span class="nc bnc" id="L411" title="All 4 branches missed.">        if (localBookieConfFile.exists() &amp;&amp; !localBookieConfFile.delete()) {</span>
+<span class="nc" id="L412">            throw new IOException(</span>
+<span class="nc" id="L413">                    &quot;Unable to delete the existing LocalBookieConfigFile - &quot; + localBookieConfFile.getAbsolutePath());</span>
+        }
+<span class="nc bnc" id="L415" title="All 2 branches missed.">        if (!localBookieConfFile.createNewFile()) {</span>
+<span class="nc" id="L416">            throw new IOException(&quot;Unable to create new File - &quot; + localBookieConfFile.getAbsolutePath());</span>
+        }
+<span class="nc" id="L418">        Iterator&lt;String&gt; keys = localBookieConfig.getKeys();</span>
+<span class="nc" id="L419">        try (PrintWriter writer = new PrintWriter(localBookieConfFile, &quot;UTF-8&quot;)) {</span>
+<span class="nc bnc" id="L420" title="All 2 branches missed.">            while (keys.hasNext()) {</span>
+<span class="nc" id="L421">                String key = keys.next();</span>
+<span class="nc" id="L422">                String[] values = localBookieConfig.getStringArray(key);</span>
+<span class="nc" id="L423">                StringBuilder concatenatedValue = new StringBuilder(values[0]);</span>
+<span class="nc bnc" id="L424" title="All 2 branches missed.">                for (int i = 1; i &lt; values.length; i++) {</span>
+<span class="nc" id="L425">                    concatenatedValue.append(&quot;,&quot;).append(values[i]);</span>
+                }
+<span class="nc" id="L427">                writer.println(key + &quot;=&quot; + concatenatedValue.toString());</span>
+<span class="nc" id="L428">            }</span>
+        }
+<span class="nc" id="L430">    }</span>
+
+    public static void main(String[] args) {
+        try {
+<span class="nc bnc" id="L434" title="All 2 branches missed.">            if (args.length &lt; 1) {</span>
+<span class="nc" id="L435">                usage();</span>
+<span class="nc" id="L436">                System.exit(-1);</span>
+            }
+
+<span class="nc" id="L439">            int numBookies = 0;</span>
+            try {
+<span class="nc" id="L441">                numBookies = Integer.parseInt(args[0]);</span>
+<span class="nc" id="L442">            } catch (NumberFormatException nfe) {</span>
+<span class="nc" id="L443">                LOG.error(&quot;Unrecognized number-of-bookies: {}&quot;, args[0]);</span>
+<span class="nc" id="L444">                usage();</span>
+<span class="nc" id="L445">                System.exit(-1);</span>
+<span class="nc" id="L446">            }</span>
+
+<span class="nc" id="L448">            ServerConfiguration conf = new ServerConfiguration();</span>
+<span class="nc" id="L449">            conf.setAllowLoopback(true);</span>
+<span class="nc bnc" id="L450" title="All 2 branches missed.">            if (args.length &gt;= 2) {</span>
+<span class="nc" id="L451">                String confFile = args[1];</span>
+                try {
+<span class="nc" id="L453">                    conf.loadConf(new File(confFile).toURI().toURL());</span>
+<span class="nc" id="L454">                    LOG.info(&quot;Using configuration file &quot; + confFile);</span>
+<span class="nc" id="L455">                } catch (Exception e) {</span>
+                    // load conf failed
+<span class="nc" id="L457">                    LOG.warn(&quot;Error loading configuration file &quot; + confFile, e);</span>
+<span class="nc" id="L458">                }</span>
+            }
+
+<span class="nc" id="L461">            String zkDataDir = null;</span>
+<span class="nc bnc" id="L462" title="All 2 branches missed.">            if (args.length &gt;= 3) {</span>
+<span class="nc" id="L463">                zkDataDir = args[2];</span>
+            }
+
+<span class="nc" id="L466">            String localBookiesConfigDirName = defaultLocalBookiesConfigDir;</span>
+<span class="nc bnc" id="L467" title="All 2 branches missed.">            if (args.length &gt;= 4) {</span>
+<span class="nc" id="L468">                localBookiesConfigDirName = args[3];</span>
+            }
+
+<span class="nc" id="L471">            startLocalBookiesInternal(conf, zooKeeperDefaultHost, zooKeeperDefaultPort, numBookies, true,</span>
+<span class="nc" id="L472">                    bookieDefaultInitialPort, false, &quot;test&quot;, zkDataDir, localBookiesConfigDirName);</span>
+<span class="nc" id="L473">        } catch (Exception e) {</span>
+<span class="nc" id="L474">            LOG.error(&quot;Exiting LocalBookKeeper because of exception in main method&quot;, e);</span>
+<span class="nc" id="L475">            e.printStackTrace();</span>
+            /*
+             * This is needed because, some non-daemon thread (probably in ZK or
+             * some other dependent service) is preventing the JVM from exiting, though
+             * there is exception in main thread.
+             */
+<span class="nc" id="L481">            System.exit(-1);</span>
+<span class="nc" id="L482">        }</span>
+<span class="nc" id="L483">    }</span>
+
+    private static void usage() {
+<span class="nc" id="L486">        System.err.println(</span>
+                &quot;Usage: LocalBookKeeper number-of-bookies [path to bookie config] &quot;
+                + &quot;[path to create ZK data directory at] [path to LocalBookiesConfigDir]&quot;);
+<span class="nc" id="L489">    }</span>
+
+    public static boolean waitForServerUp(String hp, long timeout) {
+<span class="nc" id="L492">        long start = System.currentTimeMillis();</span>
+<span class="nc" id="L493">        String[] split = hp.split(&quot;:&quot;);</span>
+<span class="nc" id="L494">        String host = split[0];</span>
+<span class="nc" id="L495">        int port = Integer.parseInt(split[1]);</span>
+        while (true) {
+            try {
+<span class="nc" id="L498">                Socket sock = new Socket(host, port);</span>
+<span class="nc" id="L499">                BufferedReader reader = null;</span>
+                try {
+<span class="nc" id="L501">                    OutputStream outstream = sock.getOutputStream();</span>
+<span class="nc" id="L502">                    outstream.write(&quot;stat&quot;.getBytes(UTF_8));</span>
+<span class="nc" id="L503">                    outstream.flush();</span>
+
+<span class="nc" id="L505">                    reader =</span>
+                        new BufferedReader(
+<span class="nc" id="L507">                                new InputStreamReader(sock.getInputStream(), UTF_8));</span>
+<span class="nc" id="L508">                    String line = reader.readLine();</span>
+<span class="nc bnc" id="L509" title="All 4 branches missed.">                    if (line != null &amp;&amp; line.startsWith(&quot;Zookeeper version:&quot;)) {</span>
+<span class="nc" id="L510">                        LOG.info(&quot;Server UP&quot;);</span>
+<span class="nc" id="L511">                        return true;</span>
+                    }
+                } finally {
+<span class="nc" id="L514">                    sock.close();</span>
+<span class="nc bnc" id="L515" title="All 2 branches missed.">                    if (reader != null) {</span>
+<span class="nc" id="L516">                        reader.close();</span>
+                    }
+                }
+<span class="nc" id="L519">            } catch (IOException e) {</span>
+                // ignore as this is expected
+<span class="nc" id="L521">                LOG.info(&quot;server &quot; + hp + &quot; not up &quot; + e);</span>
+<span class="nc" id="L522">            }</span>
+
+<span class="nc bnc" id="L524" title="All 2 branches missed.">            if (System.currentTimeMillis() &gt; start + timeout) {</span>
+<span class="nc" id="L525">                break;</span>
+            }
+            try {
+<span class="nc" id="L528">                Thread.sleep(250);</span>
+<span class="nc" id="L529">            } catch (InterruptedException e) {</span>
+<span class="nc" id="L530">                Thread.currentThread().interrupt();</span>
+                // ignore
+<span class="nc" id="L532">            }</span>
+        }
+<span class="nc" id="L534">        return false;</span>
+    }
+
+    public void shutdownBookies() {
+<span class="nc bnc" id="L538" title="All 2 branches missed.">        for (BookieServer bookieServer: bs) {</span>
+<span class="nc" id="L539">            bookieServer.shutdown();</span>
+        }
+<span class="nc" id="L541">    }</span>
+
+    /**
+     * Create the {@link BookieServiceInfo} starting from the published endpoints.
+     *
+     * @see ComponentInfoPublisher
+     * @param componentInfoPublisher the endpoint publisher
+     * @return the created bookie service info
+     */
+    private static BookieServiceInfo buildBookieServiceInfo(ComponentInfoPublisher componentInfoPublisher) {
+<span class="nc" id="L551">        List&lt;Endpoint&gt; endpoints = componentInfoPublisher.getEndpoints().values()</span>
+<span class="nc" id="L552">                .stream().map(e -&gt; {</span>
+<span class="nc" id="L553">                    return new Endpoint(</span>
+<span class="nc" id="L554">                            e.getId(),</span>
+<span class="nc" id="L555">                            e.getPort(),</span>
+<span class="nc" id="L556">                            e.getHost(),</span>
+<span class="nc" id="L557">                            e.getProtocol(),</span>
+<span class="nc" id="L558">                            e.getAuth(),</span>
+<span class="nc" id="L559">                            e.getExtensions()</span>
+                    );
+<span class="nc" id="L561">                }).collect(Collectors.toList());</span>
+<span class="nc" id="L562">        return new BookieServiceInfo(componentInfoPublisher.getProperties(), endpoints);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

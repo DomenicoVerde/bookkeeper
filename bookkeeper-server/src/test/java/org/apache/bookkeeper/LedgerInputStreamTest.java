@@ -15,15 +15,16 @@ public class LedgerInputStreamTest {
 	private static LedgerInputStream ledger;
 	private static BookKeeper bkClient;
 	private static LedgerHandle ledgerHandle;
+	private static String phrase = "This is a test phrase";
 	
 	@BeforeClass
 	public static void init() {
-		//Initializing Client and creating a new ledger
+		//Initializes Client, creates a new ledger and writes something on it 
 		try {
 			bkClient = new BookKeeper("127.0.0.1:2181");
 			byte[] password = "password".getBytes();
 			ledgerHandle = bkClient.createLedger(BookKeeper.DigestType.MAC, password);
-			ledgerHandle.addEntry("This is a test phrase".getBytes());
+			ledgerHandle.addEntry(phrase.getBytes());
 			ledger = new LedgerInputStream(ledgerHandle);
 		} catch (BKException | IOException | InterruptedException e) {
 			e.printStackTrace();
@@ -119,39 +120,63 @@ public class LedgerInputStreamTest {
 		LedgerInputStream ledger2 = null;
 		try {
 			ledger2 = new LedgerInputStream(ledgerHandle, 1000);
-			// read() method reads 1 byte at a time. In the ledger there
+			// read() method reads 1 byte at a time and returns it casted as an int. In the ledger there
 			// are 21 chars, so it should be called 21 times before reach EOS
 			int result = 0;
 			int counter = 0;
 			while (result != -1) {
 				result = ledger2.read();
+				if (counter < 21) {
+					char c = phrase.charAt(counter);
+					Assert.assertEquals(c, (char) result);
+				} else if (counter == 21) {
+					Assert.assertEquals(result, -1);
+				}
 				counter++;
 			}
+			
 			Assert.assertEquals(counter, 22);
 			
-			// the buffer can store all the ledger data. So the second time
-			// it fails
+			// the buffer can store all the ledger data. So the first time it reads all
+			// the data and second time it reaches EOS
 			result = 0;
 			counter = 0;
+			byte[] b = new byte[21];
 			while (result != -1) {
-				result = ledger2.read(new byte[1000]);
 				counter++;
+				result = ledger2.read(b);
+				if (counter == 1) {
+					Assert.assertTrue(phrase.contentEquals(new String(b)));
+					Assert.assertEquals(result, 21);
+				} else if (counter == 2) {
+					Assert.assertEquals(result, -1);
+				}			
 			}
+			
 			Assert.assertEquals(counter, 2);
 			
+			// Same as the previous case
 			result = 0;
 			counter = 0;
 			while (result != -1) {
-				result = ledger2.read(new byte[1000], 0, 1000);
 				counter++;
+				result = ledger2.read(new byte[21], 0, 21);
+				if (counter == 1) {
+					Assert.assertTrue(phrase.contentEquals(new String(b)));
+					Assert.assertEquals(result, 21);
+				} else if (counter == 2) {
+					Assert.assertEquals(result, -1);
+				}
 			}
+			
 			Assert.assertEquals(counter, 2);
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			Assert.fail();
+			
 		} finally {
 			ledger2.close();
 		}
-	}
-	
+	}	
 }

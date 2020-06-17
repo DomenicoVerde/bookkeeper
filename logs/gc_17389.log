@@ -1,0 +1,8 @@
+[0.019s][info][gc] Using G1
+[0,028s][info][gc] Periodic GC disabled
+[1,025s][info][gc] GC(0) Pause Young (Normal) (G1 Evacuation Pause) 51M->8M(1024M) 4,337ms
+[1,333s][info][gc] GC(1) Pause Young (Concurrent Start) (Metadata GC Threshold) 28M->9M(1024M) 4,483ms
+[1,333s][info][gc] GC(2) Concurrent Cycle
+[1,338s][info][gc] GC(2) Pause Remark 9M->9M(1024M) 0,796ms
+[1,341s][info][gc] GC(2) Pause Cleanup 9M->9M(1024M) 0,117ms
+[1,345s][info][gc] GC(2) Concurrent Cycle 11,617ms

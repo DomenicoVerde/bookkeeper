@@ -1,0 +1,13 @@
+[0.016s][info][gc] Using G1
+[0,025s][info][gc] Periodic GC disabled
+[0,986s][info][gc] GC(0) Pause Young (Normal) (G1 Evacuation Pause) 51M->7M(1024M) 4,288ms
+[1,272s][info][gc] GC(1) Pause Young (Concurrent Start) (Metadata GC Threshold) 28M->9M(1024M) 4,797ms
+[1,272s][info][gc] GC(2) Concurrent Cycle
+[1,278s][info][gc] GC(2) Pause Remark 9M->9M(1024M) 0,720ms
+[1,281s][info][gc] GC(2) Pause Cleanup 9M->9M(1024M) 0,102ms
+[1,286s][info][gc] GC(2) Concurrent Cycle 13,267ms
+[753,883s][info][gc] GC(3) Pause Young (Normal) (G1 Evacuation Pause) 141M->105M(1024M) 5,951ms
+[1967,929s][info][gc] GC(4) Pause Young (Normal) (G1 Evacuation Pause) 286M->255M(1024M) 8,684ms
+[2290,149s][info][gc] GC(5) Pause Young (Normal) (G1 Evacuation Pause) 299M->276M(1024M) 14,837ms
+[3203,259s][info][gc] GC(6) Pause Young (Normal) (G1 Evacuation Pause) 320M->279M(1024M) 4,780ms
+[4056,444s][info][gc] GC(7) Pause Young (Normal) (G1 Evacuation Pause) 327M->280M(1024M) 7,296ms

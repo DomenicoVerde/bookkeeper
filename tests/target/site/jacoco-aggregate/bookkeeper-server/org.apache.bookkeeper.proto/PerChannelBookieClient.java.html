@@ -1,0 +1,2525 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../jacoco-resources/report.gif" type="image/gif"/><title>PerChannelBookieClient.java</title><link rel="stylesheet" href="../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../index.html" class="el_report">Apache Bookkeeper :: Tests</a> &gt; <a href="../index.html" class="el_bundle">bookkeeper-server</a> &gt; <a href="index.source.html" class="el_package">org.apache.bookkeeper.proto</a> &gt; <span class="el_source">PerChannelBookieClient.java</span></div><h1>PerChannelBookieClient.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.bookkeeper.proto;
+
+import static org.apache.bookkeeper.client.LedgerHandle.INVALID_ENTRY_ID;
+
+import com.google.common.base.Joiner;
+import com.google.common.collect.Sets;
+import com.google.protobuf.ByteString;
+import com.google.protobuf.ExtensionRegistry;
+import com.google.protobuf.UnsafeByteOperations;
+
+import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufAllocator;
+import io.netty.buffer.Unpooled;
+import io.netty.buffer.UnpooledByteBufAllocator;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandler.Sharable;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.ChannelPromise;
+import io.netty.channel.DefaultEventLoopGroup;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.WriteBufferWaterMark;
+import io.netty.channel.epoll.EpollEventLoopGroup;
+import io.netty.channel.epoll.EpollSocketChannel;
+import io.netty.channel.local.LocalChannel;
+import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.channel.unix.Errors.NativeIoException;
+import io.netty.handler.codec.CorruptedFrameException;
+import io.netty.handler.codec.DecoderException;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
+import io.netty.handler.codec.TooLongFrameException;
+import io.netty.handler.ssl.SslHandler;
+import io.netty.util.Recycler;
+import io.netty.util.Recycler.Handle;
+import io.netty.util.concurrent.Future;
+import io.netty.util.concurrent.GenericFutureListener;
+
+import java.io.IOException;
+import java.net.SocketAddress;
+import java.net.UnknownHostException;
+import java.security.cert.Certificate;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Queue;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.function.BiPredicate;
+
+import javax.net.ssl.SSLHandshakeException;
+import javax.net.ssl.SSLPeerUnverifiedException;
+
+import org.apache.bookkeeper.auth.BookKeeperPrincipal;
+import org.apache.bookkeeper.auth.ClientAuthProvider;
+import org.apache.bookkeeper.client.BKException;
+import org.apache.bookkeeper.client.BookKeeperClientStats;
+import org.apache.bookkeeper.client.BookieInfoReader.BookieInfo;
+import org.apache.bookkeeper.client.api.WriteFlag;
+import org.apache.bookkeeper.common.util.MdcUtils;
+import org.apache.bookkeeper.common.util.OrderedExecutor;
+import org.apache.bookkeeper.conf.ClientConfiguration;
+import org.apache.bookkeeper.net.BookieSocketAddress;
+import org.apache.bookkeeper.proto.BookkeeperInternalCallbacks.ForceLedgerCallback;
+import org.apache.bookkeeper.proto.BookkeeperInternalCallbacks.GenericCallback;
+import org.apache.bookkeeper.proto.BookkeeperInternalCallbacks.GetBookieInfoCallback;
+import org.apache.bookkeeper.proto.BookkeeperInternalCallbacks.GetListOfEntriesOfLedgerCallback;
+import org.apache.bookkeeper.proto.BookkeeperInternalCallbacks.ReadEntryCallback;
+import org.apache.bookkeeper.proto.BookkeeperInternalCallbacks.ReadEntryCallbackCtx;
+import org.apache.bookkeeper.proto.BookkeeperInternalCallbacks.ReadLacCallback;
+import org.apache.bookkeeper.proto.BookkeeperInternalCallbacks.StartTLSCallback;
+import org.apache.bookkeeper.proto.BookkeeperInternalCallbacks.WriteCallback;
+import org.apache.bookkeeper.proto.BookkeeperInternalCallbacks.WriteLacCallback;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.AddRequest;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.AddResponse;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.BKPacketHeader;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.ForceLedgerRequest;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.ForceLedgerResponse;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.GetBookieInfoRequest;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.GetBookieInfoResponse;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.GetListOfEntriesOfLedgerRequest;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.GetListOfEntriesOfLedgerResponse;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.OperationType;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.ProtocolVersion;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.ReadLacRequest;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.ReadLacResponse;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.ReadRequest;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.ReadResponse;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.Request;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.Response;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.StatusCode;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.WriteLacRequest;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.WriteLacResponse;
+import org.apache.bookkeeper.stats.Counter;
+import org.apache.bookkeeper.stats.NullStatsLogger;
+import org.apache.bookkeeper.stats.OpStatsLogger;
+import org.apache.bookkeeper.stats.StatsLogger;
+import org.apache.bookkeeper.stats.annotations.StatsDoc;
+import org.apache.bookkeeper.tls.SecurityException;
+import org.apache.bookkeeper.tls.SecurityHandlerFactory;
+import org.apache.bookkeeper.tls.SecurityHandlerFactory.NodeType;
+import org.apache.bookkeeper.util.AvailabilityOfEntriesOfLedger;
+import org.apache.bookkeeper.util.ByteBufList;
+import org.apache.bookkeeper.util.MathUtils;
+import org.apache.bookkeeper.util.SafeRunnable;
+import org.apache.bookkeeper.util.StringUtils;
+import org.apache.bookkeeper.util.collections.ConcurrentOpenHashMap;
+import org.apache.bookkeeper.util.collections.SynchronizedHashMultiMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+
+/**
+ * This class manages all details of connection to a particular bookie. It also
+ * has reconnect logic if a connection to a bookie fails.
+ */
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">@StatsDoc(</span>
+    name = BookKeeperClientStats.CHANNEL_SCOPE,
+    help = &quot;Per channel bookie client stats&quot;
+)
+@Sharable
+public class PerChannelBookieClient extends ChannelInboundHandlerAdapter {
+
+<span class="fc" id="L156">    static final Logger LOG = LoggerFactory.getLogger(PerChannelBookieClient.class);</span>
+
+    // this set contains the bookie error return codes that we do not consider for a bookie to be &quot;faulty&quot;
+<span class="fc" id="L159">    private static final Set&lt;Integer&gt; expectedBkOperationErrors = Collections.unmodifiableSet(Sets</span>
+<span class="fc" id="L160">            .newHashSet(BKException.Code.BookieHandleNotAvailableException,</span>
+<span class="fc" id="L161">                        BKException.Code.NoSuchEntryException,</span>
+<span class="fc" id="L162">                        BKException.Code.NoSuchLedgerExistsException,</span>
+<span class="fc" id="L163">                        BKException.Code.LedgerFencedException,</span>
+<span class="fc" id="L164">                        BKException.Code.LedgerExistException,</span>
+<span class="fc" id="L165">                        BKException.Code.DuplicateEntryIdException,</span>
+<span class="fc" id="L166">                        BKException.Code.WriteOnReadOnlyBookieException));</span>
+    private static final int DEFAULT_HIGH_PRIORITY_VALUE = 100; // We may add finer grained priority later.
+<span class="fc" id="L168">    private static final AtomicLong txnIdGenerator = new AtomicLong(0);</span>
+
+    final BookieSocketAddress addr;
+    final EventLoopGroup eventLoopGroup;
+    final ByteBufAllocator allocator;
+    final OrderedExecutor executor;
+    final long addEntryTimeoutNanos;
+    final long readEntryTimeoutNanos;
+    final int maxFrameSize;
+    final int getBookieInfoTimeout;
+    final int startTLSTimeout;
+
+<span class="fc" id="L180">    private final ConcurrentOpenHashMap&lt;CompletionKey, CompletionValue&gt; completionObjects =</span>
+        new ConcurrentOpenHashMap&lt;CompletionKey, CompletionValue&gt;();
+
+    // Map that hold duplicated read requests. The idea is to only use this map (synchronized) when there is a duplicate
+    // read request for the same ledgerId/entryId
+<span class="fc" id="L185">    private final SynchronizedHashMultiMap&lt;CompletionKey, CompletionValue&gt; completionObjectsV2Conflicts =</span>
+        new SynchronizedHashMultiMap&lt;&gt;();
+
+    private final StatsLogger statsLogger;
+    @StatsDoc(
+        name = BookKeeperClientStats.CHANNEL_READ_OP,
+        help = &quot;channel stats of read entries requests&quot;
+    )
+    private final OpStatsLogger readEntryOpLogger;
+    @StatsDoc(
+        name = BookKeeperClientStats.CHANNEL_TIMEOUT_READ,
+        help = &quot;timeout stats of read entries requests&quot;
+    )
+    private final OpStatsLogger readTimeoutOpLogger;
+    @StatsDoc(
+        name = BookKeeperClientStats.CHANNEL_ADD_OP,
+        help = &quot;channel stats of add entries requests&quot;
+    )
+    private final OpStatsLogger addEntryOpLogger;
+    @StatsDoc(
+        name = BookKeeperClientStats.CHANNEL_WRITE_LAC_OP,
+        help = &quot;channel stats of write_lac requests&quot;
+    )
+    private final OpStatsLogger writeLacOpLogger;
+    @StatsDoc(
+        name = BookKeeperClientStats.CHANNEL_FORCE_OP,
+        help = &quot;channel stats of force requests&quot;
+    )
+    private final OpStatsLogger forceLedgerOpLogger;
+    @StatsDoc(
+        name = BookKeeperClientStats.CHANNEL_READ_LAC_OP,
+        help = &quot;channel stats of read_lac requests&quot;
+    )
+    private final OpStatsLogger readLacOpLogger;
+    @StatsDoc(
+        name = BookKeeperClientStats.CHANNEL_TIMEOUT_ADD,
+        help = &quot;timeout stats of add entries requests&quot;
+    )
+    private final OpStatsLogger addTimeoutOpLogger;
+    @StatsDoc(
+        name = BookKeeperClientStats.CHANNEL_TIMEOUT_WRITE_LAC,
+        help = &quot;timeout stats of write_lac requests&quot;
+    )
+    private final OpStatsLogger writeLacTimeoutOpLogger;
+    @StatsDoc(
+        name = BookKeeperClientStats.CHANNEL_TIMEOUT_FORCE,
+        help = &quot;timeout stats of force requests&quot;
+    )
+    private final OpStatsLogger forceLedgerTimeoutOpLogger;
+    @StatsDoc(
+        name = BookKeeperClientStats.CHANNEL_TIMEOUT_READ_LAC,
+        help = &quot;timeout stats of read_lac requests&quot;
+    )
+    private final OpStatsLogger readLacTimeoutOpLogger;
+    @StatsDoc(
+        name = BookKeeperClientStats.GET_BOOKIE_INFO_OP,
+        help = &quot;channel stats of get_bookie_info requests&quot;
+    )
+    private final OpStatsLogger getBookieInfoOpLogger;
+    @StatsDoc(
+        name = BookKeeperClientStats.TIMEOUT_GET_BOOKIE_INFO,
+        help = &quot;timeout stats of get_bookie_info requests&quot;
+    )
+    private final OpStatsLogger getBookieInfoTimeoutOpLogger;
+    @StatsDoc(
+        name = BookKeeperClientStats.CHANNEL_START_TLS_OP,
+        help = &quot;channel stats of start_tls requests&quot;
+    )
+    private final OpStatsLogger startTLSOpLogger;
+    @StatsDoc(
+        name = BookKeeperClientStats.CHANNEL_TIMEOUT_START_TLS_OP,
+        help = &quot;timeout stats of start_tls requests&quot;
+    )
+    private final OpStatsLogger startTLSTimeoutOpLogger;
+    @StatsDoc(
+        name = BookKeeperClientStats.CLIENT_CONNECT_TIMER,
+        help = &quot;channel stats of connect requests&quot;
+    )
+    private final OpStatsLogger connectTimer;
+    private final OpStatsLogger getListOfEntriesOfLedgerCompletionOpLogger;
+    private final OpStatsLogger getListOfEntriesOfLedgerCompletionTimeoutOpLogger;
+    @StatsDoc(
+        name = BookKeeperClientStats.NETTY_EXCEPTION_CNT,
+        help = &quot;the number of exceptions received from this channel&quot;
+    )
+    private final Counter exceptionCounter;
+    @StatsDoc(
+        name = BookKeeperClientStats.ADD_OP_OUTSTANDING,
+        help = &quot;the number of outstanding add_entry requests&quot;
+    )
+    private final Counter addEntryOutstanding;
+    @StatsDoc(
+        name = BookKeeperClientStats.READ_OP_OUTSTANDING,
+        help = &quot;the number of outstanding add_entry requests&quot;
+    )
+    private final Counter readEntryOutstanding;
+    /* collect stats on all Ops that flows through netty pipeline */
+    @StatsDoc(
+        name = BookKeeperClientStats.NETTY_OPS,
+        help = &quot;channel stats for all operations flowing through netty pipeline&quot;
+    )
+    private final OpStatsLogger nettyOpLogger;
+    @StatsDoc(
+        name = BookKeeperClientStats.ACTIVE_NON_TLS_CHANNEL_COUNTER,
+        help = &quot;the number of active non-tls channels&quot;
+    )
+    private final Counter activeNonTlsChannelCounter;
+    @StatsDoc(
+        name = BookKeeperClientStats.ACTIVE_TLS_CHANNEL_COUNTER,
+        help = &quot;the number of active tls channels&quot;
+    )
+    private final Counter activeTlsChannelCounter;
+    @StatsDoc(
+        name = BookKeeperClientStats.FAILED_CONNECTION_COUNTER,
+        help = &quot;the number of failed connections&quot;
+    )
+    private final Counter failedConnectionCounter;
+    @StatsDoc(
+        name = BookKeeperClientStats.FAILED_TLS_HANDSHAKE_COUNTER,
+        help = &quot;the number of failed tls handshakes&quot;
+    )
+    private final Counter failedTlsHandshakeCounter;
+
+    private final boolean useV2WireProtocol;
+    private final boolean preserveMdcForTaskExecution;
+
+    /**
+     * The following member variables do not need to be concurrent, or volatile
+     * because they are always updated under a lock.
+     */
+<span class="fc" id="L315">    private volatile Queue&lt;GenericCallback&lt;PerChannelBookieClient&gt;&gt; pendingOps =</span>
+            new ArrayDeque&lt;GenericCallback&lt;PerChannelBookieClient&gt;&gt;();
+<span class="fc" id="L317">    volatile Channel channel = null;</span>
+    private final ClientConnectionPeer connectionPeer;
+<span class="fc" id="L319">    private volatile BookKeeperPrincipal authorizedId = BookKeeperPrincipal.ANONYMOUS;</span>
+
+<span class="fc" id="L321">    enum ConnectionState {</span>
+<span class="fc" id="L322">        DISCONNECTED, CONNECTING, CONNECTED, CLOSED, START_TLS</span>
+    }
+
+    volatile ConnectionState state;
+<span class="fc" id="L326">    final ReentrantReadWriteLock closeLock = new ReentrantReadWriteLock();</span>
+    private final ClientConfiguration conf;
+
+    private final PerChannelBookieClientPool pcbcPool;
+    private final ClientAuthProvider.Factory authProviderFactory;
+    private final ExtensionRegistry extRegistry;
+    private final SecurityHandlerFactory shFactory;
+<span class="fc" id="L333">    private volatile boolean isWritable = true;</span>
+
+    public PerChannelBookieClient(OrderedExecutor executor, EventLoopGroup eventLoopGroup,
+                                  BookieSocketAddress addr) throws SecurityException {
+<span class="nc" id="L337">        this(new ClientConfiguration(), executor, eventLoopGroup, addr, NullStatsLogger.INSTANCE, null, null,</span>
+                null);
+<span class="nc" id="L339">    }</span>
+
+    public PerChannelBookieClient(OrderedExecutor executor, EventLoopGroup eventLoopGroup,
+                                  BookieSocketAddress addr,
+                                  ClientAuthProvider.Factory authProviderFactory,
+                                  ExtensionRegistry extRegistry) throws SecurityException {
+<span class="nc" id="L345">        this(new ClientConfiguration(), executor, eventLoopGroup, addr, NullStatsLogger.INSTANCE,</span>
+                authProviderFactory, extRegistry, null);
+<span class="nc" id="L347">    }</span>
+
+    public PerChannelBookieClient(ClientConfiguration conf, OrderedExecutor executor,
+                                  EventLoopGroup eventLoopGroup, BookieSocketAddress addr,
+                                  StatsLogger parentStatsLogger, ClientAuthProvider.Factory authProviderFactory,
+                                  ExtensionRegistry extRegistry,
+                                  PerChannelBookieClientPool pcbcPool) throws SecurityException {
+<span class="nc" id="L354">        this(conf, executor, eventLoopGroup, UnpooledByteBufAllocator.DEFAULT, addr, NullStatsLogger.INSTANCE,</span>
+                authProviderFactory, extRegistry, pcbcPool, null);
+<span class="nc" id="L356">    }</span>
+
+    public PerChannelBookieClient(ClientConfiguration conf, OrderedExecutor executor,
+                                  EventLoopGroup eventLoopGroup,
+                                  ByteBufAllocator allocator,
+                                  BookieSocketAddress addr,
+                                  StatsLogger parentStatsLogger, ClientAuthProvider.Factory authProviderFactory,
+                                  ExtensionRegistry extRegistry,
+                                  PerChannelBookieClientPool pcbcPool,
+<span class="fc" id="L365">                                  SecurityHandlerFactory shFactory) throws SecurityException {</span>
+<span class="fc" id="L366">        this.maxFrameSize = conf.getNettyMaxFrameSizeBytes();</span>
+<span class="fc" id="L367">        this.conf = conf;</span>
+<span class="fc" id="L368">        this.addr = addr;</span>
+<span class="fc" id="L369">        this.executor = executor;</span>
+<span class="pc bpc" id="L370" title="1 of 2 branches missed.">        if (LocalBookiesRegistry.isLocalBookie(addr)) {</span>
+<span class="nc" id="L371">            this.eventLoopGroup = new DefaultEventLoopGroup();</span>
+        } else {
+<span class="fc" id="L373">            this.eventLoopGroup = eventLoopGroup;</span>
+        }
+<span class="fc" id="L375">        this.allocator = allocator;</span>
+<span class="fc" id="L376">        this.state = ConnectionState.DISCONNECTED;</span>
+<span class="fc" id="L377">        this.addEntryTimeoutNanos = TimeUnit.SECONDS.toNanos(conf.getAddEntryTimeout());</span>
+<span class="fc" id="L378">        this.readEntryTimeoutNanos = TimeUnit.SECONDS.toNanos(conf.getReadEntryTimeout());</span>
+<span class="fc" id="L379">        this.getBookieInfoTimeout = conf.getBookieInfoTimeout();</span>
+<span class="fc" id="L380">        this.startTLSTimeout = conf.getStartTLSTimeout();</span>
+<span class="fc" id="L381">        this.useV2WireProtocol = conf.getUseV2WireProtocol();</span>
+<span class="fc" id="L382">        this.preserveMdcForTaskExecution = conf.getPreserveMdcForTaskExecution();</span>
+
+<span class="fc" id="L384">        this.authProviderFactory = authProviderFactory;</span>
+<span class="fc" id="L385">        this.extRegistry = extRegistry;</span>
+<span class="fc" id="L386">        this.shFactory = shFactory;</span>
+<span class="pc bpc" id="L387" title="1 of 2 branches missed.">        if (shFactory != null) {</span>
+<span class="nc" id="L388">            shFactory.init(NodeType.Client, conf, allocator);</span>
+        }
+
+<span class="fc" id="L391">        this.statsLogger = parentStatsLogger.scope(BookKeeperClientStats.CHANNEL_SCOPE)</span>
+<span class="fc" id="L392">            .scope(buildStatsLoggerScopeName(addr));</span>
+
+<span class="fc" id="L394">        readEntryOpLogger = statsLogger.getOpStatsLogger(BookKeeperClientStats.CHANNEL_READ_OP);</span>
+<span class="fc" id="L395">        addEntryOpLogger = statsLogger.getOpStatsLogger(BookKeeperClientStats.CHANNEL_ADD_OP);</span>
+<span class="fc" id="L396">        writeLacOpLogger = statsLogger.getOpStatsLogger(BookKeeperClientStats.CHANNEL_WRITE_LAC_OP);</span>
+<span class="fc" id="L397">        forceLedgerOpLogger = statsLogger.getOpStatsLogger(BookKeeperClientStats.CHANNEL_FORCE_OP);</span>
+<span class="fc" id="L398">        readLacOpLogger = statsLogger.getOpStatsLogger(BookKeeperClientStats.CHANNEL_READ_LAC_OP);</span>
+<span class="fc" id="L399">        getBookieInfoOpLogger = statsLogger.getOpStatsLogger(BookKeeperClientStats.GET_BOOKIE_INFO_OP);</span>
+<span class="fc" id="L400">        getListOfEntriesOfLedgerCompletionOpLogger = statsLogger</span>
+<span class="fc" id="L401">                .getOpStatsLogger(BookKeeperClientStats.GET_LIST_OF_ENTRIES_OF_LEDGER_OP);</span>
+<span class="fc" id="L402">        readTimeoutOpLogger = statsLogger.getOpStatsLogger(BookKeeperClientStats.CHANNEL_TIMEOUT_READ);</span>
+<span class="fc" id="L403">        addTimeoutOpLogger = statsLogger.getOpStatsLogger(BookKeeperClientStats.CHANNEL_TIMEOUT_ADD);</span>
+<span class="fc" id="L404">        writeLacTimeoutOpLogger = statsLogger.getOpStatsLogger(BookKeeperClientStats.CHANNEL_TIMEOUT_WRITE_LAC);</span>
+<span class="fc" id="L405">        forceLedgerTimeoutOpLogger = statsLogger.getOpStatsLogger(BookKeeperClientStats.CHANNEL_TIMEOUT_FORCE);</span>
+<span class="fc" id="L406">        readLacTimeoutOpLogger = statsLogger.getOpStatsLogger(BookKeeperClientStats.CHANNEL_TIMEOUT_READ_LAC);</span>
+<span class="fc" id="L407">        getBookieInfoTimeoutOpLogger = statsLogger.getOpStatsLogger(BookKeeperClientStats.TIMEOUT_GET_BOOKIE_INFO);</span>
+<span class="fc" id="L408">        startTLSOpLogger = statsLogger.getOpStatsLogger(BookKeeperClientStats.CHANNEL_START_TLS_OP);</span>
+<span class="fc" id="L409">        startTLSTimeoutOpLogger = statsLogger.getOpStatsLogger(BookKeeperClientStats.CHANNEL_TIMEOUT_START_TLS_OP);</span>
+<span class="fc" id="L410">        getListOfEntriesOfLedgerCompletionTimeoutOpLogger = statsLogger</span>
+<span class="fc" id="L411">                .getOpStatsLogger(BookKeeperClientStats.TIMEOUT_GET_LIST_OF_ENTRIES_OF_LEDGER);</span>
+<span class="fc" id="L412">        exceptionCounter = statsLogger.getCounter(BookKeeperClientStats.NETTY_EXCEPTION_CNT);</span>
+<span class="fc" id="L413">        connectTimer = statsLogger.getOpStatsLogger(BookKeeperClientStats.CLIENT_CONNECT_TIMER);</span>
+<span class="fc" id="L414">        addEntryOutstanding = statsLogger.getCounter(BookKeeperClientStats.ADD_OP_OUTSTANDING);</span>
+<span class="fc" id="L415">        readEntryOutstanding = statsLogger.getCounter(BookKeeperClientStats.READ_OP_OUTSTANDING);</span>
+<span class="fc" id="L416">        nettyOpLogger = statsLogger.getOpStatsLogger(BookKeeperClientStats.NETTY_OPS);</span>
+<span class="fc" id="L417">        activeNonTlsChannelCounter = statsLogger.getCounter(BookKeeperClientStats.ACTIVE_NON_TLS_CHANNEL_COUNTER);</span>
+<span class="fc" id="L418">        activeTlsChannelCounter = statsLogger.getCounter(BookKeeperClientStats.ACTIVE_TLS_CHANNEL_COUNTER);</span>
+<span class="fc" id="L419">        failedConnectionCounter = statsLogger.getCounter(BookKeeperClientStats.FAILED_CONNECTION_COUNTER);</span>
+<span class="fc" id="L420">        failedTlsHandshakeCounter = statsLogger.getCounter(BookKeeperClientStats.FAILED_TLS_HANDSHAKE_COUNTER);</span>
+
+<span class="fc" id="L422">        this.pcbcPool = pcbcPool;</span>
+
+<span class="fc" id="L424">        this.connectionPeer = new ClientConnectionPeer() {</span>
+
+            @Override
+            public SocketAddress getRemoteAddr() {
+<span class="nc" id="L428">                Channel c = channel;</span>
+<span class="nc bnc" id="L429" title="All 2 branches missed.">                if (c != null) {</span>
+<span class="nc" id="L430">                    return c.remoteAddress();</span>
+                } else {
+<span class="nc" id="L432">                    return null;</span>
+                }
+            }
+
+            @Override
+            public Collection&lt;Object&gt; getProtocolPrincipals() {
+<span class="nc" id="L438">                Channel c = channel;</span>
+<span class="nc bnc" id="L439" title="All 2 branches missed.">                if (c == null) {</span>
+<span class="nc" id="L440">                    return Collections.emptyList();</span>
+                }
+<span class="nc" id="L442">                SslHandler ssl = c.pipeline().get(SslHandler.class);</span>
+<span class="nc bnc" id="L443" title="All 2 branches missed.">                if (ssl == null) {</span>
+<span class="nc" id="L444">                    return Collections.emptyList();</span>
+                }
+                try {
+<span class="nc" id="L447">                    Certificate[] certificates = ssl.engine().getSession().getPeerCertificates();</span>
+<span class="nc bnc" id="L448" title="All 2 branches missed.">                    if (certificates == null) {</span>
+<span class="nc" id="L449">                        return Collections.emptyList();</span>
+                    }
+<span class="nc" id="L451">                    List&lt;Object&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L452">                    result.addAll(Arrays.asList(certificates));</span>
+<span class="nc" id="L453">                    return result;</span>
+<span class="nc" id="L454">                } catch (SSLPeerUnverifiedException err) {</span>
+<span class="nc" id="L455">                     return Collections.emptyList();</span>
+                }
+            }
+
+            @Override
+            public void disconnect() {
+<span class="nc" id="L461">                Channel c = channel;</span>
+<span class="nc bnc" id="L462" title="All 2 branches missed.">                if (c != null) {</span>
+<span class="nc" id="L463">                    c.close().addListener(x -&gt; makeWritable());</span>
+                }
+<span class="nc" id="L465">                LOG.info(&quot;authplugin disconnected channel {}&quot;, channel);</span>
+<span class="nc" id="L466">            }</span>
+
+            @Override
+            public void setAuthorizedId(BookKeeperPrincipal principal) {
+<span class="fc" id="L470">                authorizedId = principal;</span>
+<span class="fc" id="L471">                LOG.info(&quot;connection {} authenticated as {}&quot;, channel, principal);</span>
+<span class="fc" id="L472">            }</span>
+
+            @Override
+            public BookKeeperPrincipal getAuthorizedId() {
+<span class="nc" id="L476">                return authorizedId;</span>
+            }
+
+            @Override
+            public boolean isSecure() {
+<span class="nc" id="L481">               Channel c = channel;</span>
+<span class="nc bnc" id="L482" title="All 2 branches missed.">               if (c == null) {</span>
+<span class="nc" id="L483">                    return false;</span>
+               } else {
+<span class="nc bnc" id="L485" title="All 2 branches missed.">                    return c.pipeline().get(SslHandler.class) != null;</span>
+               }
+            }
+
+        };
+<span class="fc" id="L490">    }</span>
+
+    public static String buildStatsLoggerScopeName(BookieSocketAddress addr) {
+<span class="fc" id="L493">        StringBuilder nameBuilder = new StringBuilder();</span>
+<span class="fc" id="L494">        nameBuilder.append(addr.getHostName().replace('.', '_').replace('-', '_')).append(&quot;_&quot;).append(addr.getPort());</span>
+<span class="fc" id="L495">        return nameBuilder.toString();</span>
+    }
+
+    private void completeOperation(GenericCallback&lt;PerChannelBookieClient&gt; op, int rc) {
+        //Thread.dumpStack();
+<span class="fc" id="L500">        closeLock.readLock().lock();</span>
+        try {
+<span class="pc bpc" id="L502" title="1 of 2 branches missed.">            if (ConnectionState.CLOSED == state) {</span>
+<span class="nc" id="L503">                op.operationComplete(BKException.Code.ClientClosedException, this);</span>
+            } else {
+<span class="fc" id="L505">                op.operationComplete(rc, this);</span>
+            }
+        } finally {
+<span class="fc" id="L508">            closeLock.readLock().unlock();</span>
+        }
+<span class="fc" id="L510">    }</span>
+
+    protected long getNumPendingCompletionRequests() {
+<span class="nc" id="L513">        return completionObjects.size();</span>
+    }
+
+    protected ChannelFuture connect() {
+<span class="fc" id="L517">        final long startTime = MathUtils.nowInNano();</span>
+<span class="pc bpc" id="L518" title="1 of 2 branches missed.">        if (LOG.isDebugEnabled()) {</span>
+<span class="fc" id="L519">            LOG.debug(&quot;Connecting to bookie: {}&quot;, addr);</span>
+        }
+
+        // Set up the ClientBootStrap so we can create a new Channel connection to the bookie.
+<span class="fc" id="L523">        Bootstrap bootstrap = new Bootstrap();</span>
+<span class="fc" id="L524">        bootstrap.group(eventLoopGroup);</span>
+<span class="pc bpc" id="L525" title="1 of 2 branches missed.">        if (eventLoopGroup instanceof EpollEventLoopGroup) {</span>
+<span class="fc" id="L526">            bootstrap.channel(EpollSocketChannel.class);</span>
+<span class="nc bnc" id="L527" title="All 2 branches missed.">        } else if (eventLoopGroup instanceof DefaultEventLoopGroup) {</span>
+<span class="nc" id="L528">            bootstrap.channel(LocalChannel.class);</span>
+        } else {
+<span class="nc" id="L530">            bootstrap.channel(NioSocketChannel.class);</span>
+        }
+
+<span class="fc" id="L533">        bootstrap.option(ChannelOption.ALLOCATOR, this.allocator);</span>
+<span class="fc" id="L534">        bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, conf.getClientConnectTimeoutMillis());</span>
+<span class="fc" id="L535">        bootstrap.option(ChannelOption.WRITE_BUFFER_WATER_MARK, new WriteBufferWaterMark(</span>
+<span class="fc" id="L536">                conf.getClientWriteBufferLowWaterMark(), conf.getClientWriteBufferHighWaterMark()));</span>
+
+<span class="pc bpc" id="L538" title="1 of 2 branches missed.">        if (!(eventLoopGroup instanceof DefaultEventLoopGroup)) {</span>
+<span class="fc" id="L539">            bootstrap.option(ChannelOption.TCP_NODELAY, conf.getClientTcpNoDelay());</span>
+<span class="fc" id="L540">            bootstrap.option(ChannelOption.SO_KEEPALIVE, conf.getClientSockKeepalive());</span>
+
+            // if buffer sizes are 0, let OS auto-tune it
+<span class="pc bpc" id="L543" title="1 of 2 branches missed.">            if (conf.getClientSendBufferSize() &gt; 0) {</span>
+<span class="fc" id="L544">                bootstrap.option(ChannelOption.SO_SNDBUF, conf.getClientSendBufferSize());</span>
+            }
+
+<span class="pc bpc" id="L547" title="1 of 2 branches missed.">            if (conf.getClientReceiveBufferSize() &gt; 0) {</span>
+<span class="fc" id="L548">                bootstrap.option(ChannelOption.SO_RCVBUF, conf.getClientReceiveBufferSize());</span>
+            }
+        }
+
+        // In the netty pipeline, we need to split packets based on length, so we
+        // use the {@link LengthFieldBasedFramDecoder}. Other than that all actions
+        // are carried out in this class, e.g., making sense of received messages,
+        // prepending the length to outgoing packets etc.
+<span class="fc" id="L556">        bootstrap.handler(new ChannelInitializer&lt;Channel&gt;() {</span>
+            @Override
+            protected void initChannel(Channel ch) throws Exception {
+<span class="fc" id="L559">                ChannelPipeline pipeline = ch.pipeline();</span>
+
+<span class="fc" id="L561">                pipeline.addLast(&quot;bytebufList&quot;, ByteBufList.ENCODER_WITH_SIZE);</span>
+<span class="fc" id="L562">                pipeline.addLast(&quot;lengthbasedframedecoder&quot;,</span>
+                        new LengthFieldBasedFrameDecoder(maxFrameSize, 0, 4, 0, 4));
+<span class="fc" id="L564">                pipeline.addLast(&quot;lengthprepender&quot;, new LengthFieldPrepender(4));</span>
+<span class="fc" id="L565">                pipeline.addLast(&quot;bookieProtoEncoder&quot;, new BookieProtoEncoding.RequestEncoder(extRegistry));</span>
+<span class="fc" id="L566">                pipeline.addLast(</span>
+                    &quot;bookieProtoDecoder&quot;,
+<span class="pc bpc" id="L568" title="1 of 2 branches missed.">                    new BookieProtoEncoding.ResponseDecoder(extRegistry, useV2WireProtocol, shFactory != null));</span>
+<span class="fc" id="L569">                pipeline.addLast(&quot;authHandler&quot;, new AuthHandler.ClientSideHandler(authProviderFactory, txnIdGenerator,</span>
+<span class="fc" id="L570">                            connectionPeer, useV2WireProtocol));</span>
+<span class="fc" id="L571">                pipeline.addLast(&quot;mainhandler&quot;, PerChannelBookieClient.this);</span>
+<span class="fc" id="L572">            }</span>
+        });
+
+<span class="fc" id="L575">        SocketAddress bookieAddr = addr.getSocketAddress();</span>
+<span class="pc bpc" id="L576" title="1 of 2 branches missed.">        if (eventLoopGroup instanceof DefaultEventLoopGroup) {</span>
+<span class="nc" id="L577">            bookieAddr = addr.getLocalAddress();</span>
+        }
+
+<span class="fc" id="L580">        ChannelFuture future = bootstrap.connect(bookieAddr);</span>
+<span class="fc" id="L581">        future.addListener(contextPreservingListener(new ConnectionFutureListener(startTime)));</span>
+<span class="fc" id="L582">        future.addListener(x -&gt; makeWritable());</span>
+<span class="fc" id="L583">        return future;</span>
+    }
+
+    void cleanDisconnectAndClose() {
+<span class="nc" id="L587">        disconnect();</span>
+<span class="nc" id="L588">        close();</span>
+<span class="nc" id="L589">    }</span>
+
+    /**
+     *
+     * @return boolean, true is PCBC is writable
+     */
+    public boolean isWritable() {
+<span class="nc" id="L596">        return isWritable;</span>
+    }
+
+    public void setWritable(boolean val) {
+<span class="fc" id="L600">        isWritable = val;</span>
+<span class="fc" id="L601">    }</span>
+
+    private void makeWritable() {
+<span class="fc" id="L604">        setWritable(true);</span>
+<span class="fc" id="L605">    }</span>
+
+    void connectIfNeededAndDoOp(GenericCallback&lt;PerChannelBookieClient&gt; op) {
+<span class="fc" id="L608">        boolean completeOpNow = false;</span>
+<span class="fc" id="L609">        int opRc = BKException.Code.OK;</span>
+        // common case without lock first
+<span class="pc bpc" id="L611" title="1 of 4 branches missed.">        if (channel != null &amp;&amp; state == ConnectionState.CONNECTED) {</span>
+<span class="fc" id="L612">            completeOpNow = true;</span>
+        } else {
+
+<span class="fc" id="L615">            synchronized (this) {</span>
+                // check the channel status again under lock
+<span class="pc bpc" id="L617" title="3 of 4 branches missed.">                if (channel != null &amp;&amp; state == ConnectionState.CONNECTED) {</span>
+<span class="nc" id="L618">                    completeOpNow = true;</span>
+<span class="nc" id="L619">                    opRc = BKException.Code.OK;</span>
+<span class="pc bpc" id="L620" title="1 of 2 branches missed.">                } else if (state == ConnectionState.CLOSED) {</span>
+<span class="nc" id="L621">                    completeOpNow = true;</span>
+<span class="nc" id="L622">                    opRc = BKException.Code.BookieHandleNotAvailableException;</span>
+                } else {
+                    // channel is either null (first connection attempt), or the
+                    // channel is disconnected. Connection attempt is still in
+                    // progress, queue up this op. Op will be executed when
+                    // connection attempt either fails or succeeds
+<span class="fc" id="L628">                    pendingOps.add(op);</span>
+
+<span class="pc bpc" id="L630" title="1 of 4 branches missed.">                    if (state == ConnectionState.CONNECTING</span>
+                        || state == ConnectionState.START_TLS) {
+                        // the connection request has already been sent and it is waiting for the response.
+<span class="fc" id="L633">                        return;</span>
+                    }
+                    // switch state to connecting and do connection attempt
+<span class="fc" id="L636">                    state = ConnectionState.CONNECTING;</span>
+                }
+<span class="fc" id="L638">            }</span>
+<span class="pc bpc" id="L639" title="1 of 2 branches missed.">            if (!completeOpNow) {</span>
+                // Start connection attempt to the input server host.
+<span class="fc" id="L641">                connect();</span>
+            }
+        }
+
+<span class="fc bfc" id="L645" title="All 2 branches covered.">        if (completeOpNow) {</span>
+<span class="fc" id="L646">            completeOperation(op, opRc);</span>
+        }
+
+<span class="fc" id="L649">    }</span>
+
+    void writeLac(final long ledgerId, final byte[] masterKey, final long lac, ByteBufList toSend, WriteLacCallback cb,
+            Object ctx) {
+<span class="nc" id="L653">        final long txnId = getTxnId();</span>
+<span class="nc" id="L654">        final CompletionKey completionKey = new V3CompletionKey(txnId,</span>
+                                                                OperationType.WRITE_LAC);
+        // writeLac is mostly like addEntry hence uses addEntryTimeout
+<span class="nc" id="L657">        completionObjects.put(completionKey,</span>
+                              new WriteLacCompletion(completionKey, cb,
+                                                     ctx, lac));
+
+        // Build the request
+<span class="nc" id="L662">        BKPacketHeader.Builder headerBuilder = BKPacketHeader.newBuilder()</span>
+<span class="nc" id="L663">                .setVersion(ProtocolVersion.VERSION_THREE)</span>
+<span class="nc" id="L664">                .setOperation(OperationType.WRITE_LAC)</span>
+<span class="nc" id="L665">                .setTxnId(txnId);</span>
+        ByteString body;
+<span class="nc bnc" id="L667" title="All 2 branches missed.">        if (toSend.hasArray()) {</span>
+<span class="nc" id="L668">            body = UnsafeByteOperations.unsafeWrap(toSend.array(), toSend.arrayOffset(), toSend.readableBytes());</span>
+<span class="nc bnc" id="L669" title="All 2 branches missed.">        } else if (toSend.size() == 1) {</span>
+<span class="nc" id="L670">            body = UnsafeByteOperations.unsafeWrap(toSend.getBuffer(0).nioBuffer());</span>
+        } else {
+<span class="nc" id="L672">            body = UnsafeByteOperations.unsafeWrap(toSend.toArray());</span>
+        }
+<span class="nc" id="L674">        WriteLacRequest.Builder writeLacBuilder = WriteLacRequest.newBuilder()</span>
+<span class="nc" id="L675">                .setLedgerId(ledgerId)</span>
+<span class="nc" id="L676">                .setLac(lac)</span>
+<span class="nc" id="L677">                .setMasterKey(UnsafeByteOperations.unsafeWrap(masterKey))</span>
+<span class="nc" id="L678">                .setBody(body);</span>
+
+<span class="nc" id="L680">        final Request writeLacRequest = withRequestContext(Request.newBuilder())</span>
+<span class="nc" id="L681">                .setHeader(headerBuilder)</span>
+<span class="nc" id="L682">                .setWriteLacRequest(writeLacBuilder)</span>
+<span class="nc" id="L683">                .build();</span>
+<span class="nc" id="L684">        writeAndFlush(channel, completionKey, writeLacRequest);</span>
+<span class="nc" id="L685">    }</span>
+
+    void forceLedger(final long ledgerId, ForceLedgerCallback cb, Object ctx) {
+<span class="nc bnc" id="L688" title="All 2 branches missed.">        if (useV2WireProtocol) {</span>
+<span class="nc" id="L689">                LOG.error(&quot;force is not allowed with v2 protocol&quot;);</span>
+<span class="nc" id="L690">                executor.executeOrdered(ledgerId, () -&gt; {</span>
+<span class="nc" id="L691">                    cb.forceLedgerComplete(BKException.Code.IllegalOpException, ledgerId, addr, ctx);</span>
+<span class="nc" id="L692">                });</span>
+<span class="nc" id="L693">                return;</span>
+        }
+<span class="nc" id="L695">        final long txnId = getTxnId();</span>
+<span class="nc" id="L696">        final CompletionKey completionKey = new V3CompletionKey(txnId,</span>
+                                                                OperationType.FORCE_LEDGER);
+        // force is mostly like addEntry hence uses addEntryTimeout
+<span class="nc" id="L699">        completionObjects.put(completionKey,</span>
+                              new ForceLedgerCompletion(completionKey, cb,
+                                                     ctx, ledgerId));
+
+        // Build the request
+<span class="nc" id="L704">        BKPacketHeader.Builder headerBuilder = BKPacketHeader.newBuilder()</span>
+<span class="nc" id="L705">                .setVersion(ProtocolVersion.VERSION_THREE)</span>
+<span class="nc" id="L706">                .setOperation(OperationType.FORCE_LEDGER)</span>
+<span class="nc" id="L707">                .setTxnId(txnId);</span>
+<span class="nc" id="L708">        ForceLedgerRequest.Builder writeLacBuilder = ForceLedgerRequest.newBuilder()</span>
+<span class="nc" id="L709">                .setLedgerId(ledgerId);</span>
+
+<span class="nc" id="L711">        final Request forceLedgerRequest = withRequestContext(Request.newBuilder())</span>
+<span class="nc" id="L712">                .setHeader(headerBuilder)</span>
+<span class="nc" id="L713">                .setForceLedgerRequest(writeLacBuilder)</span>
+<span class="nc" id="L714">                .build();</span>
+<span class="nc" id="L715">        writeAndFlush(channel, completionKey, forceLedgerRequest);</span>
+<span class="nc" id="L716">    }</span>
+
+    /**
+     * This method should be called only after connection has been checked for
+     * {@link #connectIfNeededAndDoOp(GenericCallback)}.
+     *
+     * @param ledgerId
+     *          Ledger Id
+     * @param masterKey
+     *          Master Key
+     * @param entryId
+     *          Entry Id
+     * @param toSend
+     *          Buffer to send
+     * @param cb
+     *          Write callback
+     * @param ctx
+     *          Write callback context
+     * @param allowFastFail
+     *          allowFastFail flag
+     * @param writeFlags
+     *          WriteFlags
+     */
+    void addEntry(final long ledgerId, byte[] masterKey, final long entryId, ByteBufList toSend, WriteCallback cb,
+                  Object ctx, final int options, boolean allowFastFail, final EnumSet&lt;WriteFlag&gt; writeFlags) {
+<span class="fc" id="L741">        Object request = null;</span>
+<span class="fc" id="L742">        CompletionKey completionKey = null;</span>
+<span class="pc bpc" id="L743" title="1 of 2 branches missed.">        if (useV2WireProtocol) {</span>
+<span class="nc bnc" id="L744" title="All 2 branches missed.">            if (writeFlags.contains(WriteFlag.DEFERRED_SYNC)) {</span>
+<span class="nc" id="L745">                LOG.error(&quot;invalid writeflags {} for v2 protocol&quot;, writeFlags);</span>
+<span class="nc" id="L746">                executor.executeOrdered(ledgerId, () -&gt; {</span>
+<span class="nc" id="L747">                    cb.writeComplete(BKException.Code.IllegalOpException, ledgerId, entryId, addr, ctx);</span>
+<span class="nc" id="L748">                });</span>
+<span class="nc" id="L749">                return;</span>
+            }
+<span class="nc" id="L751">            completionKey = acquireV2Key(ledgerId, entryId, OperationType.ADD_ENTRY);</span>
+<span class="nc" id="L752">            request = BookieProtocol.AddRequest.create(</span>
+                    BookieProtocol.CURRENT_PROTOCOL_VERSION, ledgerId, entryId,
+                    (short) options, masterKey, toSend);
+        } else {
+<span class="fc" id="L756">            final long txnId = getTxnId();</span>
+<span class="fc" id="L757">            completionKey = new V3CompletionKey(txnId, OperationType.ADD_ENTRY);</span>
+
+            // Build the request and calculate the total size to be included in the packet.
+<span class="fc" id="L760">            BKPacketHeader.Builder headerBuilder = BKPacketHeader.newBuilder()</span>
+<span class="fc" id="L761">                    .setVersion(ProtocolVersion.VERSION_THREE)</span>
+<span class="fc" id="L762">                    .setOperation(OperationType.ADD_ENTRY)</span>
+<span class="fc" id="L763">                    .setTxnId(txnId);</span>
+<span class="pc bpc" id="L764" title="1 of 2 branches missed.">            if (((short) options &amp; BookieProtocol.FLAG_HIGH_PRIORITY) == BookieProtocol.FLAG_HIGH_PRIORITY) {</span>
+<span class="nc" id="L765">                headerBuilder.setPriority(DEFAULT_HIGH_PRIORITY_VALUE);</span>
+            }
+
+<span class="fc" id="L768">            ByteString body = null;</span>
+<span class="pc bpc" id="L769" title="1 of 2 branches missed.">            if (toSend.hasArray()) {</span>
+<span class="nc" id="L770">                body = UnsafeByteOperations.unsafeWrap(toSend.array(), toSend.arrayOffset(), toSend.readableBytes());</span>
+            } else {
+<span class="fc bfc" id="L772" title="All 2 branches covered.">                for (int i = 0; i &lt; toSend.size(); i++) {</span>
+<span class="fc" id="L773">                    ByteString piece = UnsafeByteOperations.unsafeWrap(toSend.getBuffer(i).nioBuffer());</span>
+                    // use ByteString.concat to avoid byte[] allocation when toSend has multiple ByteBufs
+<span class="fc bfc" id="L775" title="All 2 branches covered.">                    body = (body == null) ? piece : body.concat(piece);</span>
+                }
+            }
+<span class="fc" id="L778">            AddRequest.Builder addBuilder = AddRequest.newBuilder()</span>
+<span class="fc" id="L779">                    .setLedgerId(ledgerId)</span>
+<span class="fc" id="L780">                    .setEntryId(entryId)</span>
+<span class="fc" id="L781">                    .setMasterKey(UnsafeByteOperations.unsafeWrap(masterKey))</span>
+<span class="fc" id="L782">                    .setBody(body);</span>
+
+<span class="pc bpc" id="L784" title="1 of 2 branches missed.">            if (((short) options &amp; BookieProtocol.FLAG_RECOVERY_ADD) == BookieProtocol.FLAG_RECOVERY_ADD) {</span>
+<span class="nc" id="L785">                addBuilder.setFlag(AddRequest.Flag.RECOVERY_ADD);</span>
+            }
+
+<span class="pc bpc" id="L788" title="1 of 2 branches missed.">            if (!writeFlags.isEmpty()) {</span>
+                // add flags only if needed, in order to be able to talk with old bookies
+<span class="nc" id="L790">                addBuilder.setWriteFlags(WriteFlag.getWriteFlagsValue(writeFlags));</span>
+            }
+
+<span class="fc" id="L793">            request = withRequestContext(Request.newBuilder())</span>
+<span class="fc" id="L794">                    .setHeader(headerBuilder)</span>
+<span class="fc" id="L795">                    .setAddRequest(addBuilder)</span>
+<span class="fc" id="L796">                    .build();</span>
+        }
+
+<span class="fc" id="L799">        putCompletionKeyValue(completionKey,</span>
+<span class="fc" id="L800">                              acquireAddCompletion(completionKey,</span>
+                                                   cb, ctx, ledgerId, entryId));
+<span class="fc" id="L802">        final Channel c = channel;</span>
+<span class="pc bpc" id="L803" title="1 of 2 branches missed.">        if (c == null) {</span>
+            // usually checked in writeAndFlush, but we have extra check
+            // because we need to release toSend.
+<span class="nc" id="L806">            errorOut(completionKey);</span>
+<span class="nc" id="L807">            toSend.release();</span>
+<span class="nc" id="L808">            return;</span>
+        } else {
+            // addEntry times out on backpressure
+<span class="fc" id="L811">            writeAndFlush(c, completionKey, request, allowFastFail);</span>
+        }
+<span class="fc" id="L813">    }</span>
+
+    public void readLac(final long ledgerId, ReadLacCallback cb, Object ctx) {
+<span class="nc" id="L816">        Object request = null;</span>
+<span class="nc" id="L817">        CompletionKey completionKey = null;</span>
+<span class="nc bnc" id="L818" title="All 2 branches missed.">        if (useV2WireProtocol) {</span>
+<span class="nc" id="L819">            request = new BookieProtocol.ReadRequest(BookieProtocol.CURRENT_PROTOCOL_VERSION,</span>
+                                                     ledgerId, 0, (short) 0, null);
+<span class="nc" id="L821">            completionKey = acquireV2Key(ledgerId, 0, OperationType.READ_LAC);</span>
+        } else {
+<span class="nc" id="L823">            final long txnId = getTxnId();</span>
+<span class="nc" id="L824">            completionKey = new V3CompletionKey(txnId, OperationType.READ_LAC);</span>
+
+            // Build the request and calculate the total size to be included in the packet.
+<span class="nc" id="L827">            BKPacketHeader.Builder headerBuilder = BKPacketHeader.newBuilder()</span>
+<span class="nc" id="L828">                    .setVersion(ProtocolVersion.VERSION_THREE)</span>
+<span class="nc" id="L829">                    .setOperation(OperationType.READ_LAC)</span>
+<span class="nc" id="L830">                    .setTxnId(txnId);</span>
+<span class="nc" id="L831">            ReadLacRequest.Builder readLacBuilder = ReadLacRequest.newBuilder()</span>
+<span class="nc" id="L832">                    .setLedgerId(ledgerId);</span>
+<span class="nc" id="L833">            request = withRequestContext(Request.newBuilder())</span>
+<span class="nc" id="L834">                    .setHeader(headerBuilder)</span>
+<span class="nc" id="L835">                    .setReadLacRequest(readLacBuilder)</span>
+<span class="nc" id="L836">                    .build();</span>
+        }
+<span class="nc" id="L838">        putCompletionKeyValue(completionKey,</span>
+                              new ReadLacCompletion(completionKey, cb,
+                                                    ctx, ledgerId));
+<span class="nc" id="L841">        writeAndFlush(channel, completionKey, request);</span>
+<span class="nc" id="L842">    }</span>
+
+    public void getListOfEntriesOfLedger(final long ledgerId, GetListOfEntriesOfLedgerCallback cb) {
+<span class="nc" id="L845">        final long txnId = getTxnId();</span>
+<span class="nc" id="L846">        final CompletionKey completionKey = new V3CompletionKey(txnId, OperationType.GET_LIST_OF_ENTRIES_OF_LEDGER);</span>
+<span class="nc" id="L847">        completionObjects.put(completionKey, new GetListOfEntriesOfLedgerCompletion(completionKey, cb, ledgerId));</span>
+
+        // Build the request.
+<span class="nc" id="L850">        BKPacketHeader.Builder headerBuilder = BKPacketHeader.newBuilder().setVersion(ProtocolVersion.VERSION_THREE)</span>
+<span class="nc" id="L851">                .setOperation(OperationType.GET_LIST_OF_ENTRIES_OF_LEDGER).setTxnId(txnId);</span>
+
+        GetListOfEntriesOfLedgerRequest.Builder getListOfEntriesOfLedgerRequestBuilder =
+<span class="nc" id="L854">                GetListOfEntriesOfLedgerRequest.newBuilder().setLedgerId(ledgerId);</span>
+
+<span class="nc" id="L856">        final Request getListOfEntriesOfLedgerRequest = Request.newBuilder().setHeader(headerBuilder)</span>
+<span class="nc" id="L857">                .setGetListOfEntriesOfLedgerRequest(getListOfEntriesOfLedgerRequestBuilder).build();</span>
+
+<span class="nc" id="L859">        writeAndFlush(channel, completionKey, getListOfEntriesOfLedgerRequest);</span>
+<span class="nc" id="L860">    }</span>
+
+    /**
+     * Long Poll Reads.
+     */
+    public void readEntryWaitForLACUpdate(final long ledgerId,
+                                          final long entryId,
+                                          final long previousLAC,
+                                          final long timeOutInMillis,
+                                          final boolean piggyBackEntry,
+                                          ReadEntryCallback cb,
+                                          Object ctx) {
+<span class="nc" id="L872">        readEntryInternal(ledgerId, entryId, previousLAC, timeOutInMillis,</span>
+                          piggyBackEntry, cb, ctx, (short) 0, null, false);
+<span class="nc" id="L874">    }</span>
+
+    /**
+     * Normal Reads.
+     */
+    public void readEntry(final long ledgerId,
+                          final long entryId,
+                          ReadEntryCallback cb,
+                          Object ctx,
+                          int flags,
+                          byte[] masterKey,
+                          boolean allowFastFail) {
+<span class="fc" id="L886">        readEntryInternal(ledgerId, entryId, null, null, false,</span>
+                          cb, ctx, (short) flags, masterKey, allowFastFail);
+<span class="fc" id="L888">    }</span>
+
+    private void readEntryInternal(final long ledgerId,
+                                   final long entryId,
+                                   final Long previousLAC,
+                                   final Long timeOutInMillis,
+                                   final boolean piggyBackEntry,
+                                   final ReadEntryCallback cb,
+                                   final Object ctx,
+                                   int flags,
+                                   byte[] masterKey,
+                                   boolean allowFastFail) {
+<span class="fc" id="L900">        Object request = null;</span>
+<span class="fc" id="L901">        CompletionKey completionKey = null;</span>
+<span class="pc bpc" id="L902" title="1 of 2 branches missed.">        if (useV2WireProtocol) {</span>
+<span class="nc" id="L903">            request = new BookieProtocol.ReadRequest(BookieProtocol.CURRENT_PROTOCOL_VERSION,</span>
+                    ledgerId, entryId, (short) flags, masterKey);
+<span class="nc" id="L905">            completionKey = acquireV2Key(ledgerId, entryId, OperationType.READ_ENTRY);</span>
+        } else {
+<span class="fc" id="L907">            final long txnId = getTxnId();</span>
+<span class="fc" id="L908">            completionKey = new V3CompletionKey(txnId, OperationType.READ_ENTRY);</span>
+
+            // Build the request and calculate the total size to be included in the packet.
+<span class="fc" id="L911">            BKPacketHeader.Builder headerBuilder = BKPacketHeader.newBuilder()</span>
+<span class="fc" id="L912">                    .setVersion(ProtocolVersion.VERSION_THREE)</span>
+<span class="fc" id="L913">                    .setOperation(OperationType.READ_ENTRY)</span>
+<span class="fc" id="L914">                    .setTxnId(txnId);</span>
+<span class="pc bpc" id="L915" title="1 of 2 branches missed.">            if (((short) flags &amp; BookieProtocol.FLAG_HIGH_PRIORITY) == BookieProtocol.FLAG_HIGH_PRIORITY) {</span>
+<span class="nc" id="L916">                headerBuilder.setPriority(DEFAULT_HIGH_PRIORITY_VALUE);</span>
+            }
+
+<span class="fc" id="L919">            ReadRequest.Builder readBuilder = ReadRequest.newBuilder()</span>
+<span class="fc" id="L920">                    .setLedgerId(ledgerId)</span>
+<span class="fc" id="L921">                    .setEntryId(entryId);</span>
+
+<span class="pc bpc" id="L923" title="1 of 2 branches missed.">            if (null != previousLAC) {</span>
+<span class="nc" id="L924">                readBuilder = readBuilder.setPreviousLAC(previousLAC);</span>
+            }
+
+<span class="pc bpc" id="L927" title="1 of 2 branches missed.">            if (null != timeOutInMillis) {</span>
+                // Long poll requires previousLAC
+<span class="nc bnc" id="L929" title="All 2 branches missed.">                if (null == previousLAC) {</span>
+<span class="nc" id="L930">                    cb.readEntryComplete(BKException.Code.IncorrectParameterException,</span>
+                        ledgerId, entryId, null, ctx);
+<span class="nc" id="L932">                    return;</span>
+                }
+<span class="nc" id="L934">                readBuilder = readBuilder.setTimeOut(timeOutInMillis);</span>
+            }
+
+<span class="pc bpc" id="L937" title="1 of 2 branches missed.">            if (piggyBackEntry) {</span>
+                // Long poll requires previousLAC
+<span class="nc bnc" id="L939" title="All 2 branches missed.">                if (null == previousLAC) {</span>
+<span class="nc" id="L940">                    cb.readEntryComplete(BKException.Code.IncorrectParameterException,</span>
+                        ledgerId, entryId, null, ctx);
+<span class="nc" id="L942">                    return;</span>
+                }
+<span class="nc" id="L944">                readBuilder = readBuilder.setFlag(ReadRequest.Flag.ENTRY_PIGGYBACK);</span>
+            }
+
+            // Only one flag can be set on the read requests
+<span class="pc bpc" id="L948" title="1 of 2 branches missed.">            if (((short) flags &amp; BookieProtocol.FLAG_DO_FENCING) == BookieProtocol.FLAG_DO_FENCING) {</span>
+<span class="nc" id="L949">                readBuilder.setFlag(ReadRequest.Flag.FENCE_LEDGER);</span>
+<span class="nc bnc" id="L950" title="All 2 branches missed.">                if (masterKey == null) {</span>
+<span class="nc" id="L951">                    cb.readEntryComplete(BKException.Code.IncorrectParameterException,</span>
+                                         ledgerId, entryId, null, ctx);
+<span class="nc" id="L953">                    return;</span>
+                }
+<span class="nc" id="L955">                readBuilder.setMasterKey(ByteString.copyFrom(masterKey));</span>
+            }
+
+<span class="fc" id="L958">            request = withRequestContext(Request.newBuilder())</span>
+<span class="fc" id="L959">                    .setHeader(headerBuilder)</span>
+<span class="fc" id="L960">                    .setReadRequest(readBuilder)</span>
+<span class="fc" id="L961">                    .build();</span>
+        }
+
+<span class="fc" id="L964">        ReadCompletion readCompletion = new ReadCompletion(completionKey, cb, ctx, ledgerId, entryId);</span>
+<span class="fc" id="L965">        putCompletionKeyValue(completionKey, readCompletion);</span>
+
+<span class="fc" id="L967">        writeAndFlush(channel, completionKey, request, allowFastFail);</span>
+<span class="fc" id="L968">    }</span>
+
+    public void getBookieInfo(final long requested, GetBookieInfoCallback cb, Object ctx) {
+<span class="nc" id="L971">        final long txnId = getTxnId();</span>
+<span class="nc" id="L972">        final CompletionKey completionKey = new V3CompletionKey(txnId, OperationType.GET_BOOKIE_INFO);</span>
+<span class="nc" id="L973">        completionObjects.put(completionKey,</span>
+                              new GetBookieInfoCompletion(
+                                      completionKey, cb, ctx));
+
+        // Build the request and calculate the total size to be included in the packet.
+<span class="nc" id="L978">        BKPacketHeader.Builder headerBuilder = BKPacketHeader.newBuilder()</span>
+<span class="nc" id="L979">                .setVersion(ProtocolVersion.VERSION_THREE)</span>
+<span class="nc" id="L980">                .setOperation(OperationType.GET_BOOKIE_INFO)</span>
+<span class="nc" id="L981">                .setTxnId(txnId);</span>
+
+<span class="nc" id="L983">        GetBookieInfoRequest.Builder getBookieInfoBuilder = GetBookieInfoRequest.newBuilder()</span>
+<span class="nc" id="L984">                .setRequested(requested);</span>
+
+<span class="nc" id="L986">        final Request getBookieInfoRequest = withRequestContext(Request.newBuilder())</span>
+<span class="nc" id="L987">                .setHeader(headerBuilder)</span>
+<span class="nc" id="L988">                .setGetBookieInfoRequest(getBookieInfoBuilder)</span>
+<span class="nc" id="L989">                .build();</span>
+
+<span class="nc" id="L991">        writeAndFlush(channel, completionKey, getBookieInfoRequest);</span>
+<span class="nc" id="L992">    }</span>
+
+<span class="fc" id="L994">    private static final BiPredicate&lt;CompletionKey, CompletionValue&gt; timeoutCheck = (key, value) -&gt; {</span>
+<span class="nc" id="L995">        return value.maybeTimeout();</span>
+    };
+
+    public void checkTimeoutOnPendingOperations() {
+<span class="nc" id="L999">        int timedOutOperations = completionObjects.removeIf(timeoutCheck);</span>
+
+<span class="nc" id="L1001">        timedOutOperations += completionObjectsV2Conflicts.removeIf(timeoutCheck);</span>
+
+<span class="nc bnc" id="L1003" title="All 2 branches missed.">        if (timedOutOperations &gt; 0) {</span>
+<span class="nc" id="L1004">            LOG.info(&quot;Timed-out {} operations to channel {} for {}&quot;,</span>
+<span class="nc" id="L1005">                     timedOutOperations, channel, addr);</span>
+        }
+<span class="nc" id="L1007">    }</span>
+
+    /**
+     * Disconnects the bookie client. It can be reused.
+     */
+    public void disconnect() {
+<span class="nc" id="L1013">        disconnect(true);</span>
+<span class="nc" id="L1014">    }</span>
+
+    public void disconnect(boolean wait) {
+<span class="nc" id="L1017">        LOG.info(&quot;Disconnecting the per channel bookie client for {}&quot;, addr);</span>
+<span class="nc" id="L1018">        closeInternal(false, wait);</span>
+<span class="nc" id="L1019">    }</span>
+
+    /**
+     * Closes the bookie client permanently. It cannot be reused.
+     */
+    public void close() {
+<span class="nc" id="L1025">        close(true);</span>
+<span class="nc" id="L1026">    }</span>
+
+    public void close(boolean wait) {
+<span class="fc" id="L1029">        LOG.info(&quot;Closing the per channel bookie client for {}&quot;, addr);</span>
+<span class="fc" id="L1030">        closeLock.writeLock().lock();</span>
+        try {
+<span class="pc bpc" id="L1032" title="1 of 2 branches missed.">            if (ConnectionState.CLOSED == state) {</span>
+<span class="nc" id="L1033">                return;</span>
+            }
+<span class="fc" id="L1035">            state = ConnectionState.CLOSED;</span>
+<span class="fc" id="L1036">            errorOutOutstandingEntries(BKException.Code.ClientClosedException);</span>
+        } finally {
+<span class="fc" id="L1038">            closeLock.writeLock().unlock();</span>
+        }
+
+<span class="pc bpc" id="L1041" title="2 of 4 branches missed.">        if (channel != null &amp;&amp; channel.pipeline().get(SslHandler.class) != null) {</span>
+<span class="nc" id="L1042">            activeTlsChannelCounter.dec();</span>
+        } else {
+<span class="fc" id="L1044">            activeNonTlsChannelCounter.dec();</span>
+        }
+
+<span class="fc" id="L1047">        closeInternal(true, wait);</span>
+<span class="fc" id="L1048">    }</span>
+
+    private void closeInternal(boolean permanent, boolean wait) {
+<span class="fc" id="L1051">        Channel toClose = null;</span>
+<span class="fc" id="L1052">        synchronized (this) {</span>
+<span class="pc bpc" id="L1053" title="1 of 2 branches missed.">            if (permanent) {</span>
+<span class="fc" id="L1054">                state = ConnectionState.CLOSED;</span>
+<span class="nc bnc" id="L1055" title="All 2 branches missed.">            } else if (state != ConnectionState.CLOSED) {</span>
+<span class="nc" id="L1056">                state = ConnectionState.DISCONNECTED;</span>
+            }
+<span class="fc" id="L1058">            toClose = channel;</span>
+<span class="fc" id="L1059">            channel = null;</span>
+<span class="fc" id="L1060">            makeWritable();</span>
+<span class="fc" id="L1061">        }</span>
+<span class="pc bpc" id="L1062" title="1 of 2 branches missed.">        if (toClose != null) {</span>
+<span class="fc" id="L1063">            ChannelFuture cf = closeChannel(toClose);</span>
+<span class="pc bpc" id="L1064" title="1 of 2 branches missed.">            if (wait) {</span>
+<span class="fc" id="L1065">                cf.awaitUninterruptibly();</span>
+            }
+        }
+<span class="fc" id="L1068">    }</span>
+
+    private ChannelFuture closeChannel(Channel c) {
+<span class="pc bpc" id="L1071" title="1 of 2 branches missed.">        if (LOG.isDebugEnabled()) {</span>
+<span class="fc" id="L1072">            LOG.debug(&quot;Closing channel {}&quot;, c);</span>
+        }
+<span class="fc" id="L1074">        return c.close().addListener(x -&gt; makeWritable());</span>
+    }
+
+    @Override
+    public void channelWritabilityChanged(ChannelHandlerContext ctx) throws Exception {
+<span class="nc" id="L1079">        final Channel c = channel;</span>
+<span class="nc bnc" id="L1080" title="All 4 branches missed.">        if (c == null || c.isWritable()) {</span>
+<span class="nc" id="L1081">            makeWritable();</span>
+        }
+<span class="nc" id="L1083">        super.channelWritabilityChanged(ctx);</span>
+<span class="nc" id="L1084">    }</span>
+
+    private void writeAndFlush(final Channel channel,
+                               final CompletionKey key,
+                               final Object request) {
+<span class="nc" id="L1089">        writeAndFlush(channel, key, request, false);</span>
+<span class="nc" id="L1090">    }</span>
+
+    private void writeAndFlush(final Channel channel,
+                           final CompletionKey key,
+                           final Object request,
+                           final boolean allowFastFail) {
+<span class="pc bpc" id="L1096" title="1 of 2 branches missed.">        if (channel == null) {</span>
+<span class="nc" id="L1097">            LOG.warn(&quot;Operation {} failed: channel == null&quot;, StringUtils.requestToString(request));</span>
+<span class="nc" id="L1098">            errorOut(key);</span>
+<span class="nc" id="L1099">            return;</span>
+        }
+
+<span class="fc" id="L1102">        final boolean isChannelWritable = channel.isWritable();</span>
+<span class="pc bpc" id="L1103" title="1 of 2 branches missed.">        if (isWritable != isChannelWritable) {</span>
+            // isWritable is volatile so simple &quot;isWritable = channel.isWritable()&quot; would be slower
+<span class="nc" id="L1105">            isWritable = isChannelWritable;</span>
+        }
+
+<span class="pc bpc" id="L1108" title="3 of 4 branches missed.">        if (allowFastFail &amp;&amp; !isWritable) {</span>
+<span class="nc" id="L1109">            LOG.warn(&quot;Operation {} failed: TooManyRequestsException&quot;,</span>
+<span class="nc" id="L1110">                    StringUtils.requestToString(request));</span>
+
+<span class="nc" id="L1112">            errorOut(key, BKException.Code.TooManyRequestsException);</span>
+<span class="nc" id="L1113">            return;</span>
+        }
+
+        try {
+<span class="fc" id="L1117">            final long startTime = MathUtils.nowInNano();</span>
+
+<span class="fc" id="L1119">            ChannelPromise promise = channel.newPromise().addListener(future -&gt; {</span>
+<span class="pc bpc" id="L1120" title="1 of 2 branches missed.">                if (future.isSuccess()) {</span>
+<span class="fc" id="L1121">                    nettyOpLogger.registerSuccessfulEvent(MathUtils.elapsedNanos(startTime), TimeUnit.NANOSECONDS);</span>
+<span class="fc" id="L1122">                    CompletionValue completion = completionObjects.get(key);</span>
+<span class="pc bpc" id="L1123" title="1 of 2 branches missed.">                    if (completion != null) {</span>
+<span class="fc" id="L1124">                        completion.setOutstanding();</span>
+                    }
+<span class="fc" id="L1126">                } else {</span>
+<span class="nc" id="L1127">                    nettyOpLogger.registerFailedEvent(MathUtils.elapsedNanos(startTime), TimeUnit.NANOSECONDS);</span>
+                }
+<span class="fc" id="L1129">            });</span>
+
+<span class="fc" id="L1131">            channel.writeAndFlush(request, promise);</span>
+<span class="nc" id="L1132">        } catch (Throwable e) {</span>
+<span class="nc" id="L1133">            LOG.warn(&quot;Operation {} failed&quot;, StringUtils.requestToString(request), e);</span>
+<span class="nc" id="L1134">            errorOut(key);</span>
+<span class="fc" id="L1135">        }</span>
+<span class="fc" id="L1136">    }</span>
+
+    void errorOut(final CompletionKey key) {
+<span class="nc bnc" id="L1139" title="All 2 branches missed.">        if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L1140">            LOG.debug(&quot;Removing completion key: {}&quot;, key);</span>
+        }
+<span class="nc" id="L1142">        CompletionValue completion = completionObjects.remove(key);</span>
+<span class="nc bnc" id="L1143" title="All 2 branches missed.">        if (completion != null) {</span>
+<span class="nc" id="L1144">            completion.errorOut();</span>
+        } else {
+            // If there's no completion object here, try in the multimap
+<span class="nc" id="L1147">            completionObjectsV2Conflicts.removeAny(key).ifPresent(c -&gt; c.errorOut());</span>
+        }
+<span class="nc" id="L1149">    }</span>
+
+    void errorOut(final CompletionKey key, final int rc) {
+<span class="nc bnc" id="L1152" title="All 2 branches missed.">        if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L1153">            LOG.debug(&quot;Removing completion key: {}&quot;, key);</span>
+        }
+<span class="nc" id="L1155">        CompletionValue completion = completionObjects.remove(key);</span>
+<span class="nc bnc" id="L1156" title="All 2 branches missed.">        if (completion != null) {</span>
+<span class="nc" id="L1157">            completion.errorOut(rc);</span>
+        } else {
+            // If there's no completion object here, try in the multimap
+<span class="nc" id="L1160">            completionObjectsV2Conflicts.removeAny(key).ifPresent(c -&gt; c.errorOut(rc));</span>
+        }
+<span class="nc" id="L1162">    }</span>
+
+    /**
+     * Errors out pending ops from per channel bookie client. As the channel
+     * is being closed, all the operations waiting on the connection
+     * will be sent to completion with error.
+     */
+    void errorOutPendingOps(int rc) {
+        Queue&lt;GenericCallback&lt;PerChannelBookieClient&gt;&gt; oldPendingOps;
+<span class="fc" id="L1171">        synchronized (this) {</span>
+<span class="fc" id="L1172">            oldPendingOps = pendingOps;</span>
+<span class="fc" id="L1173">            pendingOps = new ArrayDeque&lt;&gt;();</span>
+<span class="fc" id="L1174">        }</span>
+
+<span class="pc bpc" id="L1176" title="1 of 2 branches missed.">        for (GenericCallback&lt;PerChannelBookieClient&gt; pendingOp : oldPendingOps) {</span>
+<span class="nc" id="L1177">            pendingOp.operationComplete(rc, PerChannelBookieClient.this);</span>
+<span class="nc" id="L1178">        }</span>
+<span class="fc" id="L1179">    }</span>
+
+    /**
+     * Errors out pending entries. We call this method from one thread to avoid
+     * concurrent executions to QuorumOpMonitor (implements callbacks). It seems
+     * simpler to call it from BookieHandle instead of calling directly from
+     * here.
+     */
+
+    void errorOutOutstandingEntries(int rc) {
+<span class="fc" id="L1189">        Optional&lt;CompletionKey&gt; multikey = completionObjectsV2Conflicts.getAnyKey();</span>
+<span class="pc bpc" id="L1190" title="1 of 2 branches missed.">        while (multikey.isPresent()) {</span>
+<span class="nc" id="L1191">            multikey.ifPresent(k -&gt; errorOut(k, rc));</span>
+<span class="nc" id="L1192">            multikey = completionObjectsV2Conflicts.getAnyKey();</span>
+        }
+<span class="pc bpc" id="L1194" title="1 of 2 branches missed.">        for (CompletionKey key : completionObjects.keys()) {</span>
+<span class="nc" id="L1195">            errorOut(key, rc);</span>
+<span class="nc" id="L1196">        }</span>
+<span class="fc" id="L1197">    }</span>
+
+    void recordError() {
+<span class="nc bnc" id="L1200" title="All 2 branches missed.">        if (pcbcPool != null) {</span>
+<span class="nc" id="L1201">            pcbcPool.recordError();</span>
+        }
+<span class="nc" id="L1203">    }</span>
+
+    /**
+     * If our channel has disconnected, we just error out the pending entries.
+     */
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+<span class="fc" id="L1210">        LOG.info(&quot;Disconnected from bookie channel {}&quot;, ctx.channel());</span>
+<span class="pc bpc" id="L1211" title="1 of 2 branches missed.">        if (ctx.channel() != null) {</span>
+<span class="fc" id="L1212">            closeChannel(ctx.channel());</span>
+<span class="pc bpc" id="L1213" title="1 of 2 branches missed.">            if (ctx.channel().pipeline().get(SslHandler.class) != null) {</span>
+<span class="nc" id="L1214">                activeTlsChannelCounter.dec();</span>
+            } else {
+<span class="fc" id="L1216">                activeNonTlsChannelCounter.dec();</span>
+            }
+        }
+
+<span class="fc" id="L1220">        errorOutOutstandingEntries(BKException.Code.BookieHandleNotAvailableException);</span>
+<span class="fc" id="L1221">        errorOutPendingOps(BKException.Code.BookieHandleNotAvailableException);</span>
+
+<span class="fc" id="L1223">        synchronized (this) {</span>
+<span class="pc bpc" id="L1224" title="3 of 4 branches missed.">            if (this.channel == ctx.channel()</span>
+                &amp;&amp; state != ConnectionState.CLOSED) {
+<span class="nc" id="L1226">                state = ConnectionState.DISCONNECTED;</span>
+            }
+<span class="fc" id="L1228">        }</span>
+
+        // we don't want to reconnect right away. If someone sends a request to
+        // this address, we will reconnect.
+<span class="fc" id="L1232">    }</span>
+
+    /**
+     * Called by netty when an exception happens in one of the netty threads
+     * (mostly due to what we do in the netty threads).
+     */
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+<span class="nc" id="L1240">        exceptionCounter.inc();</span>
+<span class="nc bnc" id="L1241" title="All 4 branches missed.">        if (cause instanceof CorruptedFrameException || cause instanceof TooLongFrameException) {</span>
+<span class="nc" id="L1242">            LOG.error(&quot;Corrupted frame received from bookie: {}&quot;, ctx.channel().remoteAddress());</span>
+<span class="nc" id="L1243">            ctx.close();</span>
+<span class="nc" id="L1244">            return;</span>
+        }
+
+<span class="nc bnc" id="L1247" title="All 2 branches missed.">        if (cause instanceof AuthHandler.AuthenticationException) {</span>
+<span class="nc" id="L1248">            LOG.error(&quot;Error authenticating connection&quot;, cause);</span>
+<span class="nc" id="L1249">            errorOutOutstandingEntries(BKException.Code.UnauthorizedAccessException);</span>
+<span class="nc" id="L1250">            Channel c = ctx.channel();</span>
+<span class="nc bnc" id="L1251" title="All 2 branches missed.">            if (c != null) {</span>
+<span class="nc" id="L1252">                closeChannel(c);</span>
+            }
+<span class="nc" id="L1254">            return;</span>
+        }
+
+<span class="nc bnc" id="L1257" title="All 4 branches missed.">        if (cause instanceof DecoderException &amp;&amp; cause.getCause() instanceof SSLHandshakeException) {</span>
+<span class="nc" id="L1258">            LOG.error(&quot;TLS handshake failed&quot;, cause);</span>
+<span class="nc" id="L1259">            errorOutPendingOps(BKException.Code.SecurityException);</span>
+<span class="nc" id="L1260">            Channel c = ctx.channel();</span>
+<span class="nc bnc" id="L1261" title="All 2 branches missed.">            if (c != null) {</span>
+<span class="nc" id="L1262">                closeChannel(c);</span>
+            }
+        }
+
+<span class="nc bnc" id="L1266" title="All 2 branches missed.">        if (cause instanceof IOException) {</span>
+<span class="nc bnc" id="L1267" title="All 2 branches missed.">            if (cause instanceof NativeIoException) {</span>
+                // Stack trace is not very interesting for native IO exceptio, the important part is in
+                // the exception message
+<span class="nc" id="L1270">                LOG.warn(&quot;Exception caught on:{} cause: {}&quot;, ctx.channel(), cause.getMessage());</span>
+            } else {
+<span class="nc" id="L1272">                LOG.warn(&quot;Exception caught on:{} cause:&quot;, ctx.channel(), cause);</span>
+            }
+<span class="nc" id="L1274">            ctx.close();</span>
+<span class="nc" id="L1275">            return;</span>
+        }
+
+<span class="nc" id="L1278">        synchronized (this) {</span>
+<span class="nc bnc" id="L1279" title="All 2 branches missed.">            if (state == ConnectionState.CLOSED) {</span>
+<span class="nc bnc" id="L1280" title="All 2 branches missed.">                if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L1281">                    LOG.debug(&quot;Unexpected exception caught by bookie client channel handler, &quot;</span>
+                            + &quot;but the client is closed, so it isn't important&quot;, cause);
+                }
+            } else {
+<span class="nc" id="L1285">                LOG.error(&quot;Unexpected exception caught by bookie client channel handler&quot;, cause);</span>
+            }
+<span class="nc" id="L1287">        }</span>
+
+        // Since we are a library, cant terminate App here, can we?
+<span class="nc" id="L1290">        ctx.close();</span>
+<span class="nc" id="L1291">    }</span>
+
+    /**
+     * Called by netty when a message is received on a channel.
+     */
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+
+<span class="pc bpc" id="L1299" title="1 of 2 branches missed.">        if (msg instanceof BookieProtocol.Response) {</span>
+<span class="nc" id="L1300">            BookieProtocol.Response response = (BookieProtocol.Response) msg;</span>
+<span class="nc" id="L1301">            readV2Response(response);</span>
+<span class="pc bpc" id="L1302" title="1 of 2 branches missed.">        } else if (msg instanceof Response) {</span>
+<span class="fc" id="L1303">            Response response = (Response) msg;</span>
+<span class="fc" id="L1304">            readV3Response(response);</span>
+<span class="fc" id="L1305">        } else {</span>
+<span class="nc" id="L1306">            ctx.fireChannelRead(msg);</span>
+        }
+<span class="fc" id="L1308">    }</span>
+
+    private void readV2Response(final BookieProtocol.Response response) {
+<span class="nc" id="L1311">        OperationType operationType = getOperationType(response.getOpCode());</span>
+<span class="nc" id="L1312">        StatusCode status = getStatusCodeFromErrorCode(response.errorCode);</span>
+
+<span class="nc" id="L1314">        CompletionKey key = acquireV2Key(response.ledgerId, response.entryId, operationType);</span>
+<span class="nc" id="L1315">        CompletionValue completionValue = getCompletionValue(key);</span>
+<span class="nc" id="L1316">        key.release();</span>
+
+<span class="nc bnc" id="L1318" title="All 2 branches missed.">        if (null == completionValue) {</span>
+            // Unexpected response, so log it. The txnId should have been present.
+<span class="nc bnc" id="L1320" title="All 2 branches missed.">            if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L1321">                LOG.debug(&quot;Unexpected response received from bookie : &quot; + addr + &quot; for type : &quot; + operationType</span>
+                        + &quot; and ledger:entry : &quot; + response.ledgerId + &quot;:&quot; + response.entryId);
+            }
+<span class="nc" id="L1324">            response.release();</span>
+        } else {
+<span class="nc" id="L1326">            long orderingKey = completionValue.ledgerId;</span>
+<span class="nc" id="L1327">            executor.executeOrdered(orderingKey,</span>
+<span class="nc" id="L1328">                    ReadV2ResponseCallback.create(completionValue, response.ledgerId, response.entryId,</span>
+                                                  status, response));
+        }
+<span class="nc" id="L1331">    }</span>
+
+    private static class ReadV2ResponseCallback extends SafeRunnable {
+        CompletionValue completionValue;
+        long ledgerId;
+        long entryId;
+        StatusCode status;
+        BookieProtocol.Response response;
+
+        static ReadV2ResponseCallback create(CompletionValue completionValue, long ledgerId, long entryId,
+                                             StatusCode status, BookieProtocol.Response response) {
+<span class="nc" id="L1342">            ReadV2ResponseCallback callback = RECYCLER.get();</span>
+<span class="nc" id="L1343">            callback.completionValue = completionValue;</span>
+<span class="nc" id="L1344">            callback.ledgerId = ledgerId;</span>
+<span class="nc" id="L1345">            callback.entryId = entryId;</span>
+<span class="nc" id="L1346">            callback.status = status;</span>
+<span class="nc" id="L1347">            callback.response = response;</span>
+<span class="nc" id="L1348">            return callback;</span>
+        }
+
+        @Override
+        public void safeRun() {
+<span class="nc" id="L1353">            completionValue.handleV2Response(ledgerId, entryId, status, response);</span>
+<span class="nc" id="L1354">            response.release();</span>
+<span class="nc" id="L1355">            response.recycle();</span>
+<span class="nc" id="L1356">            recycle();</span>
+<span class="nc" id="L1357">        }</span>
+
+        void recycle() {
+<span class="nc" id="L1360">            completionValue = null;</span>
+<span class="nc" id="L1361">            ledgerId = -1;</span>
+<span class="nc" id="L1362">            entryId = -1;</span>
+<span class="nc" id="L1363">            status = null;</span>
+<span class="nc" id="L1364">            response = null;</span>
+<span class="nc" id="L1365">            recyclerHandle.recycle(this);</span>
+<span class="nc" id="L1366">        }</span>
+
+        private final Handle&lt;ReadV2ResponseCallback&gt; recyclerHandle;
+
+<span class="nc" id="L1370">        private ReadV2ResponseCallback(Handle&lt;ReadV2ResponseCallback&gt; recyclerHandle) {</span>
+<span class="nc" id="L1371">            this.recyclerHandle = recyclerHandle;</span>
+<span class="nc" id="L1372">        }</span>
+
+<span class="nc" id="L1374">        private static final Recycler&lt;ReadV2ResponseCallback&gt; RECYCLER = new Recycler&lt;ReadV2ResponseCallback&gt;() {</span>
+            @Override
+            protected ReadV2ResponseCallback newObject(Handle&lt;ReadV2ResponseCallback&gt; handle) {
+<span class="nc" id="L1377">                return new ReadV2ResponseCallback(handle);</span>
+            }
+        };
+    }
+
+    private static OperationType getOperationType(byte opCode) {
+<span class="nc bnc" id="L1383" title="All 7 branches missed.">        switch (opCode) {</span>
+            case BookieProtocol.ADDENTRY:
+<span class="nc" id="L1385">                return  OperationType.ADD_ENTRY;</span>
+            case BookieProtocol.READENTRY:
+<span class="nc" id="L1387">                return OperationType.READ_ENTRY;</span>
+            case BookieProtocol.AUTH:
+<span class="nc" id="L1389">                return OperationType.AUTH;</span>
+            case BookieProtocol.READ_LAC:
+<span class="nc" id="L1391">                return OperationType.READ_LAC;</span>
+            case BookieProtocol.WRITE_LAC:
+<span class="nc" id="L1393">                return OperationType.WRITE_LAC;</span>
+            case BookieProtocol.GET_BOOKIE_INFO:
+<span class="nc" id="L1395">                return OperationType.GET_BOOKIE_INFO;</span>
+            default:
+<span class="nc" id="L1397">                throw new IllegalArgumentException(&quot;Invalid operation type &quot; + opCode);</span>
+        }
+    }
+
+    private static StatusCode getStatusCodeFromErrorCode(int errorCode) {
+<span class="nc bnc" id="L1402" title="All 11 branches missed.">        switch (errorCode) {</span>
+            case BookieProtocol.EOK:
+<span class="nc" id="L1404">                return StatusCode.EOK;</span>
+            case BookieProtocol.ENOLEDGER:
+<span class="nc" id="L1406">                return StatusCode.ENOLEDGER;</span>
+            case BookieProtocol.ENOENTRY:
+<span class="nc" id="L1408">                return StatusCode.ENOENTRY;</span>
+            case BookieProtocol.EBADREQ:
+<span class="nc" id="L1410">                return StatusCode.EBADREQ;</span>
+            case BookieProtocol.EIO:
+<span class="nc" id="L1412">                return StatusCode.EIO;</span>
+            case BookieProtocol.EUA:
+<span class="nc" id="L1414">                return StatusCode.EUA;</span>
+            case BookieProtocol.EBADVERSION:
+<span class="nc" id="L1416">                return StatusCode.EBADVERSION;</span>
+            case BookieProtocol.EFENCED:
+<span class="nc" id="L1418">                return StatusCode.EFENCED;</span>
+            case BookieProtocol.EREADONLY:
+<span class="nc" id="L1420">                return StatusCode.EREADONLY;</span>
+            case BookieProtocol.ETOOMANYREQUESTS:
+<span class="nc" id="L1422">                return StatusCode.ETOOMANYREQUESTS;</span>
+            default:
+<span class="nc" id="L1424">                throw new IllegalArgumentException(&quot;Invalid error code: &quot; + errorCode);</span>
+        }
+    }
+
+    private void readV3Response(final Response response) {
+<span class="fc" id="L1429">        final BKPacketHeader header = response.getHeader();</span>
+
+<span class="fc" id="L1431">        final CompletionKey key = newCompletionKey(header.getTxnId(), header.getOperation());</span>
+<span class="fc" id="L1432">        final CompletionValue completionValue = completionObjects.get(key);</span>
+
+<span class="pc bpc" id="L1434" title="1 of 2 branches missed.">        if (null == completionValue) {</span>
+            // Unexpected response, so log it. The txnId should have been present.
+<span class="nc bnc" id="L1436" title="All 2 branches missed.">            if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L1437">                LOG.debug(&quot;Unexpected response received from bookie : &quot; + addr + &quot; for type : &quot;</span>
+<span class="nc" id="L1438">                        + header.getOperation() + &quot; and txnId : &quot; + header.getTxnId());</span>
+            }
+        } else {
+<span class="fc" id="L1441">            long orderingKey = completionValue.ledgerId;</span>
+<span class="fc" id="L1442">            executor.executeOrdered(orderingKey, new SafeRunnable() {</span>
+                @Override
+                public void safeRun() {
+<span class="fc" id="L1445">                    completionValue.restoreMdcContext();</span>
+<span class="fc" id="L1446">                    completionValue.handleV3Response(response);</span>
+<span class="fc" id="L1447">                }</span>
+
+                @Override
+                public String toString() {
+<span class="nc" id="L1451">                    return String.format(&quot;HandleResponse(Txn=%d, Type=%s, Entry=(%d, %d))&quot;,</span>
+<span class="nc" id="L1452">                                         header.getTxnId(), header.getOperation(),</span>
+<span class="nc" id="L1453">                                         completionValue.ledgerId, completionValue.entryId);</span>
+                }
+            });
+        }
+
+<span class="fc" id="L1458">        completionObjects.remove(key);</span>
+<span class="fc" id="L1459">    }</span>
+
+    void initTLSHandshake() {
+        // create TLS handler
+<span class="nc" id="L1463">        PerChannelBookieClient parentObj = PerChannelBookieClient.this;</span>
+<span class="nc" id="L1464">        SslHandler handler = parentObj.shFactory.newTLSHandler();</span>
+<span class="nc" id="L1465">        channel.pipeline().addFirst(parentObj.shFactory.getHandlerName(), handler);</span>
+<span class="nc" id="L1466">        handler.handshakeFuture().addListener(new GenericFutureListener&lt;Future&lt;Channel&gt;&gt;() {</span>
+                @Override
+                public void operationComplete(Future&lt;Channel&gt; future) throws Exception {
+                    int rc;
+                    Queue&lt;GenericCallback&lt;PerChannelBookieClient&gt;&gt; oldPendingOps;
+
+<span class="nc" id="L1472">                    synchronized (PerChannelBookieClient.this) {</span>
+<span class="nc bnc" id="L1473" title="All 4 branches missed.">                        if (future.isSuccess() &amp;&amp; state == ConnectionState.CONNECTING) {</span>
+<span class="nc" id="L1474">                            LOG.error(&quot;Connection state changed before TLS handshake completed {}/{}&quot;, addr, state);</span>
+<span class="nc" id="L1475">                            rc = BKException.Code.BookieHandleNotAvailableException;</span>
+<span class="nc" id="L1476">                            closeChannel(channel);</span>
+<span class="nc" id="L1477">                            channel = null;</span>
+<span class="nc bnc" id="L1478" title="All 2 branches missed.">                            if (state != ConnectionState.CLOSED) {</span>
+<span class="nc" id="L1479">                                state = ConnectionState.DISCONNECTED;</span>
+                            }
+<span class="nc bnc" id="L1481" title="All 4 branches missed.">                        } else if (future.isSuccess() &amp;&amp; state == ConnectionState.START_TLS) {</span>
+<span class="nc" id="L1482">                            rc = BKException.Code.OK;</span>
+<span class="nc" id="L1483">                            LOG.info(&quot;Successfully connected to bookie using TLS: &quot; + addr);</span>
+
+<span class="nc" id="L1485">                            state = ConnectionState.CONNECTED;</span>
+<span class="nc" id="L1486">                            AuthHandler.ClientSideHandler authHandler = future.get().pipeline()</span>
+<span class="nc" id="L1487">                                    .get(AuthHandler.ClientSideHandler.class);</span>
+<span class="nc bnc" id="L1488" title="All 4 branches missed.">                        if (conf.getHostnameVerificationEnabled() &amp;&amp; !authHandler.verifyTlsHostName(channel)) {</span>
+                            // add HostnameVerification or private classes not
+                            // for validation
+<span class="nc" id="L1491">                            rc = BKException.Code.UnauthorizedAccessException;</span>
+                        } else {
+<span class="nc" id="L1493">                                authHandler.authProvider.onProtocolUpgrade();</span>
+<span class="nc" id="L1494">                                activeTlsChannelCounter.inc();</span>
+                            }
+<span class="nc bnc" id="L1496" title="All 6 branches missed.">                        } else if (future.isSuccess()</span>
+                                &amp;&amp; (state == ConnectionState.CLOSED || state == ConnectionState.DISCONNECTED)) {
+<span class="nc" id="L1498">                            LOG.warn(&quot;Closed before TLS handshake completed, clean up: {}, current state {}&quot;,</span>
+                                    channel, state);
+<span class="nc" id="L1500">                            closeChannel(channel);</span>
+<span class="nc" id="L1501">                            rc = BKException.Code.BookieHandleNotAvailableException;</span>
+<span class="nc" id="L1502">                            channel = null;</span>
+<span class="nc bnc" id="L1503" title="All 4 branches missed.">                        } else if (future.isSuccess() &amp;&amp; state == ConnectionState.CONNECTED) {</span>
+<span class="nc" id="L1504">                            LOG.debug(&quot;Already connected with another channel({}), so close the new channel({})&quot;,</span>
+                                    channel, channel);
+<span class="nc" id="L1506">                            closeChannel(channel);</span>
+<span class="nc" id="L1507">                            return; // pendingOps should have been completed when other channel connected</span>
+                        } else {
+<span class="nc" id="L1509">                            LOG.error(&quot;TLS handshake failed with bookie: {}/{}, current state {} : &quot;,</span>
+<span class="nc" id="L1510">                                    channel, addr, state, future.cause());</span>
+<span class="nc" id="L1511">                            rc = BKException.Code.SecurityException;</span>
+<span class="nc" id="L1512">                            closeChannel(channel);</span>
+<span class="nc" id="L1513">                            channel = null;</span>
+<span class="nc bnc" id="L1514" title="All 2 branches missed.">                            if (state != ConnectionState.CLOSED) {</span>
+<span class="nc" id="L1515">                                state = ConnectionState.DISCONNECTED;</span>
+                            }
+<span class="nc" id="L1517">                            failedTlsHandshakeCounter.inc();</span>
+                        }
+
+                        // trick to not do operations under the lock, take the list
+                        // of pending ops and assign it to a new variable, while
+                        // emptying the pending ops by just assigning it to a new
+                        // list
+<span class="nc" id="L1524">                        oldPendingOps = pendingOps;</span>
+<span class="nc" id="L1525">                        pendingOps = new ArrayDeque&lt;&gt;();</span>
+<span class="nc" id="L1526">                    }</span>
+
+<span class="nc" id="L1528">                    makeWritable();</span>
+
+<span class="nc bnc" id="L1530" title="All 2 branches missed.">                    for (GenericCallback&lt;PerChannelBookieClient&gt; pendingOp : oldPendingOps) {</span>
+<span class="nc" id="L1531">                        pendingOp.operationComplete(rc, PerChannelBookieClient.this);</span>
+<span class="nc" id="L1532">                    }</span>
+<span class="nc" id="L1533">                }</span>
+            });
+<span class="nc" id="L1535">    }</span>
+
+    /**
+     * Boiler-plate wrapper classes follow.
+     *
+     */
+
+    // visible for testing
+    abstract class CompletionValue {
+        private final OpStatsLogger opLogger;
+        private final OpStatsLogger timeoutOpLogger;
+        private final String operationName;
+        private final Map&lt;String, String&gt; mdcContextMap;
+        protected Object ctx;
+        protected long ledgerId;
+        protected long entryId;
+        protected long startTime;
+
+        public CompletionValue(String operationName,
+                               Object ctx,
+                               long ledgerId, long entryId,
+                               OpStatsLogger opLogger,
+<span class="fc" id="L1557">                               OpStatsLogger timeoutOpLogger) {</span>
+<span class="fc" id="L1558">            this.operationName = operationName;</span>
+<span class="fc" id="L1559">            this.ctx = ctx;</span>
+<span class="fc" id="L1560">            this.ledgerId = ledgerId;</span>
+<span class="fc" id="L1561">            this.entryId = entryId;</span>
+<span class="fc" id="L1562">            this.startTime = MathUtils.nowInNano();</span>
+<span class="fc" id="L1563">            this.opLogger = opLogger;</span>
+<span class="fc" id="L1564">            this.timeoutOpLogger = timeoutOpLogger;</span>
+<span class="pc bpc" id="L1565" title="1 of 2 branches missed.">            this.mdcContextMap = preserveMdcForTaskExecution ? MDC.getCopyOfContextMap() : null;</span>
+<span class="fc" id="L1566">        }</span>
+
+        private long latency() {
+<span class="fc" id="L1569">            return MathUtils.elapsedNanos(startTime);</span>
+        }
+
+        void logOpResult(int rc) {
+<span class="pc bpc" id="L1573" title="1 of 2 branches missed.">            if (rc != BKException.Code.OK) {</span>
+<span class="nc" id="L1574">                opLogger.registerFailedEvent(latency(), TimeUnit.NANOSECONDS);</span>
+            } else {
+<span class="fc" id="L1576">                opLogger.registerSuccessfulEvent(latency(), TimeUnit.NANOSECONDS);</span>
+            }
+
+<span class="pc bpc" id="L1579" title="1 of 2 branches missed.">            if (rc != BKException.Code.OK</span>
+<span class="nc bnc" id="L1580" title="All 2 branches missed.">                &amp;&amp; !expectedBkOperationErrors.contains(rc)) {</span>
+<span class="nc" id="L1581">                recordError();</span>
+            }
+<span class="fc" id="L1583">        }</span>
+
+        boolean maybeTimeout() {
+<span class="nc bnc" id="L1586" title="All 2 branches missed.">            if (MathUtils.elapsedNanos(startTime) &gt;= readEntryTimeoutNanos) {</span>
+<span class="nc" id="L1587">                timeout();</span>
+<span class="nc" id="L1588">                return true;</span>
+            } else {
+<span class="nc" id="L1590">                return false;</span>
+            }
+        }
+
+        void timeout() {
+<span class="nc" id="L1595">            errorOut(BKException.Code.TimeoutException);</span>
+<span class="nc" id="L1596">            timeoutOpLogger.registerSuccessfulEvent(latency(),</span>
+                                                    TimeUnit.NANOSECONDS);
+<span class="nc" id="L1598">        }</span>
+
+        protected void logResponse(StatusCode status, Object... extraInfo) {
+<span class="pc bpc" id="L1601" title="1 of 2 branches missed.">            if (LOG.isDebugEnabled()) {</span>
+<span class="fc" id="L1602">                LOG.debug(&quot;Got {} response from bookie:{} rc:{}, {}&quot;, operationName, addr, status,</span>
+<span class="fc" id="L1603">                        Joiner.on(&quot;:&quot;).join(extraInfo));</span>
+            }
+<span class="fc" id="L1605">        }</span>
+
+        protected int convertStatus(StatusCode status, int defaultStatus) {
+            // convert to BKException code
+<span class="fc" id="L1609">            int rcToRet = statusCodeToExceptionCode(status);</span>
+<span class="pc bpc" id="L1610" title="1 of 2 branches missed.">            if (rcToRet == BKException.Code.UNINITIALIZED) {</span>
+<span class="nc" id="L1611">                LOG.error(&quot;{} for failed on bookie {} code {}&quot;,</span>
+                          operationName, addr, status);
+<span class="nc" id="L1613">                return defaultStatus;</span>
+            } else {
+<span class="fc" id="L1615">                return rcToRet;</span>
+            }
+        }
+
+        public void restoreMdcContext() {
+<span class="fc" id="L1620">            MdcUtils.restoreContext(mdcContextMap);</span>
+<span class="fc" id="L1621">        }</span>
+
+        public abstract void errorOut();
+        public abstract void errorOut(int rc);
+        public void setOutstanding() {
+            // no-op
+<span class="nc" id="L1627">        }</span>
+
+        protected void errorOutAndRunCallback(final Runnable callback) {
+<span class="nc" id="L1630">            executor.executeOrdered(ledgerId,</span>
+<span class="nc" id="L1631">                    new SafeRunnable() {</span>
+                        @Override
+                        public void safeRun() {
+<span class="nc" id="L1634">                            String bAddress = &quot;null&quot;;</span>
+<span class="nc" id="L1635">                            Channel c = channel;</span>
+<span class="nc bnc" id="L1636" title="All 4 branches missed.">                            if (c != null &amp;&amp; c.remoteAddress() != null) {</span>
+<span class="nc" id="L1637">                                bAddress = c.remoteAddress().toString();</span>
+                            }
+<span class="nc bnc" id="L1639" title="All 2 branches missed.">                            if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L1640">                                LOG.debug(&quot;Could not write {} request to bookie {} for ledger {}, entry {}&quot;,</span>
+<span class="nc" id="L1641">                                          operationName, bAddress,</span>
+<span class="nc" id="L1642">                                          ledgerId, entryId);</span>
+                            }
+<span class="nc" id="L1644">                            callback.run();</span>
+<span class="nc" id="L1645">                        }</span>
+                    });
+<span class="nc" id="L1647">        }</span>
+
+        public void handleV2Response(
+                long ledgerId, long entryId, StatusCode status,
+                BookieProtocol.Response response) {
+<span class="nc" id="L1652">            LOG.warn(&quot;Unhandled V2 response {}&quot;, response);</span>
+<span class="nc" id="L1653">        }</span>
+
+        public abstract void handleV3Response(
+                BookkeeperProtocol.Response response);
+    }
+
+    // visible for testing
+    class WriteLacCompletion extends CompletionValue {
+        final WriteLacCallback cb;
+
+        public WriteLacCompletion(final CompletionKey key,
+                                  final WriteLacCallback originalCallback,
+                                  final Object originalCtx,
+<span class="nc" id="L1666">                                  final long ledgerId) {</span>
+<span class="nc" id="L1667">            super(&quot;WriteLAC&quot;,</span>
+                  originalCtx, ledgerId, BookieProtocol.LAST_ADD_CONFIRMED,
+<span class="nc" id="L1669">                  writeLacOpLogger, writeLacTimeoutOpLogger);</span>
+<span class="nc" id="L1670">            this.cb = new WriteLacCallback() {</span>
+                    @Override
+                    public void writeLacComplete(int rc, long ledgerId,
+                                                 BookieSocketAddress addr,
+                                                 Object ctx) {
+<span class="nc" id="L1675">                        logOpResult(rc);</span>
+<span class="nc" id="L1676">                        originalCallback.writeLacComplete(rc, ledgerId,</span>
+                                                          addr, originalCtx);
+<span class="nc" id="L1678">                        key.release();</span>
+<span class="nc" id="L1679">                    }</span>
+                };
+<span class="nc" id="L1681">        }</span>
+
+        @Override
+        public void errorOut() {
+<span class="nc" id="L1685">            errorOut(BKException.Code.BookieHandleNotAvailableException);</span>
+<span class="nc" id="L1686">        }</span>
+
+        @Override
+        public void errorOut(final int rc) {
+<span class="nc" id="L1690">            errorOutAndRunCallback(</span>
+<span class="nc" id="L1691">                    () -&gt; cb.writeLacComplete(rc, ledgerId, addr, ctx));</span>
+<span class="nc" id="L1692">        }</span>
+
+        @Override
+        public void handleV3Response(BookkeeperProtocol.Response response) {
+<span class="nc" id="L1696">            WriteLacResponse writeLacResponse = response.getWriteLacResponse();</span>
+<span class="nc bnc" id="L1697" title="All 2 branches missed.">            StatusCode status = response.getStatus() == StatusCode.EOK</span>
+<span class="nc" id="L1698">                ? writeLacResponse.getStatus() : response.getStatus();</span>
+<span class="nc" id="L1699">            long ledgerId = writeLacResponse.getLedgerId();</span>
+
+<span class="nc bnc" id="L1701" title="All 2 branches missed.">            if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L1702">                logResponse(status, &quot;ledger&quot;, ledgerId);</span>
+            }
+<span class="nc" id="L1704">            int rc = convertStatus(status, BKException.Code.WriteException);</span>
+<span class="nc" id="L1705">            cb.writeLacComplete(rc, ledgerId, addr, ctx);</span>
+<span class="nc" id="L1706">        }</span>
+    }
+
+    class ForceLedgerCompletion extends CompletionValue {
+        final ForceLedgerCallback cb;
+
+        public ForceLedgerCompletion(final CompletionKey key,
+                                  final ForceLedgerCallback originalCallback,
+                                  final Object originalCtx,
+<span class="nc" id="L1715">                                  final long ledgerId) {</span>
+<span class="nc" id="L1716">            super(&quot;ForceLedger&quot;,</span>
+                  originalCtx, ledgerId, BookieProtocol.LAST_ADD_CONFIRMED,
+<span class="nc" id="L1718">                  forceLedgerOpLogger, forceLedgerTimeoutOpLogger);</span>
+<span class="nc" id="L1719">            this.cb = new ForceLedgerCallback() {</span>
+                    @Override
+                    public void forceLedgerComplete(int rc, long ledgerId,
+                                                 BookieSocketAddress addr,
+                                                 Object ctx) {
+<span class="nc" id="L1724">                        logOpResult(rc);</span>
+<span class="nc" id="L1725">                        originalCallback.forceLedgerComplete(rc, ledgerId,</span>
+                                                          addr, originalCtx);
+<span class="nc" id="L1727">                        key.release();</span>
+<span class="nc" id="L1728">                    }</span>
+                };
+<span class="nc" id="L1730">        }</span>
+
+        @Override
+        public void errorOut() {
+<span class="nc" id="L1734">            errorOut(BKException.Code.BookieHandleNotAvailableException);</span>
+<span class="nc" id="L1735">        }</span>
+
+        @Override
+        public void errorOut(final int rc) {
+<span class="nc" id="L1739">            errorOutAndRunCallback(</span>
+<span class="nc" id="L1740">                    () -&gt; cb.forceLedgerComplete(rc, ledgerId, addr, ctx));</span>
+<span class="nc" id="L1741">        }</span>
+
+        @Override
+        public void handleV3Response(BookkeeperProtocol.Response response) {
+<span class="nc" id="L1745">            ForceLedgerResponse forceLedgerResponse = response.getForceLedgerResponse();</span>
+<span class="nc bnc" id="L1746" title="All 2 branches missed.">            StatusCode status = response.getStatus() == StatusCode.EOK</span>
+<span class="nc" id="L1747">                ? forceLedgerResponse.getStatus() : response.getStatus();</span>
+<span class="nc" id="L1748">            long ledgerId = forceLedgerResponse.getLedgerId();</span>
+
+<span class="nc bnc" id="L1750" title="All 2 branches missed.">            if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L1751">                logResponse(status, &quot;ledger&quot;, ledgerId);</span>
+            }
+<span class="nc" id="L1753">            int rc = convertStatus(status, BKException.Code.WriteException);</span>
+<span class="nc" id="L1754">            cb.forceLedgerComplete(rc, ledgerId, addr, ctx);</span>
+<span class="nc" id="L1755">        }</span>
+    }
+
+    // visible for testing
+    class ReadLacCompletion extends CompletionValue {
+        final ReadLacCallback cb;
+
+        public ReadLacCompletion(final CompletionKey key,
+                                 ReadLacCallback originalCallback,
+<span class="nc" id="L1764">                                 final Object ctx, final long ledgerId) {</span>
+<span class="nc" id="L1765">            super(&quot;ReadLAC&quot;, ctx, ledgerId, BookieProtocol.LAST_ADD_CONFIRMED,</span>
+<span class="nc" id="L1766">                  readLacOpLogger, readLacTimeoutOpLogger);</span>
+<span class="nc" id="L1767">            this.cb = new ReadLacCallback() {</span>
+                    @Override
+                    public void readLacComplete(int rc, long ledgerId,
+                                                ByteBuf lacBuffer,
+                                                ByteBuf lastEntryBuffer,
+                                                Object ctx) {
+<span class="nc" id="L1773">                        logOpResult(rc);</span>
+<span class="nc" id="L1774">                        originalCallback.readLacComplete(</span>
+                                rc, ledgerId, lacBuffer, lastEntryBuffer, ctx);
+<span class="nc" id="L1776">                        key.release();</span>
+<span class="nc" id="L1777">                    }</span>
+                };
+<span class="nc" id="L1779">        }</span>
+
+        @Override
+        public void errorOut() {
+<span class="nc" id="L1783">            errorOut(BKException.Code.BookieHandleNotAvailableException);</span>
+<span class="nc" id="L1784">        }</span>
+
+        @Override
+        public void errorOut(final int rc) {
+<span class="nc" id="L1788">            errorOutAndRunCallback(</span>
+<span class="nc" id="L1789">                    () -&gt; cb.readLacComplete(rc, ledgerId, null, null, ctx));</span>
+<span class="nc" id="L1790">        }</span>
+
+        @Override
+        public void handleV3Response(BookkeeperProtocol.Response response) {
+<span class="nc" id="L1794">            ReadLacResponse readLacResponse = response.getReadLacResponse();</span>
+<span class="nc" id="L1795">            ByteBuf lacBuffer = Unpooled.EMPTY_BUFFER;</span>
+<span class="nc" id="L1796">            ByteBuf lastEntryBuffer = Unpooled.EMPTY_BUFFER;</span>
+<span class="nc bnc" id="L1797" title="All 2 branches missed.">            StatusCode status = response.getStatus() == StatusCode.EOK</span>
+<span class="nc" id="L1798">                ? readLacResponse.getStatus() : response.getStatus();</span>
+
+<span class="nc bnc" id="L1800" title="All 2 branches missed.">            if (readLacResponse.hasLacBody()) {</span>
+<span class="nc" id="L1801">                lacBuffer = Unpooled.wrappedBuffer(readLacResponse.getLacBody().asReadOnlyByteBuffer());</span>
+            }
+
+<span class="nc bnc" id="L1804" title="All 2 branches missed.">            if (readLacResponse.hasLastEntryBody()) {</span>
+<span class="nc" id="L1805">                lastEntryBuffer = Unpooled.wrappedBuffer(readLacResponse.getLastEntryBody().asReadOnlyByteBuffer());</span>
+            }
+
+<span class="nc bnc" id="L1808" title="All 2 branches missed.">            if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L1809">                logResponse(status, &quot;ledgerId&quot;, ledgerId);</span>
+            }
+
+<span class="nc" id="L1812">            int rc = convertStatus(status, BKException.Code.ReadException);</span>
+<span class="nc" id="L1813">            cb.readLacComplete(rc, ledgerId, lacBuffer.slice(),</span>
+<span class="nc" id="L1814">                               lastEntryBuffer.slice(), ctx);</span>
+<span class="nc" id="L1815">        }</span>
+    }
+
+    // visible for testing
+    class ReadCompletion extends CompletionValue {
+        final ReadEntryCallback cb;
+
+        public ReadCompletion(final CompletionKey key,
+                              final ReadEntryCallback originalCallback,
+                              final Object originalCtx,
+<span class="fc" id="L1825">                              long ledgerId, final long entryId) {</span>
+<span class="fc" id="L1826">            super(&quot;Read&quot;, originalCtx, ledgerId, entryId,</span>
+<span class="fc" id="L1827">                  readEntryOpLogger, readTimeoutOpLogger);</span>
+
+<span class="fc" id="L1829">            this.cb = new ReadEntryCallback() {</span>
+                    @Override
+                    public void readEntryComplete(int rc, long ledgerId,
+                                                  long entryId, ByteBuf buffer,
+                                                  Object ctx) {
+<span class="fc" id="L1834">                        logOpResult(rc);</span>
+<span class="fc" id="L1835">                        originalCallback.readEntryComplete(rc,</span>
+                                                           ledgerId, entryId,
+                                                           buffer, originalCtx);
+<span class="fc" id="L1838">                        key.release();</span>
+<span class="fc" id="L1839">                    }</span>
+                };
+<span class="fc" id="L1841">        }</span>
+
+        @Override
+        public void errorOut() {
+<span class="nc" id="L1845">            errorOut(BKException.Code.BookieHandleNotAvailableException);</span>
+<span class="nc" id="L1846">        }</span>
+
+        @Override
+        public void errorOut(final int rc) {
+<span class="nc" id="L1850">            errorOutAndRunCallback(</span>
+<span class="nc" id="L1851">                    () -&gt; cb.readEntryComplete(rc, ledgerId,</span>
+                                               entryId, null, ctx));
+<span class="nc" id="L1853">        }</span>
+
+        @Override
+        public void setOutstanding() {
+<span class="fc" id="L1857">            readEntryOutstanding.inc();</span>
+<span class="fc" id="L1858">        }</span>
+
+        @Override
+        public void handleV2Response(long ledgerId, long entryId,
+                                     StatusCode status,
+                                     BookieProtocol.Response response) {
+<span class="nc" id="L1864">            readEntryOutstanding.dec();</span>
+<span class="nc bnc" id="L1865" title="All 2 branches missed.">            if (!(response instanceof BookieProtocol.ReadResponse)) {</span>
+<span class="nc" id="L1866">                return;</span>
+            }
+<span class="nc" id="L1868">            BookieProtocol.ReadResponse readResponse = (BookieProtocol.ReadResponse) response;</span>
+<span class="nc" id="L1869">            handleReadResponse(ledgerId, entryId, status, readResponse.getData(),</span>
+                               INVALID_ENTRY_ID, -1L);
+<span class="nc" id="L1871">        }</span>
+
+        @Override
+        public void handleV3Response(BookkeeperProtocol.Response response) {
+<span class="fc" id="L1875">            readEntryOutstanding.dec();</span>
+<span class="fc" id="L1876">            ReadResponse readResponse = response.getReadResponse();</span>
+<span class="pc bpc" id="L1877" title="1 of 2 branches missed.">            StatusCode status = response.getStatus() == StatusCode.EOK</span>
+<span class="pc" id="L1878">                ? readResponse.getStatus() : response.getStatus();</span>
+<span class="fc" id="L1879">            ByteBuf buffer = Unpooled.EMPTY_BUFFER;</span>
+<span class="pc bpc" id="L1880" title="1 of 2 branches missed.">            if (readResponse.hasBody()) {</span>
+<span class="fc" id="L1881">                buffer = Unpooled.wrappedBuffer(readResponse.getBody().asReadOnlyByteBuffer());</span>
+            }
+<span class="fc" id="L1883">            long maxLAC = INVALID_ENTRY_ID;</span>
+<span class="pc bpc" id="L1884" title="1 of 2 branches missed.">            if (readResponse.hasMaxLAC()) {</span>
+<span class="fc" id="L1885">                maxLAC = readResponse.getMaxLAC();</span>
+            }
+<span class="fc" id="L1887">            long lacUpdateTimestamp = -1L;</span>
+<span class="pc bpc" id="L1888" title="1 of 2 branches missed.">            if (readResponse.hasLacUpdateTimestamp()) {</span>
+<span class="nc" id="L1889">                lacUpdateTimestamp = readResponse.getLacUpdateTimestamp();</span>
+            }
+<span class="fc" id="L1891">            handleReadResponse(readResponse.getLedgerId(),</span>
+<span class="fc" id="L1892">                               readResponse.getEntryId(),</span>
+                               status, buffer, maxLAC, lacUpdateTimestamp);
+<span class="fc" id="L1894">            buffer.release(); // meaningless using unpooled, but client may expect to hold the last reference</span>
+<span class="fc" id="L1895">        }</span>
+
+        private void handleReadResponse(long ledgerId,
+                                        long entryId,
+                                        StatusCode status,
+                                        ByteBuf buffer,
+                                        long maxLAC, // max known lac piggy-back from bookies
+                                        long lacUpdateTimestamp) { // the timestamp when the lac is updated.
+<span class="fc" id="L1903">            int readableBytes = buffer.readableBytes();</span>
+<span class="pc bpc" id="L1904" title="1 of 2 branches missed.">            if (LOG.isDebugEnabled()) {</span>
+<span class="fc" id="L1905">                logResponse(status, &quot;ledger&quot;, ledgerId, &quot;entry&quot;, entryId, &quot;entryLength&quot;, readableBytes);</span>
+            }
+
+<span class="fc" id="L1908">            int rc = convertStatus(status, BKException.Code.ReadException);</span>
+
+<span class="pc bpc" id="L1910" title="3 of 4 branches missed.">            if (maxLAC &gt; INVALID_ENTRY_ID &amp;&amp; (ctx instanceof ReadEntryCallbackCtx)) {</span>
+<span class="nc" id="L1911">                ((ReadEntryCallbackCtx) ctx).setLastAddConfirmed(maxLAC);</span>
+            }
+<span class="pc bpc" id="L1913" title="3 of 4 branches missed.">            if (lacUpdateTimestamp &gt; -1L &amp;&amp; (ctx instanceof ReadLastConfirmedAndEntryContext)) {</span>
+<span class="nc" id="L1914">                ((ReadLastConfirmedAndEntryContext) ctx).setLacUpdateTimestamp(lacUpdateTimestamp);</span>
+            }
+<span class="fc" id="L1916">            cb.readEntryComplete(rc, ledgerId, entryId, buffer.slice(), ctx);</span>
+<span class="fc" id="L1917">        }</span>
+    }
+
+    class StartTLSCompletion extends CompletionValue {
+        final StartTLSCallback cb;
+
+<span class="nc" id="L1923">        public StartTLSCompletion(final CompletionKey key) {</span>
+<span class="nc" id="L1924">            super(&quot;StartTLS&quot;, null, -1, -1,</span>
+<span class="nc" id="L1925">                  startTLSOpLogger, startTLSTimeoutOpLogger);</span>
+<span class="nc" id="L1926">            this.cb = new StartTLSCallback() {</span>
+                @Override
+                public void startTLSComplete(int rc, Object ctx) {
+<span class="nc" id="L1929">                    logOpResult(rc);</span>
+<span class="nc" id="L1930">                    key.release();</span>
+<span class="nc" id="L1931">                }</span>
+            };
+<span class="nc" id="L1933">        }</span>
+
+        @Override
+        public void errorOut() {
+<span class="nc" id="L1937">            errorOut(BKException.Code.BookieHandleNotAvailableException);</span>
+<span class="nc" id="L1938">        }</span>
+
+        @Override
+        public void errorOut(final int rc) {
+<span class="nc" id="L1942">            failTLS(rc);</span>
+<span class="nc" id="L1943">        }</span>
+
+        @Override
+        public void handleV3Response(BookkeeperProtocol.Response response) {
+<span class="nc" id="L1947">            StatusCode status = response.getStatus();</span>
+
+<span class="nc bnc" id="L1949" title="All 2 branches missed.">            if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L1950">                logResponse(status);</span>
+            }
+
+<span class="nc" id="L1953">            int rc = convertStatus(status, BKException.Code.SecurityException);</span>
+
+            // Cancel START_TLS request timeout
+<span class="nc" id="L1956">            cb.startTLSComplete(rc, null);</span>
+
+<span class="nc bnc" id="L1958" title="All 2 branches missed.">            if (state != ConnectionState.START_TLS) {</span>
+<span class="nc" id="L1959">                LOG.error(&quot;Connection state changed before TLS response received&quot;);</span>
+<span class="nc" id="L1960">                failTLS(BKException.Code.BookieHandleNotAvailableException);</span>
+<span class="nc bnc" id="L1961" title="All 2 branches missed.">            } else if (status != StatusCode.EOK) {</span>
+<span class="nc" id="L1962">                LOG.error(&quot;Client received error {} during TLS negotiation&quot;, status);</span>
+<span class="nc" id="L1963">                failTLS(BKException.Code.SecurityException);</span>
+            } else {
+<span class="nc" id="L1965">                initTLSHandshake();</span>
+            }
+<span class="nc" id="L1967">        }</span>
+
+    }
+
+    // visible for testing
+    class GetBookieInfoCompletion extends CompletionValue {
+        final GetBookieInfoCallback cb;
+
+        public GetBookieInfoCompletion(final CompletionKey key,
+                                       final GetBookieInfoCallback origCallback,
+<span class="nc" id="L1977">                                       final Object origCtx) {</span>
+<span class="nc" id="L1978">            super(&quot;GetBookieInfo&quot;, origCtx, 0L, 0L,</span>
+<span class="nc" id="L1979">                  getBookieInfoOpLogger, getBookieInfoTimeoutOpLogger);</span>
+<span class="nc" id="L1980">            this.cb = new GetBookieInfoCallback() {</span>
+                @Override
+                public void getBookieInfoComplete(int rc, BookieInfo bInfo,
+                                                  Object ctx) {
+<span class="nc" id="L1984">                    logOpResult(rc);</span>
+<span class="nc" id="L1985">                    origCallback.getBookieInfoComplete(rc, bInfo, origCtx);</span>
+<span class="nc" id="L1986">                    key.release();</span>
+<span class="nc" id="L1987">                }</span>
+            };
+<span class="nc" id="L1989">        }</span>
+
+        @Override
+        public void errorOut() {
+<span class="nc" id="L1993">            errorOut(BKException.Code.BookieHandleNotAvailableException);</span>
+<span class="nc" id="L1994">        }</span>
+
+        @Override
+        public void errorOut(final int rc) {
+<span class="nc" id="L1998">            errorOutAndRunCallback(</span>
+<span class="nc" id="L1999">                    () -&gt; cb.getBookieInfoComplete(rc, new BookieInfo(), ctx));</span>
+<span class="nc" id="L2000">        }</span>
+
+        @Override
+        public void handleV3Response(BookkeeperProtocol.Response response) {
+<span class="nc" id="L2004">            GetBookieInfoResponse getBookieInfoResponse = response.getGetBookieInfoResponse();</span>
+<span class="nc bnc" id="L2005" title="All 2 branches missed.">            StatusCode status = response.getStatus() == StatusCode.EOK</span>
+<span class="nc" id="L2006">                ? getBookieInfoResponse.getStatus() : response.getStatus();</span>
+
+<span class="nc" id="L2008">            long freeDiskSpace = getBookieInfoResponse.getFreeDiskSpace();</span>
+<span class="nc" id="L2009">            long totalDiskSpace = getBookieInfoResponse.getTotalDiskCapacity();</span>
+
+<span class="nc bnc" id="L2011" title="All 2 branches missed.">            if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L2012">                logResponse(status, &quot;freeDisk&quot;, freeDiskSpace, &quot;totalDisk&quot;, totalDiskSpace);</span>
+            }
+
+<span class="nc" id="L2015">            int rc = convertStatus(status, BKException.Code.ReadException);</span>
+<span class="nc" id="L2016">            cb.getBookieInfoComplete(rc,</span>
+                                     new BookieInfo(totalDiskSpace,
+                                                    freeDiskSpace), ctx);
+<span class="nc" id="L2019">        }</span>
+    }
+
+    class GetListOfEntriesOfLedgerCompletion extends CompletionValue {
+        final GetListOfEntriesOfLedgerCallback cb;
+
+        public GetListOfEntriesOfLedgerCompletion(final CompletionKey key,
+<span class="nc" id="L2026">                final GetListOfEntriesOfLedgerCallback origCallback, final long ledgerId) {</span>
+<span class="nc" id="L2027">            super(&quot;GetListOfEntriesOfLedger&quot;, null, ledgerId, 0L, getListOfEntriesOfLedgerCompletionOpLogger,</span>
+<span class="nc" id="L2028">                    getListOfEntriesOfLedgerCompletionTimeoutOpLogger);</span>
+<span class="nc" id="L2029">            this.cb = new GetListOfEntriesOfLedgerCallback() {</span>
+                @Override
+                public void getListOfEntriesOfLedgerComplete(int rc, long ledgerId,
+                        AvailabilityOfEntriesOfLedger availabilityOfEntriesOfLedger) {
+<span class="nc" id="L2033">                    logOpResult(rc);</span>
+<span class="nc" id="L2034">                    origCallback.getListOfEntriesOfLedgerComplete(rc, ledgerId, availabilityOfEntriesOfLedger);</span>
+<span class="nc" id="L2035">                    key.release();</span>
+<span class="nc" id="L2036">                }</span>
+            };
+<span class="nc" id="L2038">        }</span>
+
+        @Override
+        public void errorOut() {
+<span class="nc" id="L2042">            errorOut(BKException.Code.BookieHandleNotAvailableException);</span>
+<span class="nc" id="L2043">        }</span>
+
+        @Override
+        public void errorOut(final int rc) {
+<span class="nc" id="L2047">            errorOutAndRunCallback(() -&gt; cb.getListOfEntriesOfLedgerComplete(rc, ledgerId, null));</span>
+<span class="nc" id="L2048">        }</span>
+
+        @Override
+        public void handleV3Response(BookkeeperProtocol.Response response) {
+<span class="nc" id="L2052">            GetListOfEntriesOfLedgerResponse getListOfEntriesOfLedgerResponse = response</span>
+<span class="nc" id="L2053">                    .getGetListOfEntriesOfLedgerResponse();</span>
+<span class="nc" id="L2054">            ByteBuf availabilityOfEntriesOfLedgerBuffer = Unpooled.EMPTY_BUFFER;</span>
+<span class="nc bnc" id="L2055" title="All 2 branches missed.">            StatusCode status = response.getStatus() == StatusCode.EOK ? getListOfEntriesOfLedgerResponse.getStatus()</span>
+<span class="nc" id="L2056">                    : response.getStatus();</span>
+
+<span class="nc bnc" id="L2058" title="All 2 branches missed.">            if (getListOfEntriesOfLedgerResponse.hasAvailabilityOfEntriesOfLedger()) {</span>
+<span class="nc" id="L2059">                availabilityOfEntriesOfLedgerBuffer = Unpooled.wrappedBuffer(</span>
+<span class="nc" id="L2060">                        getListOfEntriesOfLedgerResponse.getAvailabilityOfEntriesOfLedger().asReadOnlyByteBuffer());</span>
+            }
+
+<span class="nc bnc" id="L2063" title="All 2 branches missed.">            if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L2064">                logResponse(status, &quot;ledgerId&quot;, ledgerId);</span>
+            }
+
+<span class="nc" id="L2067">            int rc = convertStatus(status, BKException.Code.ReadException);</span>
+<span class="nc" id="L2068">            AvailabilityOfEntriesOfLedger availabilityOfEntriesOfLedger = null;</span>
+<span class="nc bnc" id="L2069" title="All 2 branches missed.">            if (rc == BKException.Code.OK) {</span>
+<span class="nc" id="L2070">                availabilityOfEntriesOfLedger = new AvailabilityOfEntriesOfLedger(</span>
+<span class="nc" id="L2071">                        availabilityOfEntriesOfLedgerBuffer.slice());</span>
+            }
+<span class="nc" id="L2073">            cb.getListOfEntriesOfLedgerComplete(rc, ledgerId, availabilityOfEntriesOfLedger);</span>
+<span class="nc" id="L2074">        }</span>
+    }
+
+<span class="fc" id="L2077">    private final Recycler&lt;AddCompletion&gt; addCompletionRecycler = new Recycler&lt;AddCompletion&gt;() {</span>
+            @Override
+            protected AddCompletion newObject(Recycler.Handle&lt;AddCompletion&gt; handle) {
+<span class="fc" id="L2080">                return new AddCompletion(handle);</span>
+            }
+        };
+
+    AddCompletion acquireAddCompletion(final CompletionKey key,
+                                       final WriteCallback originalCallback,
+                                       final Object originalCtx,
+                                       final long ledgerId, final long entryId) {
+<span class="fc" id="L2088">        AddCompletion completion = addCompletionRecycler.get();</span>
+<span class="fc" id="L2089">        completion.reset(key, originalCallback, originalCtx, ledgerId, entryId);</span>
+<span class="fc" id="L2090">        return completion;</span>
+    }
+
+    // visible for testing
+    class AddCompletion extends CompletionValue implements WriteCallback {
+        final Recycler.Handle&lt;AddCompletion&gt; handle;
+
+<span class="fc" id="L2097">        CompletionKey key = null;</span>
+<span class="fc" id="L2098">        WriteCallback originalCallback = null;</span>
+
+<span class="fc" id="L2100">        AddCompletion(Recycler.Handle&lt;AddCompletion&gt; handle) {</span>
+<span class="fc" id="L2101">            super(&quot;Add&quot;, null, -1, -1, addEntryOpLogger, addTimeoutOpLogger);</span>
+<span class="fc" id="L2102">            this.handle = handle;</span>
+<span class="fc" id="L2103">        }</span>
+
+        void reset(final CompletionKey key,
+                   final WriteCallback originalCallback,
+                   final Object originalCtx,
+                   final long ledgerId, final long entryId) {
+<span class="fc" id="L2109">            this.key = key;</span>
+<span class="fc" id="L2110">            this.originalCallback = originalCallback;</span>
+<span class="fc" id="L2111">            this.ctx = originalCtx;</span>
+<span class="fc" id="L2112">            this.ledgerId = ledgerId;</span>
+<span class="fc" id="L2113">            this.entryId = entryId;</span>
+<span class="fc" id="L2114">            this.startTime = MathUtils.nowInNano();</span>
+<span class="fc" id="L2115">        }</span>
+
+        @Override
+        public void writeComplete(int rc, long ledgerId, long entryId,
+                                  BookieSocketAddress addr,
+                                  Object ctx) {
+<span class="fc" id="L2121">            logOpResult(rc);</span>
+<span class="fc" id="L2122">            originalCallback.writeComplete(rc, ledgerId, entryId, addr, ctx);</span>
+<span class="fc" id="L2123">            key.release();</span>
+<span class="fc" id="L2124">            handle.recycle(this);</span>
+<span class="fc" id="L2125">        }</span>
+
+        @Override
+        boolean maybeTimeout() {
+<span class="nc bnc" id="L2129" title="All 2 branches missed.">            if (MathUtils.elapsedNanos(startTime) &gt;= addEntryTimeoutNanos) {</span>
+<span class="nc" id="L2130">                timeout();</span>
+<span class="nc" id="L2131">                return true;</span>
+            } else {
+<span class="nc" id="L2133">                return false;</span>
+            }
+        }
+
+        @Override
+        public void errorOut() {
+<span class="nc" id="L2139">            errorOut(BKException.Code.BookieHandleNotAvailableException);</span>
+<span class="nc" id="L2140">        }</span>
+
+        @Override
+        public void errorOut(final int rc) {
+<span class="nc" id="L2144">            errorOutAndRunCallback(</span>
+<span class="nc" id="L2145">                    () -&gt; writeComplete(rc, ledgerId, entryId, addr, ctx));</span>
+<span class="nc" id="L2146">        }</span>
+
+        @Override
+        public void setOutstanding() {
+<span class="nc" id="L2150">            addEntryOutstanding.inc();</span>
+<span class="nc" id="L2151">        }</span>
+
+        @Override
+        public void handleV2Response(
+                long ledgerId, long entryId, StatusCode status,
+                BookieProtocol.Response response) {
+<span class="nc" id="L2157">            addEntryOutstanding.dec();</span>
+<span class="nc" id="L2158">            handleResponse(ledgerId, entryId, status);</span>
+<span class="nc" id="L2159">        }</span>
+
+        @Override
+        public void handleV3Response(
+                BookkeeperProtocol.Response response) {
+<span class="fc" id="L2164">            addEntryOutstanding.dec();</span>
+<span class="fc" id="L2165">            AddResponse addResponse = response.getAddResponse();</span>
+<span class="pc bpc" id="L2166" title="1 of 2 branches missed.">            StatusCode status = response.getStatus() == StatusCode.EOK</span>
+<span class="pc" id="L2167">                ? addResponse.getStatus() : response.getStatus();</span>
+<span class="fc" id="L2168">            handleResponse(addResponse.getLedgerId(), addResponse.getEntryId(),</span>
+                           status);
+<span class="fc" id="L2170">        }</span>
+
+        private void handleResponse(long ledgerId, long entryId,
+                                    StatusCode status) {
+<span class="pc bpc" id="L2174" title="1 of 2 branches missed.">            if (LOG.isDebugEnabled()) {</span>
+<span class="fc" id="L2175">                logResponse(status, &quot;ledger&quot;, ledgerId, &quot;entry&quot;, entryId);</span>
+            }
+
+<span class="fc" id="L2178">            int rc = convertStatus(status, BKException.Code.WriteException);</span>
+<span class="fc" id="L2179">            writeComplete(rc, ledgerId, entryId, addr, ctx);</span>
+<span class="fc" id="L2180">        }</span>
+    }
+
+    // visable for testing
+    CompletionKey newCompletionKey(long txnId, OperationType operationType) {
+<span class="fc" id="L2185">        return new V3CompletionKey(txnId, operationType);</span>
+    }
+
+    class V3CompletionKey extends CompletionKey {
+
+<span class="fc" id="L2190">        public V3CompletionKey(long txnId, OperationType operationType) {</span>
+<span class="fc" id="L2191">            super(txnId, operationType);</span>
+<span class="fc" id="L2192">        }</span>
+
+        @Override
+        public boolean equals(Object obj) {
+<span class="fc bfc" id="L2196" title="All 2 branches covered.">            if (!(obj instanceof V3CompletionKey)) {</span>
+<span class="fc" id="L2197">                return false;</span>
+            }
+<span class="fc" id="L2199">            V3CompletionKey that = (V3CompletionKey) obj;</span>
+<span class="pc bpc" id="L2200" title="2 of 4 branches missed.">            return this.txnId == that.txnId &amp;&amp; this.operationType == that.operationType;</span>
+        }
+
+        @Override
+        public int hashCode() {
+<span class="fc" id="L2205">            return ((int) txnId);</span>
+        }
+
+        @Override
+        public String toString() {
+<span class="nc" id="L2210">            return String.format(&quot;TxnId(%d), OperationType(%s)&quot;, txnId, operationType);</span>
+        }
+
+    }
+
+    abstract class CompletionKey {
+        final long txnId;
+        OperationType operationType;
+
+        CompletionKey(long txnId,
+<span class="fc" id="L2220">                      OperationType operationType) {</span>
+<span class="fc" id="L2221">            this.txnId = txnId;</span>
+<span class="fc" id="L2222">            this.operationType = operationType;</span>
+<span class="fc" id="L2223">        }</span>
+
+<span class="fc" id="L2225">        public void release() {}</span>
+    }
+
+    /**
+     * Note : Helper functions follow
+     */
+
+    /**
+     * @param status
+     * @return {@link BKException.Code.UNINITIALIZED} if the statuscode is unknown.
+     */
+    private int statusCodeToExceptionCode(StatusCode status) {
+<span class="pc bpc" id="L2237" title="8 of 9 branches missed.">        switch (status) {</span>
+            case EOK:
+<span class="fc" id="L2239">                return BKException.Code.OK;</span>
+            case ENOENTRY:
+<span class="nc" id="L2241">                return BKException.Code.NoSuchEntryException;</span>
+            case ENOLEDGER:
+<span class="nc" id="L2243">                return BKException.Code.NoSuchLedgerExistsException;</span>
+            case EBADVERSION:
+<span class="nc" id="L2245">                return BKException.Code.ProtocolVersionException;</span>
+            case EUA:
+<span class="nc" id="L2247">                return BKException.Code.UnauthorizedAccessException;</span>
+            case EFENCED:
+<span class="nc" id="L2249">                return BKException.Code.LedgerFencedException;</span>
+            case EREADONLY:
+<span class="nc" id="L2251">                return BKException.Code.WriteOnReadOnlyBookieException;</span>
+            case ETOOMANYREQUESTS:
+<span class="nc" id="L2253">                return BKException.Code.TooManyRequestsException;</span>
+            default:
+<span class="nc" id="L2255">                return BKException.Code.UNINITIALIZED;</span>
+        }
+    }
+
+    private void putCompletionKeyValue(CompletionKey key, CompletionValue value) {
+<span class="fc" id="L2260">        CompletionValue existingValue = completionObjects.putIfAbsent(key, value);</span>
+<span class="pc bpc" id="L2261" title="1 of 2 branches missed.">        if (existingValue != null) { // will only happen for V2 keys, as V3 have unique txnid</span>
+            // There's a pending read request on same ledger/entry. Use the multimap to track all of them
+<span class="nc" id="L2263">            completionObjectsV2Conflicts.put(key, value);</span>
+        }
+<span class="fc" id="L2265">    }</span>
+
+    private CompletionValue getCompletionValue(CompletionKey key) {
+<span class="nc" id="L2268">        CompletionValue completionValue = completionObjects.remove(key);</span>
+<span class="nc bnc" id="L2269" title="All 2 branches missed.">        if (completionValue == null) {</span>
+            // If there's no completion object here, try in the multimap
+<span class="nc" id="L2271">            completionValue = completionObjectsV2Conflicts.removeAny(key).orElse(null);</span>
+        }
+<span class="nc" id="L2273">        return completionValue;</span>
+    }
+
+    private long getTxnId() {
+<span class="fc" id="L2277">        return txnIdGenerator.incrementAndGet();</span>
+    }
+
+<span class="fc" id="L2280">    private final Recycler&lt;V2CompletionKey&gt; v2KeyRecycler = new Recycler&lt;V2CompletionKey&gt;() {</span>
+            @Override
+            protected V2CompletionKey newObject(
+                    Recycler.Handle&lt;V2CompletionKey&gt; handle) {
+<span class="nc" id="L2284">                return new V2CompletionKey(handle);</span>
+            }
+        };
+
+    V2CompletionKey acquireV2Key(long ledgerId, long entryId,
+                             OperationType operationType) {
+<span class="nc" id="L2290">        V2CompletionKey key = v2KeyRecycler.get();</span>
+<span class="nc" id="L2291">        key.reset(ledgerId, entryId, operationType);</span>
+<span class="nc" id="L2292">        return key;</span>
+    }
+
+    private class V2CompletionKey extends CompletionKey {
+        private final Handle&lt;V2CompletionKey&gt; recyclerHandle;
+        long ledgerId;
+        long entryId;
+
+<span class="nc" id="L2300">        private V2CompletionKey(Handle&lt;V2CompletionKey&gt; handle) {</span>
+<span class="nc" id="L2301">            super(-1, null);</span>
+<span class="nc" id="L2302">            this.recyclerHandle = handle;</span>
+<span class="nc" id="L2303">        }</span>
+
+        void reset(long ledgerId, long entryId, OperationType operationType) {
+<span class="nc" id="L2306">            this.ledgerId = ledgerId;</span>
+<span class="nc" id="L2307">            this.entryId = entryId;</span>
+<span class="nc" id="L2308">            this.operationType = operationType;</span>
+<span class="nc" id="L2309">        }</span>
+
+        @Override
+        public boolean equals(Object object) {
+<span class="nc bnc" id="L2313" title="All 2 branches missed.">            if (!(object instanceof V2CompletionKey)) {</span>
+<span class="nc" id="L2314">                return  false;</span>
+            }
+<span class="nc" id="L2316">            V2CompletionKey that = (V2CompletionKey) object;</span>
+<span class="nc bnc" id="L2317" title="All 6 branches missed.">            return this.entryId == that.entryId</span>
+                &amp;&amp; this.ledgerId == that.ledgerId
+                &amp;&amp; this.operationType == that.operationType;
+        }
+
+        @Override
+        public int hashCode() {
+<span class="nc" id="L2324">            return Long.hashCode(ledgerId) * 31 + Long.hashCode(entryId);</span>
+        }
+
+        @Override
+        public String toString() {
+<span class="nc" id="L2329">            return String.format(&quot;%d:%d %s&quot;, ledgerId, entryId, operationType);</span>
+        }
+
+        @Override
+        public void release() {
+<span class="nc" id="L2334">            recyclerHandle.recycle(this);</span>
+<span class="nc" id="L2335">        }</span>
+    }
+
+    Request.Builder withRequestContext(Request.Builder builder) {
+<span class="pc bpc" id="L2339" title="1 of 2 branches missed.">        if (preserveMdcForTaskExecution) {</span>
+<span class="nc" id="L2340">            return appendRequestContext(builder);</span>
+        }
+<span class="fc" id="L2342">        return builder;</span>
+    }
+
+    static Request.Builder appendRequestContext(Request.Builder builder) {
+<span class="nc" id="L2346">        final Map&lt;String, String&gt; mdcContextMap = MDC.getCopyOfContextMap();</span>
+<span class="nc bnc" id="L2347" title="All 4 branches missed.">        if (mdcContextMap == null || mdcContextMap.isEmpty()) {</span>
+<span class="nc" id="L2348">            return builder;</span>
+        }
+<span class="nc bnc" id="L2350" title="All 2 branches missed.">        for (Map.Entry&lt;String, String&gt; kv : mdcContextMap.entrySet()) {</span>
+<span class="nc" id="L2351">            final BookkeeperProtocol.ContextPair context = BookkeeperProtocol.ContextPair.newBuilder()</span>
+<span class="nc" id="L2352">                    .setKey(kv.getKey())</span>
+<span class="nc" id="L2353">                    .setValue(kv.getValue())</span>
+<span class="nc" id="L2354">                    .build();</span>
+<span class="nc" id="L2355">            builder.addRequestContext(context);</span>
+<span class="nc" id="L2356">        }</span>
+<span class="nc" id="L2357">        return builder;</span>
+    }
+
+    ChannelFutureListener contextPreservingListener(ChannelFutureListener listener) {
+<span class="pc bpc" id="L2361" title="1 of 2 branches missed.">        return preserveMdcForTaskExecution ? new ContextPreservingFutureListener(listener) : listener;</span>
+    }
+
+    /**
+     * Decorator to preserve MDC for connection listener.
+     */
+    static class ContextPreservingFutureListener implements ChannelFutureListener {
+        private final ChannelFutureListener listener;
+        private final Map&lt;String, String&gt; mdcContextMap;
+
+<span class="nc" id="L2371">        ContextPreservingFutureListener(ChannelFutureListener listener) {</span>
+<span class="nc" id="L2372">            this.listener = listener;</span>
+<span class="nc" id="L2373">            this.mdcContextMap = MDC.getCopyOfContextMap();</span>
+<span class="nc" id="L2374">        }</span>
+
+        @Override
+        public void operationComplete(ChannelFuture future) throws Exception {
+<span class="nc" id="L2378">            MdcUtils.restoreContext(mdcContextMap);</span>
+            try {
+<span class="nc" id="L2380">                listener.operationComplete(future);</span>
+            } finally {
+<span class="nc" id="L2382">                MDC.clear();</span>
+            }
+<span class="nc" id="L2384">        }</span>
+    }
+
+    /**
+     * Connection listener.
+     */
+    class ConnectionFutureListener implements ChannelFutureListener {
+        private final long startTime;
+
+<span class="fc" id="L2393">        ConnectionFutureListener(long startTime) {</span>
+<span class="fc" id="L2394">            this.startTime = startTime;</span>
+<span class="fc" id="L2395">        }</span>
+
+        @Override
+        public void operationComplete(ChannelFuture future) throws Exception {
+<span class="pc bpc" id="L2399" title="1 of 2 branches missed.">            if (LOG.isDebugEnabled()) {</span>
+<span class="fc" id="L2400">                LOG.debug(&quot;Channel connected ({}) {}&quot;, future.isSuccess(), future.channel());</span>
+            }
+            int rc;
+            Queue&lt;GenericCallback&lt;PerChannelBookieClient&gt;&gt; oldPendingOps;
+
+            /* We fill in the timer based on whether the connect operation itself succeeded regardless of
+             * whether there was a race */
+<span class="pc bpc" id="L2407" title="1 of 2 branches missed.">            if (future.isSuccess()) {</span>
+<span class="fc" id="L2408">                PerChannelBookieClient.this</span>
+<span class="fc" id="L2409">                .connectTimer.registerSuccessfulEvent(MathUtils.elapsedNanos(startTime), TimeUnit.NANOSECONDS);</span>
+            } else {
+<span class="nc" id="L2411">                PerChannelBookieClient.this</span>
+<span class="nc" id="L2412">                .connectTimer.registerFailedEvent(MathUtils.elapsedNanos(startTime), TimeUnit.NANOSECONDS);</span>
+            }
+
+<span class="fc" id="L2415">            synchronized (PerChannelBookieClient.this) {</span>
+<span class="pc bpc" id="L2416" title="3 of 6 branches missed.">                if (future.isSuccess() &amp;&amp; state == ConnectionState.CONNECTING &amp;&amp; future.channel().isActive()) {</span>
+<span class="fc" id="L2417">                    LOG.info(&quot;Successfully connected to bookie: {}&quot;, future.channel());</span>
+<span class="fc" id="L2418">                    rc = BKException.Code.OK;</span>
+<span class="fc" id="L2419">                    channel = future.channel();</span>
+<span class="pc bpc" id="L2420" title="1 of 2 branches missed.">                    if (shFactory != null) {</span>
+<span class="nc" id="L2421">                        makeWritable();</span>
+<span class="nc" id="L2422">                        initiateTLS();</span>
+<span class="nc" id="L2423">                        return;</span>
+                    } else {
+<span class="fc" id="L2425">                        LOG.info(&quot;Successfully connected to bookie: &quot; + addr);</span>
+<span class="fc" id="L2426">                        state = ConnectionState.CONNECTED;</span>
+<span class="fc" id="L2427">                        activeNonTlsChannelCounter.inc();</span>
+                    }
+<span class="nc bnc" id="L2429" title="All 4 branches missed.">                } else if (future.isSuccess() &amp;&amp; state == ConnectionState.START_TLS) {</span>
+<span class="nc" id="L2430">                    rc = BKException.Code.OK;</span>
+<span class="nc" id="L2431">                    LOG.info(&quot;Successfully connected to bookie using TLS: &quot; + addr);</span>
+
+<span class="nc" id="L2433">                    state = ConnectionState.CONNECTED;</span>
+<span class="nc" id="L2434">                    AuthHandler.ClientSideHandler authHandler = future.channel().pipeline()</span>
+<span class="nc" id="L2435">                            .get(AuthHandler.ClientSideHandler.class);</span>
+<span class="nc bnc" id="L2436" title="All 4 branches missed.">                    if (conf.getHostnameVerificationEnabled() &amp;&amp; !authHandler.verifyTlsHostName(channel)) {</span>
+<span class="nc" id="L2437">                        rc = BKException.Code.UnauthorizedAccessException;</span>
+                    } else {
+<span class="nc" id="L2439">                        authHandler.authProvider.onProtocolUpgrade();</span>
+<span class="nc" id="L2440">                        activeTlsChannelCounter.inc();</span>
+                    }
+<span class="nc bnc" id="L2442" title="All 6 branches missed.">                } else if (future.isSuccess() &amp;&amp; (state == ConnectionState.CLOSED</span>
+                    || state == ConnectionState.DISCONNECTED)) {
+<span class="nc" id="L2444">                    LOG.warn(&quot;Closed before connection completed, clean up: {}, current state {}&quot;,</span>
+<span class="nc" id="L2445">                            future.channel(), state);</span>
+<span class="nc" id="L2446">                    closeChannel(future.channel());</span>
+<span class="nc" id="L2447">                    rc = BKException.Code.BookieHandleNotAvailableException;</span>
+<span class="nc" id="L2448">                    channel = null;</span>
+<span class="nc bnc" id="L2449" title="All 4 branches missed.">                } else if (future.isSuccess() &amp;&amp; state == ConnectionState.CONNECTED) {</span>
+<span class="nc bnc" id="L2450" title="All 2 branches missed.">                    if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L2451">                        LOG.debug(&quot;Already connected with another channel({}), so close the new channel({})&quot;, channel,</span>
+<span class="nc" id="L2452">                                future.channel());</span>
+                    }
+<span class="nc" id="L2454">                    closeChannel(future.channel());</span>
+<span class="nc" id="L2455">                    return; // pendingOps should have been completed when other channel connected</span>
+                } else {
+<span class="nc" id="L2457">                    Throwable cause = future.cause();</span>
+<span class="nc bnc" id="L2458" title="All 4 branches missed.">                    if (cause instanceof UnknownHostException || cause instanceof NativeIoException) {</span>
+                        // Don't log stack trace for common errors
+<span class="nc" id="L2460">                        LOG.warn(&quot;Could not connect to bookie: {}/{}, current state {} : {}&quot;,</span>
+<span class="nc" id="L2461">                                future.channel(), addr, state, future.cause().getMessage());</span>
+                    } else {
+                        // Regular exceptions, include stack trace
+<span class="nc" id="L2464">                        LOG.error(&quot;Could not connect to bookie: {}/{}, current state {} : &quot;,</span>
+<span class="nc" id="L2465">                                future.channel(), addr, state, future.cause());</span>
+                    }
+
+<span class="nc" id="L2468">                    rc = BKException.Code.BookieHandleNotAvailableException;</span>
+<span class="nc" id="L2469">                    closeChannel(future.channel());</span>
+<span class="nc" id="L2470">                    channel = null;</span>
+<span class="nc bnc" id="L2471" title="All 2 branches missed.">                    if (state != ConnectionState.CLOSED) {</span>
+<span class="nc" id="L2472">                        state = ConnectionState.DISCONNECTED;</span>
+                    }
+<span class="nc" id="L2474">                    failedConnectionCounter.inc();</span>
+                }
+
+                // trick to not do operations under the lock, take the list
+                // of pending ops and assign it to a new variable, while
+                // emptying the pending ops by just assigning it to a new
+                // list
+<span class="fc" id="L2481">                oldPendingOps = pendingOps;</span>
+<span class="fc" id="L2482">                pendingOps = new ArrayDeque&lt;&gt;();</span>
+<span class="fc" id="L2483">            }</span>
+
+<span class="fc bfc" id="L2485" title="All 2 branches covered.">            for (GenericCallback&lt;PerChannelBookieClient&gt; pendingOp : oldPendingOps) {</span>
+<span class="fc" id="L2486">                pendingOp.operationComplete(rc, PerChannelBookieClient.this);</span>
+<span class="fc" id="L2487">            }</span>
+
+<span class="fc" id="L2489">            makeWritable();</span>
+<span class="fc" id="L2490">        }</span>
+    }
+
+    private void initiateTLS() {
+<span class="nc" id="L2494">        LOG.info(&quot;Initializing TLS to {}&quot;, channel);</span>
+<span class="nc bnc" id="L2495" title="All 4 branches missed.">        assert state == ConnectionState.CONNECTING;</span>
+<span class="nc" id="L2496">        final long txnId = getTxnId();</span>
+<span class="nc" id="L2497">        final CompletionKey completionKey = new V3CompletionKey(txnId, OperationType.START_TLS);</span>
+<span class="nc" id="L2498">        completionObjects.put(completionKey,</span>
+                              new StartTLSCompletion(completionKey));
+<span class="nc" id="L2500">        BookkeeperProtocol.Request.Builder h = withRequestContext(BookkeeperProtocol.Request.newBuilder());</span>
+<span class="nc" id="L2501">        BKPacketHeader.Builder headerBuilder = BKPacketHeader.newBuilder()</span>
+<span class="nc" id="L2502">                .setVersion(ProtocolVersion.VERSION_THREE)</span>
+<span class="nc" id="L2503">                .setOperation(OperationType.START_TLS)</span>
+<span class="nc" id="L2504">                .setTxnId(txnId);</span>
+<span class="nc" id="L2505">        h.setHeader(headerBuilder.build());</span>
+<span class="nc" id="L2506">        h.setStartTLSRequest(BookkeeperProtocol.StartTLSRequest.newBuilder().build());</span>
+<span class="nc" id="L2507">        state = ConnectionState.START_TLS;</span>
+<span class="nc" id="L2508">        writeAndFlush(channel, completionKey, h.build());</span>
+<span class="nc" id="L2509">    }</span>
+
+    private void failTLS(int rc) {
+<span class="nc" id="L2512">        LOG.error(&quot;TLS failure on: {}, rc: {}&quot;, channel, rc);</span>
+        Queue&lt;GenericCallback&lt;PerChannelBookieClient&gt;&gt; oldPendingOps;
+<span class="nc" id="L2514">        synchronized (this) {</span>
+<span class="nc" id="L2515">            disconnect();</span>
+<span class="nc" id="L2516">            oldPendingOps = pendingOps;</span>
+<span class="nc" id="L2517">            pendingOps = new ArrayDeque&lt;&gt;();</span>
+<span class="nc" id="L2518">        }</span>
+<span class="nc bnc" id="L2519" title="All 2 branches missed.">        for (GenericCallback&lt;PerChannelBookieClient&gt; pendingOp : oldPendingOps) {</span>
+<span class="nc" id="L2520">            pendingOp.operationComplete(rc, null);</span>
+<span class="nc" id="L2521">        }</span>
+<span class="nc" id="L2522">        failedTlsHandshakeCounter.inc();</span>
+<span class="nc" id="L2523">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

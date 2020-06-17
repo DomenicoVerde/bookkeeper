@@ -16,7 +16,7 @@ public class BookkeeperTest {
 	
 	@BeforeClass
 	public static void init() {
-		//Initializing BookKeeper Client
+		//Initializes a new BookKeeper Client
 		try {	
 			bkClient = new BookKeeper("127.0.0.1:2181");
 		} catch (BKException | IOException | InterruptedException e) {
