@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <concat destfile="/home/domenicoverde/Scrivania/Bookkeeper.git/tools/all/src/main/resources/META-INF/services/org.apache.bookkeeper.tools.framework.CommandGroup" append="true">
+    <filelist files="commands" dir="/home/domenicoverde/Scrivania/Bookkeeper.git/tools/all/../stream/src/main/resources"></filelist>
+  </concat>
+</target>
+</project>

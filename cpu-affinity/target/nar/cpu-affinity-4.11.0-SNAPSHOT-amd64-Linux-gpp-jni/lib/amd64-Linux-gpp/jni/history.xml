@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="7 -shared -lrt -fexceptions -lstdc++">
+      <target file="libcpu-affinity.so" lastModified="172c7d0fc4d">
+         <source file="../../../../obj/amd64-Linux-gpp/affinity_jni.67f6b8e.o" lastModified="172c7d0f475"/>
+      </target>
+   </processor>
+</history>

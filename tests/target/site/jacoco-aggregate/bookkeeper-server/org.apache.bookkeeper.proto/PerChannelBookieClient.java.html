@@ -996,15 +996,15 @@ public class PerChannelBookieClient extends ChannelInboundHandlerAdapter {
     };
 
     public void checkTimeoutOnPendingOperations() {
-<span class="nc" id="L999">        int timedOutOperations = completionObjects.removeIf(timeoutCheck);</span>
+<span class="fc" id="L999">        int timedOutOperations = completionObjects.removeIf(timeoutCheck);</span>
 
-<span class="nc" id="L1001">        timedOutOperations += completionObjectsV2Conflicts.removeIf(timeoutCheck);</span>
+<span class="fc" id="L1001">        timedOutOperations += completionObjectsV2Conflicts.removeIf(timeoutCheck);</span>
 
-<span class="nc bnc" id="L1003" title="All 2 branches missed.">        if (timedOutOperations &gt; 0) {</span>
+<span class="pc bpc" id="L1003" title="1 of 2 branches missed.">        if (timedOutOperations &gt; 0) {</span>
 <span class="nc" id="L1004">            LOG.info(&quot;Timed-out {} operations to channel {} for {}&quot;,</span>
 <span class="nc" id="L1005">                     timedOutOperations, channel, addr);</span>
         }
-<span class="nc" id="L1007">    }</span>
+<span class="fc" id="L1007">    }</span>
 
     /**
      * Disconnects the bookie client. It can be reused.

@@ -1,0 +1,195 @@
+# Created on 2020-06-18T16:24:45.944
+java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/util/resources/cldr/provider/CLDRLocaleDataMetaInfo.
+
+# Created on 2020-06-18T16:24:45.944
+	at org.jacoco.agent.rt.internal_035b120.CoverageTransformer.transform(CoverageTransformer.java:93)
+
+# Created on 2020-06-18T16:24:45.944
+	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:246)
+
+# Created on 2020-06-18T16:24:45.945
+	at java.instrument/sun.instrument.TransformerManager.transform(TransformerManager.java:188)
+
+# Created on 2020-06-18T16:24:45.945
+	at java.instrument/sun.instrument.InstrumentationImpl.transform(InstrumentationImpl.java:563)
+
+# Created on 2020-06-18T16:24:45.945
+	at java.base/java.lang.ClassLoader.defineClass2(Native Method)
+
+# Created on 2020-06-18T16:24:45.945
+	at java.base/java.lang.ClassLoader.defineClass(ClassLoader.java:1109)
+
+# Created on 2020-06-18T16:24:45.945
+	at java.base/java.security.SecureClassLoader.defineClass(SecureClassLoader.java:183)
+
+# Created on 2020-06-18T16:24:45.945
+	at java.base/jdk.internal.loader.BuiltinClassLoader.defineClass(BuiltinClassLoader.java:780)
+
+# Created on 2020-06-18T16:24:45.945
+	at java.base/jdk.internal.loader.BuiltinClassLoader.findClassInModuleOrNull(BuiltinClassLoader.java:701)
+
+# Created on 2020-06-18T16:24:45.946
+	at java.base/jdk.internal.loader.BuiltinClassLoader.findClass(BuiltinClassLoader.java:582)
+
+# Created on 2020-06-18T16:24:45.946
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:634)
+
+# Created on 2020-06-18T16:24:45.946
+	at java.base/java.lang.Class.forName(Class.java:505)
+
+# Created on 2020-06-18T16:24:45.946
+	at java.base/java.util.ServiceLoader.loadProvider(ServiceLoader.java:854)
+
+# Created on 2020-06-18T16:24:45.946
+	at java.base/java.util.ServiceLoader$ModuleServicesLookupIterator.hasNext(ServiceLoader.java:1078)
+
+# Created on 2020-06-18T16:24:45.946
+	at java.base/java.util.ServiceLoader$2.hasNext(ServiceLoader.java:1301)
+
+# Created on 2020-06-18T16:24:45.946
+	at java.base/java.util.ServiceLoader$3.hasNext(ServiceLoader.java:1386)
+
+# Created on 2020-06-18T16:24:45.946
+	at java.base/sun.util.cldr.CLDRLocaleProviderAdapter$1.run(CLDRLocaleProviderAdapter.java:89)
+
+# Created on 2020-06-18T16:24:45.947
+	at java.base/sun.util.cldr.CLDRLocaleProviderAdapter$1.run(CLDRLocaleProviderAdapter.java:86)
+
+# Created on 2020-06-18T16:24:45.947
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:554)
+
+# Created on 2020-06-18T16:24:45.947
+	at java.base/sun.util.cldr.CLDRLocaleProviderAdapter.<init>(CLDRLocaleProviderAdapter.java:86)
+
+# Created on 2020-06-18T16:24:45.947
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+
+# Created on 2020-06-18T16:24:45.947
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+
+# Created on 2020-06-18T16:24:45.947
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+
+# Created on 2020-06-18T16:24:45.947
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
+
+# Created on 2020-06-18T16:24:45.947
+	at java.base/java.lang.reflect.ReflectAccess.newInstance(ReflectAccess.java:124)
+
+# Created on 2020-06-18T16:24:45.947
+	at java.base/jdk.internal.reflect.ReflectionFactory.newInstance(ReflectionFactory.java:346)
+
+# Created on 2020-06-18T16:24:45.947
+	at java.base/java.lang.Class.newInstance(Class.java:604)
+
+# Created on 2020-06-18T16:24:45.948
+	at java.base/sun.util.locale.provider.LocaleProviderAdapter.forType(LocaleProviderAdapter.java:176)
+
+# Created on 2020-06-18T16:24:45.948
+	at java.base/sun.util.locale.provider.LocaleProviderAdapter.findAdapter(LocaleProviderAdapter.java:279)
+
+# Created on 2020-06-18T16:24:45.948
+	at java.base/sun.util.locale.provider.LocaleProviderAdapter.getAdapter(LocaleProviderAdapter.java:250)
+
+# Created on 2020-06-18T16:24:45.948
+	at java.base/java.text.NumberFormat.getInstance(NumberFormat.java:960)
+
+# Created on 2020-06-18T16:24:45.948
+	at java.base/java.text.NumberFormat.getNumberInstance(NumberFormat.java:518)
+
+# Created on 2020-06-18T16:24:45.948
+	at java.base/java.util.Scanner.useLocale(Scanner.java:1270)
+
+# Created on 2020-06-18T16:24:45.948
+	at java.base/java.util.Scanner.<init>(Scanner.java:543)
+
+# Created on 2020-06-18T16:24:45.948
+	at java.base/java.util.Scanner.<init>(Scanner.java:595)
+
+# Created on 2020-06-18T16:24:45.948
+	at java.base/java.util.Scanner.<init>(Scanner.java:581)
+
+# Created on 2020-06-18T16:24:45.948
+	at org.apache.maven.surefire.booter.PpidChecker$ProcessInfoConsumer.execute(PpidChecker.java:300)
+
+# Created on 2020-06-18T16:24:45.948
+	at org.apache.maven.surefire.booter.PpidChecker.unix(PpidChecker.java:160)
+
+# Created on 2020-06-18T16:24:45.948
+	at org.apache.maven.surefire.booter.PpidChecker.isProcessAlive(PpidChecker.java:115)
+
+# Created on 2020-06-18T16:24:45.949
+	at org.apache.maven.surefire.booter.ForkedBooter$2.run(ForkedBooter.java:213)
+
+# Created on 2020-06-18T16:24:45.949
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+
+# Created on 2020-06-18T16:24:45.949
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:305)
+
+# Created on 2020-06-18T16:24:45.949
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+
+# Created on 2020-06-18T16:24:45.949
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+
+# Created on 2020-06-18T16:24:45.949
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+
+# Created on 2020-06-18T16:24:45.949
+	at java.base/java.lang.Thread.run(Thread.java:832)
+
+# Created on 2020-06-18T16:24:45.949
+Caused by: java.io.IOException: Error while instrumenting sun/util/resources/cldr/provider/CLDRLocaleDataMetaInfo.
+
+# Created on 2020-06-18T16:24:45.949
+	at org.jacoco.agent.rt.internal_035b120.core.instr.Instrumenter.instrumentError(Instrumenter.java:158)
+
+# Created on 2020-06-18T16:24:45.949
+	at org.jacoco.agent.rt.internal_035b120.core.instr.Instrumenter.instrument(Instrumenter.java:108)
+
+# Created on 2020-06-18T16:24:45.949
+	at org.jacoco.agent.rt.internal_035b120.CoverageTransformer.transform(CoverageTransformer.java:91)
+
+# Created on 2020-06-18T16:24:45.949
+	... 45 more
+
+# Created on 2020-06-18T16:24:45.950
+Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 58
+
+# Created on 2020-06-18T16:24:45.950
+	at org.jacoco.agent.rt.internal_035b120.asm.ClassReader.<init>(ClassReader.java:195)
+
+# Created on 2020-06-18T16:24:45.950
+	at org.jacoco.agent.rt.internal_035b120.asm.ClassReader.<init>(ClassReader.java:176)
+
+# Created on 2020-06-18T16:24:45.950
+	at org.jacoco.agent.rt.internal_035b120.asm.ClassReader.<init>(ClassReader.java:162)
+
+# Created on 2020-06-18T16:24:45.950
+	at org.jacoco.agent.rt.internal_035b120.core.internal.instr.InstrSupport.classReaderFor(InstrSupport.java:279)
+
+# Created on 2020-06-18T16:24:45.950
+	at org.jacoco.agent.rt.internal_035b120.core.instr.Instrumenter.instrument(Instrumenter.java:74)
+
+# Created on 2020-06-18T16:24:45.950
+	at org.jacoco.agent.rt.internal_035b120.core.instr.Instrumenter.instrument(Instrumenter.java:106)
+
+# Created on 2020-06-18T16:24:45.950
+	... 46 more
+
+# Created on 2020-06-18T16:24:47.307
+WARNING: An illegal reflective access operation has occurred
+
+# Created on 2020-06-18T16:24:47.307
+WARNING: Illegal reflective access by com.google.protobuf.UnsafeUtil (file:/home/domenicoverde/.m2/repository/com/google/protobuf/protobuf-java/3.5.1/protobuf-java-3.5.1.jar) to field java.nio.Buffer.address
+
+# Created on 2020-06-18T16:24:47.307
+WARNING: Please consider reporting this to the maintainers of com.google.protobuf.UnsafeUtil
+
+# Created on 2020-06-18T16:24:47.307
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+
+# Created on 2020-06-18T16:24:47.307
+WARNING: All illegal access operations will be denied in a future release
+

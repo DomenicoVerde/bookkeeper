@@ -455,7 +455,7 @@ Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,Shell.Ex
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,ZkUtils.1.new AsyncCallback.StringCallback() {...},12,32,3,1,1,4,2,2,0,2
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,LedgerIdFormatter.UUIDLedgerIdFormatter,15,0,0,0,3,0,3,0,3,0
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,SafeRunnable.new SafeRunnable() {...},21,0,0,0,7,0,2,0,2,0
-Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,SafeRunnable.new SafeRunnable() {...},4,6,0,0,2,1,1,1,1,1
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,SafeRunnable.new SafeRunnable() {...},0,10,0,0,0,3,0,2,0,2
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,SubTreeCache,94,0,4,0,24,0,9,0,7,0
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,SnapshotMap,150,0,4,0,34,0,7,0,5,0
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util,EntryFormatter,60,0,4,0,18,0,6,0,4,0
@@ -544,17 +544,17 @@ Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collecti
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentLongLongPairHashMap,445,0,26,0,79,0,39,0,26,0
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentOpenHashSet.Section,422,0,58,0,121,0,37,0,8,0
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentLongHashSet,322,0,24,0,60,0,30,0,18,0
-Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentOpenHashMap.Section,345,264,53,21,83,59,40,7,4,6
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentOpenHashMap.Section,306,303,49,25,75,67,38,9,3,7
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentLongLongPairHashMap.LongPair,58,0,8,0,12,0,8,0,4,0
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentOpenHashSet,295,0,20,0,55,0,28,0,18,0
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentLongHashMap,429,0,28,0,75,0,40,0,26,0
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentLongHashMap.Section,690,0,98,0,169,0,58,0,9,0
-Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentOpenHashMap,219,199,19,7,36,41,23,15,12,13
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentOpenHashMap,189,229,17,9,31,46,21,17,11,14
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentLongLongHashMap.Section,925,0,110,0,214,0,68,0,13,0
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,GrowableArrayBlockingQueue,601,0,40,0,138,0,41,0,21,0
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentLongLongPairHashMap.Section,739,0,72,0,151,0,45,0,9,0
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,ConcurrentLongHashSet.Section,459,0,56,0,114,0,37,0,9,0
-Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,SynchronizedHashMultiMap,109,16,4,0,19,3,13,2,11,2
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.util.collections,SynchronizedHashMultiMap,92,33,4,0,15,7,12,3,10,3
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.net,NetworkTopologyImpl,702,230,116,18,164,52,81,13,19,8
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.net,StabilizeNetworkTopology,110,0,4,0,27,0,12,0,10,0
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.net,BookieSocketAddress,41,114,6,6,8,23,8,8,2,8
@@ -584,7 +584,7 @@ Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieC
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.GetListOfEntriesOfLedgerCompletion.new BookkeeperInternalCallbacks.GetListOfEntriesOfLedgerCallback() {...},29,0,0,0,5,0,2,0,2,0
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtocol.AuthRequest,17,0,0,0,5,0,2,0,2,0
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.ReadV2ResponseCallback.new Recycler() {...},9,0,0,0,2,0,2,0,2,0
-Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,DefaultPerChannelBookieClientPool,163,139,21,11,28,31,19,12,6,9
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,DefaultPerChannelBookieClientPool,143,159,18,14,24,35,17,14,5,10
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieServer.DeathWatcher,53,0,2,0,16,0,4,0,3,0
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.GetListOfEntriesOfLedgerCompletion,106,0,8,0,26,0,9,0,5,0
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,WriteEntryProcessorV3,283,0,18,0,71,0,15,0,6,0
@@ -626,7 +626,7 @@ Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,WriteLa
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtocol.ErrorResponse,10,0,0,0,3,0,1,0,1,0
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieNettyServer,527,0,38,0,117,0,30,0,11,0
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,AuthHandler.ServerSideHandler.AuthResponseCallbackLegacy,43,0,2,0,12,0,3,0,2,0
-Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient,1347,1106,161,62,337,275,154,35,37,30
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient,1332,1121,160,63,333,279,153,36,36,31
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtocol.ParsedAddRequest,74,0,2,0,23,0,8,0,7,0
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,ReadEntryProcessorV3.new FutureCallback() {...},63,0,0,0,7,0,3,0,3,0
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.AddCompletion,54,127,4,2,14,29,9,5,6,5
@@ -672,7 +672,7 @@ Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieN
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,ReadEntryProcessor.new Recycler() {...},9,0,0,0,2,0,2,0,2,0
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,ReadEntryProcessor.new FutureCallback() {...},34,0,0,0,6,0,3,0,3,0
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieNettyServer.1.new DefaultEventLoop() {...},24,0,2,0,4,0,3,0,2,0
-Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieClientImpl,706,284,59,13,165,68,61,12,27,10
+Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieClientImpl,687,303,57,15,159,74,58,15,25,12
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,AuthHandler.ClientSideHandler,325,125,47,10,72,34,32,7,4,6
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,BookieProtoEncoding.RequestEncoder,33,33,4,2,5,8,3,2,0,2
 Apache Bookkeeper :: Tests/bookkeeper-server,org.apache.bookkeeper.proto,PerChannelBookieClient.ReadV2ResponseCallback,72,0,0,0,23,0,5,0,5,0

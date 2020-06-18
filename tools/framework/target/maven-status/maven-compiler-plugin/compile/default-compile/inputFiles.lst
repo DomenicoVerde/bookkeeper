@@ -1,0 +1,14 @@
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/framework/src/main/java/org/apache/bookkeeper/tools/framework/CliCommand.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/framework/src/main/java/org/apache/bookkeeper/tools/framework/CommandUtils.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/framework/src/main/java/org/apache/bookkeeper/tools/framework/CommandGroup.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/framework/src/main/java/org/apache/bookkeeper/tools/framework/Cli.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/framework/src/main/java/org/apache/bookkeeper/tools/framework/Command.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/framework/src/main/java/org/apache/bookkeeper/tools/common/BKCommandCategories.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/framework/src/main/java/org/apache/bookkeeper/tools/common/package-info.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/framework/src/main/java/org/apache/bookkeeper/tools/framework/CliCommandGroup.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/framework/src/main/java/org/apache/bookkeeper/tools/framework/HelpCommand.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/framework/src/main/java/org/apache/bookkeeper/tools/common/BKFlags.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/framework/src/main/java/org/apache/bookkeeper/tools/framework/package-info.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/framework/src/main/java/org/apache/bookkeeper/tools/framework/CliFlags.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/framework/src/main/java/org/apache/bookkeeper/tools/common/BKCommand.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/framework/src/main/java/org/apache/bookkeeper/tools/framework/CliSpec.java

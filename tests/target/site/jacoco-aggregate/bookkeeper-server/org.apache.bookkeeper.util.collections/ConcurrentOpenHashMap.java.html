@@ -165,14 +165,14 @@ public class ConcurrentOpenHashMap&lt;K, V&gt; {
 <span class="fc" id="L165">    }</span>
 
     public int removeIf(BiPredicate&lt;K, V&gt; filter) {
-<span class="nc" id="L168">        checkNotNull(filter);</span>
+<span class="fc" id="L168">        checkNotNull(filter);</span>
 
-<span class="nc" id="L170">        int removedCount = 0;</span>
-<span class="nc bnc" id="L171" title="All 2 branches missed.">        for (Section&lt;K, V&gt; s : sections) {</span>
-<span class="nc" id="L172">            removedCount += s.removeIf(filter);</span>
+<span class="fc" id="L170">        int removedCount = 0;</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">        for (Section&lt;K, V&gt; s : sections) {</span>
+<span class="fc" id="L172">            removedCount += s.removeIf(filter);</span>
         }
 
-<span class="nc" id="L175">        return removedCount;</span>
+<span class="fc" id="L175">        return removedCount;</span>
     }
 
     /**
@@ -398,16 +398,16 @@ public class ConcurrentOpenHashMap&lt;K, V&gt; {
 <span class="fc" id="L398">        }</span>
 
         int removeIf(BiPredicate&lt;K, V&gt; filter) {
-<span class="nc" id="L401">            long stamp = writeLock();</span>
+<span class="fc" id="L401">            long stamp = writeLock();</span>
 
-<span class="nc" id="L403">            int removedCount = 0;</span>
+<span class="fc" id="L403">            int removedCount = 0;</span>
             try {
                 // Go through all the buckets for this section
-<span class="nc bnc" id="L406" title="All 2 branches missed.">                for (int bucket = 0; bucket &lt; table.length; bucket += 2) {</span>
-<span class="nc" id="L407">                    K storedKey = (K) table[bucket];</span>
-<span class="nc" id="L408">                    V storedValue = (V) table[bucket + 1];</span>
+<span class="fc bfc" id="L406" title="All 2 branches covered.">                for (int bucket = 0; bucket &lt; table.length; bucket += 2) {</span>
+<span class="fc" id="L407">                    K storedKey = (K) table[bucket];</span>
+<span class="fc" id="L408">                    V storedValue = (V) table[bucket + 1];</span>
 
-<span class="nc bnc" id="L410" title="All 4 branches missed.">                    if (storedKey != DeletedKey &amp;&amp; storedKey != EmptyKey) {</span>
+<span class="pc bpc" id="L410" title="2 of 4 branches missed.">                    if (storedKey != DeletedKey &amp;&amp; storedKey != EmptyKey) {</span>
 <span class="nc bnc" id="L411" title="All 2 branches missed.">                        if (filter.test(storedKey, storedValue)) {</span>
                             // Removing item
 <span class="nc" id="L413">                            --size;</span>
@@ -417,9 +417,9 @@ public class ConcurrentOpenHashMap&lt;K, V&gt; {
                     }
                 }
 
-<span class="nc" id="L420">                return removedCount;</span>
+<span class="fc" id="L420">                return removedCount;</span>
             } finally {
-<span class="nc" id="L422">                unlockWrite(stamp);</span>
+<span class="fc" id="L422">                unlockWrite(stamp);</span>
             }
         }
 

@@ -128,13 +128,13 @@ class DefaultPerChannelBookieClientPool implements PerChannelBookieClientPool,
 
     @Override
     public void checkTimeoutOnPendingOperations() {
-<span class="nc bnc" id="L131" title="All 2 branches missed.">        for (int i = 0; i &lt; clients.length; i++) {</span>
-<span class="nc" id="L132">            clients[i].checkTimeoutOnPendingOperations();</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">            if (clients != clientsV3Enforced) {</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        for (int i = 0; i &lt; clients.length; i++) {</span>
+<span class="fc" id="L132">            clients[i].checkTimeoutOnPendingOperations();</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">            if (clients != clientsV3Enforced) {</span>
 <span class="nc" id="L134">                clientsV3Enforced[i].checkTimeoutOnPendingOperations();</span>
             }
         }
-<span class="nc" id="L137">    }</span>
+<span class="fc" id="L137">    }</span>
 
     @Override
     public void recordError() {

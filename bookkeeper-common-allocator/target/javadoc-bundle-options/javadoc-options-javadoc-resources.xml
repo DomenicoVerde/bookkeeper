@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<javadocOptions>
+  <groups>
+    <group>
+      <title>Bookkeeper Client</title>
+      <packages>org.apache.bookkeeper.client:org.apache.bookkeeper.common.annotation:org.apache.bookkeeper.conf:org.apache.bookkeeper.feature</packages>
+    </group>
+    <group>
+      <title>Bookkeeper Client (New Fluent API - Experimental)</title>
+      <packages>org.apache.bookkeeper.client.api</packages>
+    </group>
+    <group>
+      <title>Bookkeeper Stats API</title>
+      <packages>org.apache.bookkeeper.stats</packages>
+    </group>
+    <group>
+      <title>Bookkeeper Stats Providers</title>
+      <packages>org.apache.bookkeeper.stats.codahale:org.apache.bookkeeper.stats.prometheus</packages>
+    </group>
+  </groups>
+  <docletArtifacts>
+    <docletArtifact />
+  </docletArtifacts>
+  <tagletArtifacts>
+    <tagletArtifact />
+  </tagletArtifacts>
+  <javadocResourcesDirectory>src/main/javadoc</javadocResourcesDirectory>
+</javadocOptions>

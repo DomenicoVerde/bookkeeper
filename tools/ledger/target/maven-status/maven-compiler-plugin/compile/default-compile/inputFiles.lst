@@ -1,0 +1,11 @@
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/ledger/src/main/java/org/apache/bookkeeper/tools/cli/commands/BookieCommandGroup.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/ledger/src/main/java/org/apache/bookkeeper/tools/cli/commands/bookieid/package-info.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/ledger/src/main/java/org/apache/bookkeeper/tools/cli/commands/CookieCommandGroup.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/ledger/src/main/java/org/apache/bookkeeper/tools/cli/package-info.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/ledger/src/main/java/org/apache/bookkeeper/tools/cli/commands/bookieid/SearchReplaceBookieIdCommand.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/ledger/src/main/java/org/apache/bookkeeper/tools/cli/commands/package-info.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/ledger/src/main/java/org/apache/bookkeeper/tools/cli/BKCtl.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/ledger/src/main/java/org/apache/bookkeeper/tools/cli/commands/BookieIdCommandGroup.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/ledger/src/main/java/org/apache/bookkeeper/tools/cli/commands/LedgerCommandGroup.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/ledger/src/main/java/org/apache/bookkeeper/tools/cli/commands/AutoRecoveryCommandGroup.java
+/home/domenicoverde/Scrivania/Bookkeeper.git/tools/ledger/src/main/java/org/apache/bookkeeper/tools/cli/commands/BookiesCommandGroup.java

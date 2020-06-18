@@ -1,0 +1,15 @@
+language: java
+
+jdk:
+- openjdk8
+
+install: skip
+
+addons:
+ sonarcloud:
+  organization: domenicoverde
+  token: 
+    secure: "PvXcVYTb7ioAthb2EDWwacm8w3WmtKm2smEBMOozJPiE5COqPPc5+RepbQUJS3F+SvWYtmkyCCAAhIR5hYd6/jqKx27iPmT3H1i89mC60AgALBhs5nAjou4eDQYkpO4NiSiGyPkhfdSJIJQVBqOInPEu9WnXOWrIRPaKCmQFKgGsPxQGr7GLYae0b3jyl2J60l815dOr2CffDMdvUL+HzMo7rbpdePNIsifHvLBFMRR0BSrpugEBANlL1cVvMvQwTUbRoe1d01zXdZTtKfovm7igeADRiR5TByeAwoxTx6wF2IZLsv90nyxcPcID/4vrqVSLh2IrBwYU97yILZiGLepTRk1sFdg+IretyMc5c0QE7Z400ex726wanspdBU+FByvMM0pRyhxcVbj8foj+W5FcSHcsA/H1OFQGUHW45OxsztibimpvpiTt8tRmncKhV+OQ0qwMAzAKDm2HSvTFBA8XZCbcHOWeiI6tVBrCh+0AjqrUWKa87UvN6X/v+fquv6+ZvkOyxcW+TNVoI82Eky5MJFbgiWevLn7IVDotoU/BwQFfntE8+xsAhhBGc1WGgtj1Mm1GMvOfrzW8wBUlc6Q1uQ0hTz6J0i2Fb3jCN0AHQAzyKPbuSv0qVXSts/ifejz/GlNLYJwheuTPAmInCvSjeELCKM65fW4jnQSMPTg="
+
+script: 
+- mvn sonar:sonar Dsonar.projectKey=DomenicoVerde_bookkeeper -pl .,bookkeeper-server

@@ -1,0 +1,33 @@
+-classpath
+'/home/domenicoverde/.m2/repository/io/netty/netty-buffer/4.1.32.Final/netty-buffer-4.1.32.Final.jar:/home/domenicoverde/.m2/repository/io/netty/netty-common/4.1.32.Final/netty-common-4.1.32.Final.jar:/home/domenicoverde/.m2/repository/org/projectlombok/lombok/1.18.10/lombok-1.18.10.jar:/home/domenicoverde/.m2/repository/com/github/spotbugs/spotbugs-annotations/3.1.8/spotbugs-annotations-3.1.8.jar:/home/domenicoverde/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/home/domenicoverde/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/domenicoverde/.m2/repository/commons-configuration/commons-configuration/1.10/commons-configuration-1.10.jar:/home/domenicoverde/.m2/repository/commons-lang/commons-lang/2.6/commons-lang-2.6.jar:/home/domenicoverde/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar'
+-encoding
+'UTF-8'
+-package
+-sourcepath
+'/home/domenicoverde/Scrivania/Bookkeeper.git/bookkeeper-common-allocator/src/main/java'
+-subpackages
+org.apache.bookkeeper.client:org.apache.bookkeeper.client.api:org.apache.bookkeeper.common.annotation:org.apache.bookkeeper.conf:org.apache.bookkeeper.feature:org.apache.bookkeeper.stats
+-Xdoclint:none -notimestamp
+-author
+-bottom
+'Copyright &#169; 2011&#x2013;2020 <a href="https://www.apache.org/">The Apache Software Foundation</a>. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'/home/domenicoverde/Scrivania/Bookkeeper.git/bookkeeper-common-allocator/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'BookKeeper Java API (version 4.11.0-SNAPSHOT)'
+-group
+'Bookkeeper Client' 'org.apache.bookkeeper.client:org.apache.bookkeeper.common.annotation:org.apache.bookkeeper.conf:org.apache.bookkeeper.feature'
+-group
+'Bookkeeper Client (New Fluent API - Experimental)' 'org.apache.bookkeeper.client.api'
+-group
+'Bookkeeper Stats API' 'org.apache.bookkeeper.stats'
+-group
+'Bookkeeper Stats Providers' 'org.apache.bookkeeper.stats.codahale:org.apache.bookkeeper.stats.prometheus'
+-use
+-version
+-windowtitle
+'Apache BookKeeper :: Common :: Allocator 4.11.0-SNAPSHOT API'

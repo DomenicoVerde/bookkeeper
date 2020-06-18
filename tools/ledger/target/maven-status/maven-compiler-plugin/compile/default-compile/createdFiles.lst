@@ -1,0 +1,9 @@
+org/apache/bookkeeper/tools/cli/commands/BookieCommandGroup.class
+org/apache/bookkeeper/tools/cli/BKCtl.class
+org/apache/bookkeeper/tools/cli/commands/CookieCommandGroup.class
+org/apache/bookkeeper/tools/cli/commands/AutoRecoveryCommandGroup.class
+org/apache/bookkeeper/tools/cli/commands/BookiesCommandGroup.class
+org/apache/bookkeeper/tools/cli/commands/LedgerCommandGroup.class
+org/apache/bookkeeper/tools/cli/commands/bookieid/SearchReplaceBookieIdCommand$Flags.class
+org/apache/bookkeeper/tools/cli/commands/BookieIdCommandGroup.class
+org/apache/bookkeeper/tools/cli/commands/bookieid/SearchReplaceBookieIdCommand.class

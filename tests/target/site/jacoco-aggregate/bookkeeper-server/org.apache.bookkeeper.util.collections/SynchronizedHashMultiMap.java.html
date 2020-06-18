@@ -63,7 +63,7 @@ import org.apache.commons.lang3.tuple.Pair;
     }
 
     public synchronized int removeIf(BiPredicate&lt;K, V&gt; predicate) {
-<span class="nc" id="L66">        int removedSum = map.values().stream().mapToInt(</span>
+<span class="fc" id="L66">        int removedSum = map.values().stream().mapToInt(</span>
                 pairs -&gt; {
 <span class="nc" id="L68">                    int removed = 0;</span>
                     // Can't use removeIf because we need the count
@@ -76,9 +76,9 @@ import org.apache.commons.lang3.tuple.Pair;
                         }
 <span class="nc" id="L77">                    }</span>
 <span class="nc" id="L78">                    return removed;</span>
-<span class="nc" id="L79">                }).sum();</span>
-<span class="nc" id="L80">        map.values().removeIf((s) -&gt; s.isEmpty());</span>
-<span class="nc" id="L81">        return removedSum;</span>
+<span class="fc" id="L79">                }).sum();</span>
+<span class="pc" id="L80">        map.values().removeIf((s) -&gt; s.isEmpty());</span>
+<span class="fc" id="L81">        return removedSum;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

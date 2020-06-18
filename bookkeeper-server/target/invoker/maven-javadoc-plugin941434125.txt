@@ -1,0 +1,56 @@
+Invoking Maven for the goals: [org.apache.maven.plugins:maven-javadoc-plugin:3.1.1:javadoc] with no properties
+
+M2_HOME=/usr/share/maven
+MAVEN_OPTS=null
+JAVA_HOME=/usr/lib/jvm/jdk-14.0.1
+JAVA_OPTS=null
+
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Detecting the operating system and CPU architecture
+[INFO] ------------------------------------------------------------------------
+[INFO] os.detected.name: linux
+[INFO] os.detected.arch: x86_64
+[INFO] os.detected.release: ubuntu
+[INFO] os.detected.release.version: 18.04
+[INFO] os.detected.release.like.ubuntu: true
+[INFO] os.detected.release.like.debian: true
+[INFO] os.detected.classifier: linux-x86_64
+[INFO] 
+[INFO] --------------< org.apache.bookkeeper:bookkeeper-common >---------------
+[INFO] Building Apache BookKeeper :: Common 4.11.0-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> maven-javadoc-plugin:3.1.1:javadoc (default-cli) > generate-sources @ bookkeeper-common >>>
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.4.1:enforce (enforce-maven-version) @ bookkeeper-common ---
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.4:prepare-agent (prepare-agent) @ bookkeeper-common ---
+[INFO] argLine set to -javaagent:/home/domenicoverde/.m2/repository/org/jacoco/org.jacoco.agent/0.8.4/org.jacoco.agent-0.8.4-runtime.jar=destfile=/home/domenicoverde/Scrivania/Bookkeeper.git/bookkeeper-common/target/jacoco.exec
+[INFO] 
+[INFO] <<< maven-javadoc-plugin:3.1.1:javadoc (default-cli) < generate-sources @ bookkeeper-common <<<
+[INFO] 
+[INFO] 
+[INFO] --- maven-javadoc-plugin:3.1.1:javadoc (default-cli) @ bookkeeper-common ---
+[INFO] 
+Loading source files for package org.apache.bookkeeper.client...
+1 error
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  2.638 s
+[INFO] Finished at: 2020-06-18T16:24:52+02:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-javadoc-plugin:3.1.1:javadoc (default-cli) on project bookkeeper-common: An error has occurred in Javadoc report generation: 
+[ERROR] Exit code: 2 - javadoc: error - No source files for package org.apache.bookkeeper.client
+[ERROR] 
+[ERROR] Command line was: /usr/lib/jvm/jdk-14.0.1/bin/javadoc @options
+[ERROR] 
+[ERROR] Refer to the generated Javadoc files in '/home/domenicoverde/Scrivania/Bookkeeper.git/bookkeeper-common/target/site/apidocs' dir.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
