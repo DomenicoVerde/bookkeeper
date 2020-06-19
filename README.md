@@ -1,8 +1,6 @@
 # Bookkeeper
 
-[![Build Status](https://travis-ci.com/DomenicoVerde/Bookkeeper.svg?branch=master)](https://travis-ci.com/DomenicoVerde/Bookkeeper)
-
-[![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=DomenicoVerde_bookkeeper&metric=coverage)](https://sonarcloud.io/dashboard?id=DomenicoVerde_bookkeeper)
+[![Build Status](https://travis-ci.com/DomenicoVerde/Bookkeeper.svg?branch=master)](https://travis-ci.com/DomenicoVerde/Bookkeeper)    [![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=DomenicoVerde_bookkeeper&metric=coverage)](https://sonarcloud.io/dashboard?id=DomenicoVerde_bookkeeper)
 
 A cloned repository of the Apache's project Bookkeeper where I removed original tests then I added some others.
 
